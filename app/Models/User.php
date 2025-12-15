@@ -23,6 +23,19 @@ class User extends Authenticatable
         'password',
     ];
 
+     //helper method for checking role
+     public function isAdmin(){
+        return $this->role ==='admin';
+     }
+
+      public function isSuperuser(){
+        return $this->role ==='superuser';
+     }
+       public function isUser(){
+        return $this->role ==='user';
+     }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

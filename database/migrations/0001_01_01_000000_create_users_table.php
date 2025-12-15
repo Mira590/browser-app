@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->enum('role',['staff','superuser','admin'])->default('staff');
+            $table->enum('role',['user','superuser','admin'])->default('user');
             $table->enum('status',['0','1'])->default('1');
             $table->longText('bio')->nullable();
             $table->string('password');
