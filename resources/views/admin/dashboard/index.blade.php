@@ -1,5 +1,5 @@
 
-@include('admin.partial.link');
+@include('partial.link');
 
 <body onload="info_noti()">
 	<!--wrapper-->
@@ -1086,7 +1086,7 @@
 	</div>
 	<!--end switcher-->
 	<!-- Bootstrap JS -->
-	@include('admin.partial.js');
+	@include('partial.js');
 </body>
 
 </html>
