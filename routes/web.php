@@ -12,9 +12,9 @@ Route::get('/', function () {
 
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 
-Route::middleware(['auth', 'verified','role:admin'])->prefix('admin.')->name('admin')->group(function () {
+Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin')->group(function () {
 
-    Route::get('/admin/dashboard',[AdminController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[AdminController::class,'index'])->name('.dashboard');
 });
 
 Route::middleware('auth')->group(function () {
