@@ -25,13 +25,13 @@
 									<div class="card-body">
 										<div class="d-flex flex-column align-items-center text-center">
 									<img id="pre" 
-          src="{{ auth()->user()->photo ? Storage::url(auth()->user()->photo) : asset('backend/assets/images/avatars/avatar-2.png') }}" 
-          alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                      src="{{asset('backend/assets/images/avatars/avatar-2.png')}} }}" 
+                     alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 
 											<div class="mt-3">
-												<h4>{{Auth::user()->name}}</h4>
-												<p class="text-secondary mb-1">{{Auth::user()->email}}</p>
-												<p class="text-muted font-size-sm">{{Auth::user()->address}}</p>
+												<h4></h4>
+												<p class="text-secondary mb-1"></p>
+												<p class="text-muted font-size-sm"></p>
 												<button class="btn btn-primary">Follow</button>
 												<button class="btn btn-outline-primary">Message</button>
 											</div>
@@ -54,7 +54,7 @@
 												<h6 class="mb-0">Name</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name='first_name' value="{{Auth::user()->first_name}}" />
+												<input type="text" class="form-control" name='first_name' value="" />
 												        @error('name')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -65,7 +65,7 @@
 												<h6 class="mb-0">Username</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="username" value="{{Auth::user()->username}}" />
+												<input type="text" class="form-control" name="username" value="" />
 												 @error('email')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -76,8 +76,8 @@
 												<h6 class="mb-0">email</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="email" value="{{Auth::user()->email}}" />
-												           @error('phone')
+												<input type="text" class="form-control" name="email" value="" />
+												           @error('email')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -87,8 +87,8 @@
 												<h6 class="mb-0">Position</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="job_title" value="{{Auth::user()->city}}" /> 
-												          @error('city')
+												<input type="text" class="form-control" name="job_title" value="" /> 
+												          @error('job_titl')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -98,7 +98,7 @@
 												<h6 class="mb-0">Password</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="password" value="{{Auth::user()->password}}" />
+												<input type="text" class="form-control" name="password" value="" />
 												             @error('country')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -115,7 +115,7 @@
                                              <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                              <option value="superuser" {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
                                                </select>
-												 @error('gender')
+												 @error('role')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -126,7 +126,7 @@
 												<h6 class="mb-0">bio</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="bio" value="{{Auth::user()->bio}}" />
+												<input type="text" class="form-control" name="bio" value="" />
 												      @error('bio')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -138,7 +138,7 @@
 												<h6 class="mb-0">AZB Number</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="azid" placeholder="ex: AZ#" value="{{Auth::user()->azbid}}" />
+												<input type="text" class="form-control" name="azid" placeholder="ex: AZ#" value="" />
 												       @error('experience')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
