@@ -73,10 +73,10 @@
 										</div>
 										<div class="row mb-3">
 											<div class="col-sm-3">
-												<h6 class="mb-0">Role</h6>
+												<h6 class="mb-0">email</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="role" value="{{Auth::user()->role}}" />
+												<input type="text" class="form-control" name="email" value="{{Auth::user()->email}}" />
 												           @error('phone')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -95,10 +95,10 @@
 										</div>
 										<div class="row mb-3">
 											<div class="col-sm-3">
-												<h6 class="mb-0">Country</h6>
+												<h6 class="mb-0">Password</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="country" value="{{Auth::user()->country}}" />
+												<input type="text" class="form-control" name="password" value="{{Auth::user()->password}}" />
 												             @error('country')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -106,14 +106,15 @@
 										</div>
 										<div class="row mb-3">
 											<div class="col-sm-3">
-												<h6 class="mb-0">Gender</h6>
+												<h6 class="mb-0">Role</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<select class="form-select" name="gender">
-													<option>Male</option>
-													<option>Female</option>
-													<option>others</option>
-												</select>
+												
+												 <select name="role" id="role" class="form-select">
+                                              <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                             <option value="superuser" {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
+                                               </select>
 												 @error('gender')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
@@ -134,26 +135,16 @@
 
 										 <div class="row mb-3">
 											<div class="col-sm-3">
-												<h6 class="mb-0">Experience</h6>
+												<h6 class="mb-0">AZB Number</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="experience" placeholder="ex: Python ,Java" value="{{Auth::user()->experience}}" />
+												<input type="text" class="form-control" name="azid" placeholder="ex: AZ#" value="{{Auth::user()->azbid}}" />
 												       @error('experience')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
 										</div>
-										     <div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Address</h6>
-											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="address" value="{{Auth::user()->address}}" />
-												      @error('address')
-                                                          <span class="text-danger small">{{ $message }}</span>
-                                                       @enderror
-											</div>
-										</div>
+										     
 										     <div class="row mb-3">
 											<div class="col-sm-3">
 												<h6 class="mb-0">Profile Image</h6>

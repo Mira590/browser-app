@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email');
+            $table->string('job_title');
             $table->string('username');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('photo')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->string('azbid')->nullable();
             $table->enum('role',['user','superuser','admin'])->default('user');
             $table->enum('status',['0','1'])->default('1');
             $table->longText('bio')->nullable();
