@@ -15,6 +15,7 @@ Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login
 Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin')->group(function () {
 
     Route::get('/dashboard',[AdminController::class,'index'])->name('.dashboard');
+    Route::get('/UserCreate',[AdminController::class,'create'])->name('.Usercreate');
 });
 
 Route::middleware('auth')->group(function () {
