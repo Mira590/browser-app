@@ -13,11 +13,14 @@ Route::get('/', function () {
 
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 
-Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin')->group(function () {
+Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard',[AdminController::class,'index'])->name('.dashboard');
-    Route::get('/userIndex',[UserController::class,'create'])->name('.userIndex');
-    Route::post('/UserCreate',[UserController::class,'store'])->name('.userCreate');
+    Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
+    Route::get('/userIndex',[UserController::class,'create'])->name('userIndex');
+    Route::post('/UserCreate',[UserController::class,'store'])->name('userCreate');
+    Route::get('/allusers',[UserController::class,'index'])->name('allUsers');
+
+
 });
 
 Route::middleware('auth')->group(function () {

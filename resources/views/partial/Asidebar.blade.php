@@ -31,7 +31,7 @@
 					<ul>
 						<li> <a href="{{route('admin.userIndex')}}"><i class='bx bx-user-plus'></i>Create User</a>
 						</li>
-						<li> <a href="app-chat-box.html"><i class='bx bx-menu'></i>All Users</a>
+						<li> <a href="{{route('admin.allUsers')}}"><i class='bx bx-menu'></i>All Users</a>
 						</li>
 						
 					</ul>

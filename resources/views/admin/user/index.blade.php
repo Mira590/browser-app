@@ -1,5 +1,9 @@
+
+
 @extends('admin.master')
 @section('content')
+
+
 <div class="page-content" style="margin-top: -70px">
 
 				<!--breadcrumb-->
@@ -14,38 +18,25 @@
 							</ol>
 						</nav>
 					</div>
-					
+
 				</div>
+
+				@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
 				<!--end breadcrumb-->
 				<div class="container">
 					<div class="main-body">
 						<div class="row">
-							<div class="col-lg-4">
-								<div class="card">
-									<div class="card-body">
-										<div class="d-flex flex-column align-items-center text-center">
-									<img id="pre" 
-                      src="{{asset('backend/assets/images/avatars/avatar-2.png')}} }}" 
-                     alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
-
-											<div class="mt-3">
-												<h4></h4>
-												<p class="text-secondary mb-1"></p>
-												<p class="text-muted font-size-sm"></p>
-												<button class="btn btn-primary">Follow</button>
-												<button class="btn btn-outline-primary">Message</button>
-											</div>
-										</div>
-										<hr class="my-4" />
-										
-									</div>
-								</div>
-							</div>
+							
 							<div class="col-lg-8">
 								
 
 								<div class="card">
-									<form method="POST" enctype="multipart/form-data" action="">
+									<form action="{{route('admin.userCreate')}}" method="POST" enctype="multipart/form-data">
 
 										@csrf
 									<div class="card-body">
@@ -55,7 +46,7 @@
 											</div>
 											<div class="col-sm-9 text-secondary">
 												<input type="text" class="form-control" name='first_name' value="" />
-												        @error('name')
+												        @error('first_name')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -66,7 +57,7 @@
 											</div>
 											<div class="col-sm-9 text-secondary">
 												<input type="text" class="form-control" name="username" value="" />
-												 @error('email')
+												 @error('username')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -98,8 +89,19 @@
 												<h6 class="mb-0">Password</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="password" value="" />
-												             @error('country')
+												<input type="password" class="form-control" name="password" value="" />
+												             @error('password')
+                                                          <span class="text-danger small">{{ $message }}</span>
+                                                       @enderror
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0"> Confirm Password</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="password" class="form-control" name="password_confirmation" value="" require />
+												             @error('password_confirmation')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -138,26 +140,30 @@
 												<h6 class="mb-0">AZB Number</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="azid" placeholder="ex: AZ#" value="" />
+												<input type="text" class="form-control" name="azbid" placeholder="ex: AZ#" value="" />
 												       @error('experience')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
 										</div>
 										     
-										     <div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Profile Image</h6>
-											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="file" class="form-control" name="photo" id="photo" />
-												         @error('photo')
-                                                          <span class="text-danger small">{{ $message }}</span>
-                                                       @enderror
-												
-											</div>
-										</div>
+										    <div class="row mb-3">
+    <div class="col-sm-3">
+        <h6 class="mb-0">Profile Image</h6>
+    </div>
+    <div class="col-sm-9 text-secondary">
+        <input type="file" class="form-control" name="photo" id="photo" />
+        @error('photo')
+            <span class="text-danger small">{{ $message }}</span>
+        @enderror
 
+        <!-- IMAGE PREVIEW UNDER INPUT -->
+        <div class="mt-2">
+            <img id="pre" src="{{ asset('backend/assets/images/avatars/avatar-2.png') }}" 
+                 alt="Preview" class="rounded-circle" width="100">
+        </div>
+    </div>
+</div>
 
 										
 										
@@ -179,4 +185,21 @@
 			</div>
 		</div>
 
+		<script>
+    const photoInput = document.getElementById('photo');
+    const previewImg = document.getElementById('pre');
+
+    photoInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+		
 @endsection

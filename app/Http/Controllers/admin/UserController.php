@@ -4,6 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -12,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-         
+         return view('admin.user.all');
     }
 
     /**
@@ -26,26 +29,21 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        
+    public function store(UserRequest $request)
+{
+    $data = $request->validated();
+
+    if ($request->hasFile('photo')) {
+        $data['photo'] = $request->file('photo')->store('users', 'public');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    $data['password'] = Hash::make($data['password']);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    User::create($data);
+
+    return redirect()->back()->with('success', 'User Created Successfully!');
+}
+
 
     /**
      * Update the specified resource in storage.

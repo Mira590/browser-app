@@ -26,5 +26,5 @@
 	<link rel="stylesheet" href='{{asset("assets/css/dark-theme.css")}}' />
 	<link rel="stylesheet" href='{{asset("assets/css/semi-dark.css")}}' />
 	<link rel="stylesheet" href='{{asset("assets/css/header-colors.css")}}' />
-	<title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
+	<title>IT Stock</title>
 </head>
