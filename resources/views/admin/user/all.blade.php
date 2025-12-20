@@ -72,7 +72,9 @@
 										<td> {{$user->role}}</td>
 											
 										
-                                        <td><button type="button" class="btn btn-sm btn-primary">Edit</button>
+                                        <td><a href="{{ route('admin.editUser', $user->id) }}">
+    <button type="button" class="btn btn-sm btn-primary">Edit</button>
+  </a>
                                         <a href="javascript:void(0)"
                                          class="btn btn-sm btn-danger delete-user"
                                          data-id="{{ $user->id }}"

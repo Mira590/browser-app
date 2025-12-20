@@ -10,7 +10,7 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">User Profilep</li>
+								<li class="breadcrumb-item active" aria-current="page">User Profile</li>
 							</ol>
 						</nav>
 					</div>
@@ -25,15 +25,13 @@
 									<div class="card-body">
 										<div class="d-flex flex-column align-items-center text-center">
 									<img id="pre" 
-          src="{{ auth()->user()->photo ? Storage::url(auth()->user()->photo) : asset('backend/assets/images/avatars/avatar-2.png') }}" 
+          src="{{ $user->photo ? Storage::url($user->photo) : 'No image' }}" 
           alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 
 											<div class="mt-3">
 												<h4>{{Auth::user()->name}}</h4>
-												<p class="text-secondary mb-1">{{Auth::user()->email}}</p>
-												<p class="text-muted font-size-sm">{{Auth::user()->address}}</p>
-												<button class="btn btn-primary">Follow</button>
-												<button class="btn btn-outline-primary">Message</button>
+												<p class="text-secondary mb-1">{{$user->email}}</p>
+												
 											</div>
 										</div>
 										<hr class="my-4" />
@@ -45,17 +43,18 @@
 								
 
 								<div class="card">
-									<form method="POST" enctype="multipart/form-data" action="">
+									<form method="POST" enctype="multipart/form-data" action="{{ route('admin.updateUser',$user->id) }}">
 
 										@csrf
+										@method('PUT')
 									<div class="card-body">
 										<div class="row mb-3">
 											<div class="col-sm-3">
 												<h6 class="mb-0">Name</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name='first_name' value="{{Auth::user()->first_name}}" />
-												        @error('name')
+												<input type="text" class="form-control" name='first_name' value="{{$user->first_name}}" />
+												        @error('first_name')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -65,8 +64,8 @@
 												<h6 class="mb-0">Username</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="username" value="{{Auth::user()->username}}" />
-												 @error('email')
+												<input type="text" class="form-control" name="username" value="{{$user->username}}" />
+												 @error('username')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -76,8 +75,8 @@
 												<h6 class="mb-0">email</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="email" value="{{Auth::user()->email}}" />
-												           @error('phone')
+												<input type="text" class="form-control" name="email" value="{{$user->email}}" />
+												           @error('email')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -87,8 +86,8 @@
 												<h6 class="mb-0">Position</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="job_title" value="{{Auth::user()->city}}" /> 
-												          @error('city')
+												<input type="text" class="form-control" name="job_title" value="{{$user->job_title}}" /> 
+												          @error('job_title')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -98,8 +97,19 @@
 												<h6 class="mb-0">Password</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="password" value="{{Auth::user()->password}}" />
-												             @error('country')
+												<input type="text" class="form-control" name="password" value="" />
+												             @error('password')
+                                                          <span class="text-danger small">{{ $message }}</span>
+                                                       @enderror
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0"> Confirm Password</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="text" class="form-control" name="password_confirmation" value="" />
+												             @error('password_confirmation')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -115,19 +125,24 @@
                                              <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                              <option value="superuser" {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
                                                </select>
-												 @error('gender')
+												 @error('role')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
 										</div>
 										
-                                          <div class="row mb-3">
+                                         	<div class="row mb-3">
 											<div class="col-sm-3">
-												<h6 class="mb-0">bio</h6>
+												<h6 class="mb-0">Status</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="bio" value="{{Auth::user()->bio}}" />
-												      @error('bio')
+												
+												 <select name="status" id="status" class="form-select">
+                                              <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Enable</option>
+                                             <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Disable</option>
+                                             
+                                               </select>
+												 @error('status')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>
@@ -138,8 +153,8 @@
 												<h6 class="mb-0">AZB Number</h6>
 											</div>
 											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" name="azid" placeholder="ex: AZ#" value="{{Auth::user()->azbid}}" />
-												       @error('experience')
+												<input type="text" class="form-control" name="azbid" placeholder="ex: AZ#" value="{{$user->azbid}}" />
+												       @error('azbid')
                                                           <span class="text-danger small">{{ $message }}</span>
                                                        @enderror
 											</div>

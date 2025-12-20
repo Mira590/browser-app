@@ -20,6 +20,8 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::post('/UserCreate',[UserController::class,'store'])->name('userCreate');
     Route::get('/allusers',[UserController::class,'index'])->name('allUsers');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('userDelete');
+    Route::get('/edit/{id}',[UserController::class,'edit'])->name('editUser');
+    Route::put('/update/{id}',[UserController::class,'update'])->name('updateUser');
 
 
 });

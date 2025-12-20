@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -50,10 +51,50 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function edit(Request $request,$id){
+
+
+       $user=User::findorFail($id);
+        return view('admin.user.edit',compact('user'));
     }
+  public function update(Request $request, string $id)
+{
+    $user = User::findOrFail($id);
+
+    
+
+    $user->first_name = $request->first_name;
+    $user->last_name = $request->last_name;
+    $user->email = $request->email;
+    $user->job_title = $request->job_title;
+    $user->username = $request->username;
+    $user->phone = $request->phone;
+    $user->azbid = $request->azbid;
+    $user->role = $request->role;
+    $user->status = $request->status;
+    $user->bio = $request->bio;
+
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+
+    if ($request->hasFile('photo')) {
+        if ($user->photo) {
+            Storage::disk('public')->delete('users/' . $user->photo);
+        }
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('public/users', $filename);
+        $user->photo = $filename;
+    }
+
+    $user->save();
+
+    return redirect()->route('admin.allUsers')->with('success', 'User updated successfully!');
+}
+
+
+
 
     /**
      * Remove the specified resource from storage.
