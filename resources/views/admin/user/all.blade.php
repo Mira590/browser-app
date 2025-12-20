@@ -29,7 +29,7 @@
 					</div>
 				</div>
 				<!--end breadcrumb-->
-				<h6 class="mb-0 text-uppercase">DataTable Example</h6>
+				<h6 class="mb-0 text-uppercase">All Users</h6>
 				<hr/>
 				<div class="card">
 					<div class="card-body">
@@ -42,31 +42,45 @@
 										<th>status</th>
 										<th>Role</th>
 										<th>Action</th>
-										<th>Salary</th>
+										<th>AZB#</th>
 									</tr>
 								</thead>
 								<tbody>
+									@foreach ($users as $user)
+										
+									
 									<tr>
-										<td>Tiger Nixon</td>
-										<td>System Architect</td>
-										<td>Edinburgh</td>
-										<td>61</td>
-										<td><button type="button" class="btn btn-sm btn-primary">Edit</button>
+										<td>{{$user->first_name}}</td>
+										<td>{{$user->job_title}}</td>
+										<td>@if($user->status == 1)
+                                            <span class="text-success">Enable</span>
+                                        @else
+                                            <span class="text-danger">Disable</span>
+                                        @endif
+										</td>
+										<td> {{$user->role}}</td>
+											
+										
+                                        <td><button type="button" class="btn btn-sm btn-primary">Edit</button>
                                         <button type="button" class="btn btn-sm btn-danger">Delete</button></td>
-										<td>$320,800</td>
+                                    </td>
+
+										<td>{{$user->azbid}}</td>
+										
+										
 									</tr>
 									
 									
-									
+									@endforeach
 								</tbody>
 								<tfoot>
 									<tr>
 										<th>Name</th>
 										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
+										<th>Status</th>
+										<th>Role</th>
+										<th>Action</th>
+										<th>AZB#</th>
 									</tr>
 								</tfoot>
 							</table>
@@ -84,9 +98,7 @@
 		<!--end overlay-->
 		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		<!--End Back To Top Button-->
-		<footer class="page-footer">
-			<p class="mb-0">Copyright © 2021. All right reserved.</p>
-		</footer>
+		
 	</div>
 	<!--end wrapper-->
 

@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-         return view('admin.user.all');
+
+        $users=User::all();
+         return view('admin.user.all',compact('users'));
     }
 
     /**
