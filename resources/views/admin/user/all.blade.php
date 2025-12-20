@@ -2,6 +2,13 @@
 
 @section('content')
 
+	@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
 <div class="page-content">
  
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -37,6 +44,7 @@
 							<table id="example" class="table table-striped table-bordered" style="width:100%">
 								<thead>
 									<tr>
+										<th>No#</th>
 										<th>Name</th>
 										<th>Position</th>
 										<th>status</th>
@@ -46,10 +54,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($users as $user)
+									@foreach ($users as $key=>$user)
 										
 									
-									<tr>
+									
+										<tr id="row-{{ $user->id }}">
+                                         <td>{{ $key + 1 }}</td>
+
 										<td>{{$user->first_name}}</td>
 										<td>{{$user->job_title}}</td>
 										<td>@if($user->status == 1)
@@ -62,7 +73,13 @@
 											
 										
                                         <td><button type="button" class="btn btn-sm btn-primary">Edit</button>
-                                        <button type="button" class="btn btn-sm btn-danger">Delete</button></td>
+                                        <a href="javascript:void(0)"
+                                         class="btn btn-sm btn-danger delete-user"
+                                         data-id="{{ $user->id }}"
+                                         data-url="{{ route('admin.userDelete', $user->id) }}">
+                                         Delete
+                                         </a>
+                                       </td>
                                     </td>
 
 										<td>{{$user->azbid}}</td>
@@ -87,7 +104,8 @@
 						</div>
 					</div>
 				</div>
-				
+				 
+
 				<hr/>
 				
 			</div>
@@ -247,5 +265,37 @@
 			</div>
 		</div>
 	</div>
-
+<form method="POST" style="display:none" id="delete-form">
+                         @csrf
+                        @method('DELETE')
+                        </form>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).on('click', '.delete-user', function(e){
+    e.preventDefault();
+
+    let deleteUrl = $(this).data('url');
+    let categoryId = $(this).data('id');
+
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'You won’t be able to revert this!',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if(result.isConfirmed) {
+            // Set action and submit hidden form
+            $('#delete-form').attr('action', deleteUrl).submit();
+        }
+    });
+});
+</script>
+@endpush

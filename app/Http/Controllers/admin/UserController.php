@@ -60,6 +60,20 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $user=User::findOrFail($id);
+
+        if($user->photo){
+
+            $imagepath=public_path(parse_url($user->photo,PHP_URL_PATH));
+            if(file_exists($imagepath)){
+                unlink($imagepath);
+            }
+        }
+
+
+          $user->delete();
+
+    return redirect()->back()->with('success','User Deleted Successfully');
+
     }
 }

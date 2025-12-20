@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/userIndex',[UserController::class,'create'])->name('userIndex');
     Route::post('/UserCreate',[UserController::class,'store'])->name('userCreate');
     Route::get('/allusers',[UserController::class,'index'])->name('allUsers');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('userDelete');
 
 
 });

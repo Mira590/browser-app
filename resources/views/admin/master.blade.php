@@ -175,6 +175,8 @@
 	<!--end switcher-->
 	<!-- Bootstrap JS -->
 	@include('partial.js');
+	@stack('scripts')
+
 </body>
 
 </html>
