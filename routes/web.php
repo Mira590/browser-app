@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\BranchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,7 +23,8 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('userDelete');
     Route::get('/edit/{id}',[UserController::class,'edit'])->name('editUser');
     Route::put('/update/{id}',[UserController::class,'update'])->name('updateUser');
-
+    Route::get('/branch',[BranchController::class,'create'])->name('addBranch');
+    Route::post('/saveBranch',[BranchController::class,'store'])->name('savebranch');
 
 });
 

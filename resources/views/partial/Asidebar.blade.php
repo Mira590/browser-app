@@ -45,7 +45,7 @@
 						<div class="menu-title">Asset Management</div>
 					</a>
 					<ul>
-						<li> <a href="ecommerce-products.html"><i class='bx bx-plus-circle'></i>Add Branch</a>
+						<li> <a href="{{route('admin.addBranch')}}"><i class='bx bx-plus-circle'></i>Add Branch</a>
 						</li>
 						<li> <a href="ecommerce-products-details.html"><i class='bx bx-menu'></i>All Branches</a>
 						</li>
