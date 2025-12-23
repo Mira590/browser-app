@@ -47,7 +47,7 @@
 					<ul>
 						<li> <a href="{{route('admin.addBranch')}}"><i class='bx bx-plus-circle'></i>Add Branch</a>
 						</li>
-						<li> <a href="ecommerce-products-details.html"><i class='bx bx-menu'></i>All Branches</a>
+						<li> <a href="{{route('admin.allbranch')}}"><i class='bx bx-menu'></i>All Branches</a>
 						</li>
 						<li> <a href="ecommerce-add-new-products.html"><i class='bx bx-plus-circle'></i> Add Category</a>
 						</li>

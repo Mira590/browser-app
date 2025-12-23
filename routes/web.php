@@ -25,6 +25,10 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::put('/update/{id}',[UserController::class,'update'])->name('updateUser');
     Route::get('/branch',[BranchController::class,'create'])->name('addBranch');
     Route::post('/saveBranch',[BranchController::class,'store'])->name('savebranch');
+    Route::get('/allbranches',[BranchController::class,'index'])->name('allbranch');
+    Route::delete('/branch/{id}',[BranchController::class,'destroy'])->name('deletebranch');
+    Route::get('/branchedit/{id}',[BranchController::class,'edit'])->name('editbranch');
+    Route::put('/updatebranch/{id}',[BranchController::class,'update'])->name('updatebranch');
 
 });
 

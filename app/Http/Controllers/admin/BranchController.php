@@ -13,7 +13,9 @@ class BranchController extends Controller
      */
     public function index()
     {
-        
+        $branch=Branch::all();
+
+        return view('admin.branch.index',compact('branch'));
     }
 
     /**
@@ -61,8 +63,12 @@ class BranchController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
+
     {
-        //
+
+        $branch=Branch::findorFail($id);
+        return view('admin.branch.edit',compact('branch'));
     }
 
     /**
@@ -70,14 +76,34 @@ class BranchController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+
+            'name'=>'string|max:255',
+            'br_code'=>'string|max:255',
+        ]);
+
+        $branch=Branch::findorFail($id);
+
+
+
+        $branch->name= $request->name;
+        $branch->br_code=$request->br_code;
+
+        $branch->update();
+
+        return redirect()->route('admin.allbranch')->with('success','Branch Updated successfully');
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+
     {
-        //
+        $branch=Branch::findorFail($id);
+
+        $branch->delete();
+        return redirect()->back()->with('success','Branch Successfully Removed!');
     }
 }
