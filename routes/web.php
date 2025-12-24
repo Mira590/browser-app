@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\BranchController;
+use App\Http\Controllers\admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,6 +30,13 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::delete('/branch/{id}',[BranchController::class,'destroy'])->name('deletebranch');
     Route::get('/branchedit/{id}',[BranchController::class,'edit'])->name('editbranch');
     Route::put('/updatebranch/{id}',[BranchController::class,'update'])->name('updatebranch');
+    Route::get('/category',[CategoryController::class,'create'])->name('addcategory');
+    Route::post('/saveCategory',[CategoryController::class,'store'])->name('savecategory');
+    Route::get('/allcategory',[CategoryController::class,'index'])->name('allcategory');
+    Route::delete('/category/{id}',[CategoryController::class,'destroy'])->name('deletecategory');
+    Route::get('/categoryedit/{id}',[CategoryController::class,'edit'])->name('editcategory');
+    Route::put('/updatecategory/{id}',[CategoryController::class,'update'])->name('updatecategory');
+
 
 });
 
