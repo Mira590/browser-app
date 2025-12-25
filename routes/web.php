@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\ItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::delete('/category/{id}',[CategoryController::class,'destroy'])->name('deletecategory');
     Route::get('/categoryedit/{id}',[CategoryController::class,'edit'])->name('editcategory');
     Route::put('/updatecategory/{id}',[CategoryController::class,'update'])->name('updatecategory');
+    Route::get('/category',[CategoryController::class,'create'])->name('addcategory');
+    Route::get('/newitem',[ItemController::class,'create'])->name('additem');
+    
 
 
 });

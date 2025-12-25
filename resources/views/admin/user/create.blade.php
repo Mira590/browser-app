@@ -21,7 +21,7 @@
 					<div class="main-body">
 						<div class="row">
 							<div class="col-lg-4">
-							@include('backend.admin.profile.prosidebar')
+							
 							</div>
 							<div class="col-lg-8">
 								
