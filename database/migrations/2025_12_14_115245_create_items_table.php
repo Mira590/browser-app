@@ -17,13 +17,14 @@ return new class extends Migration
             $table->string('Model');
             $table->string('tag_number');
             $table->string('serial_number');
-            $table->string('status');
-            $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete();
+            $table->enum('status',['New','Normal','OutOfUse'])->default('Normal');
+            $table->enum('location',['Stock','Branch'])->default('Stock');
+            $table->foreignId('branch_id')->constrained('branches')->nullable()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->string('location');
-            $table->string('amount');
+            $table->string('Author');
             $table->string('remark');
-            $table->string('Purchase date');
+            $table->string('Pur_date')->nullable();
+            $table->string('issue_date')->nullable();
             $table->timestamps();
         });
     }

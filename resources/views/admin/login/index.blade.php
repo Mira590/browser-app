@@ -20,15 +20,15 @@
 										<img src="assets/images/logo-icon.png" width="60" alt="">
 									</div>
 									<div class="text-center mb-4">
-										<h5 class="">Rocker Admin</h5>
+										<h5 class="">IT Stock</h5>
 										<p class="mb-0">Please log in to your account</p>
 									</div>
 									<div class="form-body">
 										<form class="row g-3" method="POST" action="{{ route('login') }}">
 											@csrf
 											<div class="col-12">
-												<label for="inputEmailAddress" class="form-label">Email</label>
-												<input type="text" class="form-control" id="inputEmailAddress" required name="username" :value="{{old('username')}}" placeholder="Username">
+												<label for="inputEmailAddress" class="form-label">Username</label>
+												<input type="text" class="form-control" id="inputEmailAddress" required name="username" :value="{{old('username')}}" placeholder="Type a user name">
 												 <x-input-error :messages="$errors->get('email')" class="mt-2" />
 											</div>
 											<div class="col-12">
@@ -52,22 +52,11 @@
 												</div>
 											</div>
 											<div class="col-12">
-												<div class="text-center ">
-													<p class="mb-0">Don't have an account yet? <a href="authentication-signup.html">Sign up here</a>
-													</p>
-												</div>
+												
 											</div>
 										</form>
 									</div>
-									<div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-										<hr>
-									</div>
-									<div class="list-inline contacts-social text-center">
-										<a href="javascript:;" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i class="bx bxl-facebook"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i class="bx bxl-twitter"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i class="bx bxl-google"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i class="bx bxl-linkedin"></i></a>
-									</div>
+									
 								</div>
 							</div>
 						</div>

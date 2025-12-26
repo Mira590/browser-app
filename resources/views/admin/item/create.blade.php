@@ -1,5 +1,5 @@
-@extends('admin.master');
-@section('content');
+@extends('admin.master')
+@section('content')
 
 
 				<!--breadcrumb-->
@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name"
-                        value="{{ Auth::user()->name }}">
+                        value="{{ Auth::user()->username }}">
                     @error('name')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -43,7 +43,7 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Model</label>
-                    <input type="email" class="form-control" name="email"
+                    <input type="text" class="form-control" name="Model"
                         value="{{ Auth::user()->email }}">
                     @error('email')
                         <span class="text-danger small">{{ $message }}</span>
@@ -55,7 +55,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Tag#</label>
-                    <input type="text" class="form-control" name="phone"
+                    <input type="text" class="form-control" name="tag_number"
                         value="{{ Auth::user()->phone }}">
                     @error('phone')
                         <span class="text-danger small">{{ $message }}</span>
@@ -64,7 +64,7 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Serial Number</label>
-                    <input type="text" class="form-control" name="city"
+                    <input type="text" class="form-control" name="serial_number"
                         value="{{ Auth::user()->city }}">
                     @error('city')
                         <span class="text-danger small">{{ $message }}</span>
@@ -75,18 +75,22 @@
             <!-- Country & Gender -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">Status</label>
-                    <input type="text" class="form-control" name="country"
-                        value="{{ Auth::user()->country }}">
+                    <label class="form-label">status </label>
+                    <select class="form-select" name="status">
+                        <option value="New" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Normal" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                        <option value="out of use" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
                     @error('country')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="col-md-6">
+                  
                     <label class="form-label">location </label>
-                    <select class="form-select" name="gender">
-                        <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                    <select class="form-select" name="location">
+                        <option value="stock" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
                         <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
                         <option value="Others" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
                     </select>
@@ -99,19 +103,24 @@
             <!-- Bio & Experience -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">Bio</label>
-                    <input type="text" class="form-control" name="bio"
-                        value="{{ Auth::user()->bio }}">
+                   <label class="form-label">Branch </label>
+                    <select class="form-select" name="gender">
+                        <option value="00010" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>00010</option>
+                        <option value="00030" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>00030</option>
+                        <option value="Others" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
                     @error('bio')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Experience</label>
-                    <input type="text" class="form-control" name="experience"
-                        placeholder="ex: Python, Java"
-                        value="{{ Auth::user()->experience }}">
+                    <label class="form-label">Category </label>
+                    <select class="form-select" name="gender">
+                        <option value="Network"  selected='Network'>Network</option>
+                        <option value="Female" >system admin</option>
+                        <option value="Others">Others</option>
+                    </select>
                     @error('experience')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -120,9 +129,17 @@
 
             <!-- Address -->
             <div class="row mb-3">
-                <div class="col-md-12">
-                    <label class="form-label">Address</label>
+                <div class="col-md-6">
+                    <label class="form-label">Author</label>
                     <input type="text" class="form-control" name="address"
+                        value="{{ Auth::user()->username }}" readonly>
+                    @error('address')
+                        <span class="text-danger small">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Purchase date</label>
+                    <input type="date" class="form-control" name="address"
                         value="{{ Auth::user()->address }}">
                     @error('address')
                         <span class="text-danger small">{{ $message }}</span>
@@ -145,7 +162,7 @@
             <div class="row">
                 <div class="col-md-12 text-end">
                     <button type="submit" class="btn btn-primary px-4">
-                        Save Changes
+                      save 
                     </button>
                 </div>
             </div>

@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/categoryedit/{id}',[CategoryController::class,'edit'])->name('editcategory');
     Route::put('/updatecategory/{id}',[CategoryController::class,'update'])->name('updatecategory');
     Route::get('/category',[CategoryController::class,'create'])->name('addcategory');
-    Route::get('/newitem',[ItemController::class,'create'])->name('additem');
+    Route::get('/item',[ItemController::class,'create'])->name('additem');
     
 
 
