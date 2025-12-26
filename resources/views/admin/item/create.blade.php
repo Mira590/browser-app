@@ -25,7 +25,7 @@
 								
 
 								<div class="card">
-    <form method="POST" enctype="multipart/form-data" action="">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
         @csrf
 
         <div class="card-body">
@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name"
-                        value="{{ Auth::user()->username }}">
+                        value="{{ old('name') }}" required>
                     @error('name')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -44,7 +44,7 @@
                 <div class="col-md-6">
                     <label class="form-label">Model</label>
                     <input type="text" class="form-control" name="Model"
-                        value="{{ Auth::user()->email }}">
+                        value="{{ old('Model') }}" required>
                     @error('email')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -54,9 +54,9 @@
             <!-- Phone & City -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">Tag#</label>
+                    <label class="form-label">Tag Number</label>
                     <input type="text" class="form-control" name="tag_number"
-                        value="{{ Auth::user()->phone }}">
+                        value="{{ old('tag_number') }}" required>
                     @error('phone')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -65,7 +65,7 @@
                 <div class="col-md-6">
                     <label class="form-label">Serial Number</label>
                     <input type="text" class="form-control" name="serial_number"
-                        value="{{ Auth::user()->city }}">
+                        value="{{ old('serail_number') }}" required>
                     @error('city')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -77,9 +77,10 @@
                 <div class="col-md-6">
                     <label class="form-label">status </label>
                     <select class="form-select" name="status">
-                        <option value="New" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                        <option value="Normal" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                        <option value="out of use" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
+                        <option value="New" >New</option>
+                        <option value="Normal">Normal</option>
+                        <option value="OutOfUse">Normal</option>
+                        
                     </select>
                     @error('country')
                         <span class="text-danger small">{{ $message }}</span>
@@ -90,9 +91,9 @@
                   
                     <label class="form-label">location </label>
                     <select class="form-select" name="location">
-                        <option value="stock" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                        <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                        <option value="Others" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
+                        <option value="Stock" {{ old('location') == 'Stock' ? 'selected' : '' }}>Stock</option>
+                        <option value="Branch" {{ old('location') == 'Branch' ? 'selected' : '' }} >Branch</option>
+                        
                     </select>
                     @error('gender')
                         <span class="text-danger small">{{ $message }}</span>
@@ -104,10 +105,13 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                    <label class="form-label">Branch </label>
-                    <select class="form-select" name="gender">
-                        <option value="00010" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>00010</option>
-                        <option value="00030" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>00030</option>
-                        <option value="Others" {{ Auth::user()->gender == 'Others' ? 'selected' : '' }}>Others</option>
+                    <select class="form-select" name="branch_id">
+                       <option value="">-- Select Branch --</option>
+                       @foreach ($branch as $br)
+                           <option value="{{ $br->id }}" >{{$br->br_code}}</option>
+                       @endforeach
+                        
+                        
                     </select>
                     @error('bio')
                         <span class="text-danger small">{{ $message }}</span>
@@ -116,10 +120,13 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Category </label>
-                    <select class="form-select" name="gender">
-                        <option value="Network"  selected='Network'>Network</option>
-                        <option value="Female" >system admin</option>
-                        <option value="Others">Others</option>
+                    <select class="form-select" name="category_id">
+                        <option value="">-- Select Category --</option>
+                        @foreach ($category as $cat )
+                              <option value="{{ $cat->id }}" >{{$cat->name}}</option>
+                        @endforeach
+                      
+                       
                     </select>
                     @error('experience')
                         <span class="text-danger small">{{ $message }}</span>
@@ -131,16 +138,16 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Author</label>
-                    <input type="text" class="form-control" name="address"
+                    <input type="text" class="form-control" name="Author"
                         value="{{ Auth::user()->username }}" readonly>
-                    @error('address')
+                    @error('author')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Purchase date</label>
-                    <input type="date" class="form-control" name="address"
-                        value="{{ Auth::user()->address }}">
+                    <input type="date" class="form-control" name="Pur_date"
+                        value="">
                     @error('address')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
@@ -150,9 +157,9 @@
             <!-- Profile Image -->
             <div class="row mb-4">
                 <div class="col-md-12">
-                    <label class="form-label">Profile Image</label>
-                    <input type="file" class="form-control" name="photo">
-                    @error('photo')
+                    <label class="form-label">Remark</label>
+                    <input type="text" class="form-control" name="remark">
+                    @error('remark')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>

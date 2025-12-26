@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('Model');
-            $table->string('tag_number');
+            $table->string('tag_number')->nullable();
             $table->string('serial_number');
             $table->enum('status',['New','Normal','OutOfUse'])->default('Normal');
             $table->enum('location',['Stock','Branch'])->default('Stock');
             $table->foreignId('branch_id')->constrained('branches')->nullable()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('Author');
-            $table->string('remark');
+            $table->string('remark')->nullable();
             $table->string('Pur_date')->nullable();
             $table->string('issue_date')->nullable();
             $table->timestamps();
