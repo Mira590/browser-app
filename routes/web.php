@@ -40,6 +40,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/category',[CategoryController::class,'create'])->name('addcategory');
     Route::get('/item',[ItemController::class,'create'])->name('additem');
     Route::post('/storeitem',[ItemController::class,'store'])->name('saveitem');
+    Route::get('/allitem',[ItemController::class,'index'])->name('allitem');
     
 
 

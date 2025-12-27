@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\Category;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
@@ -14,7 +15,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        
+
+        $item=Item::all();
+        return view('admin.item.index',compact('item'));
     }
 
     /**
@@ -31,32 +34,27 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $data=$request->validate([
+  public function store(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'model' => 'required|string|max:255',
+        'tag_number' => 'required|string|max:100|unique:items,tag_number',
+        'serial_number' => 'nullable|string|max:100',
+        'status' => 'required|in:New,Used,Damaged',
+        'location' => 'required|string|max:100',
+        'branch_id' => 'nullable|exists:branches,id',
+        'category_id' => 'required|exists:categories,id',
+        'author' => 'required|string|max:100',
+        'remark' => 'nullable|string|max:500',
+        'pur_date' => 'required|date',
+        'issue_date' => 'nullable|date|after_or_equal:pur_date',
+    ]);
 
-            'name' =>'required|string|max:255',
-            'Model'  =>'required|string|max:255',
-            'tag_number' =>'nullable|unique:items,tag_number',
-            'serial_number'  =>'required|string|max:255|unique:items,serial_number',
-            'status'  =>'required|in:New,Normal,OutOfUse',
-            'location'     =>'required|in:Stock,Branch',
-            'branch_id'      =>'nullable|string|max:255',
-            'category_id'       =>'required|string',
-            
-            'remark'        =>'nullable|string|max:255',
-            'Pur_date'   =>'required|max:255',
-            
-        ]);
+    Item::create($validated);
 
-
-        Item::create($data);
-        return redirect()->back()->with('success','Item imported in stock!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    return redirect()->back()->with('success', 'Item created successfully');
+}
     public function show(string $id)
     {
         //

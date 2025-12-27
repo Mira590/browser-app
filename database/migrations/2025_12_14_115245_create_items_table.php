@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('Model');
+            $table->string('model');
             $table->string('tag_number')->nullable();
-            $table->string('serial_number');
-            $table->enum('status',['New','Normal','OutOfUse'])->default('Normal');
+            $table->string('serial_number')->nullable();
+            $table->enum('status',['New','Used','Damanged'])->default('Normal');
             $table->enum('location',['Stock','Branch'])->default('Stock');
             $table->foreignId('branch_id')->constrained('branches')->nullable()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->string('Author');
+            $table->string('author');
             $table->string('remark')->nullable();
-            $table->string('Pur_date')->nullable();
+            $table->string('pur_date')->nullable();
             $table->string('issue_date')->nullable();
+            $table->enum('disposal',['true','false'])->default('false')->nullable();
             $table->timestamps();
         });
     }

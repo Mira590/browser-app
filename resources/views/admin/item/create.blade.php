@@ -1,5 +1,13 @@
 @extends('admin.master')
 @section('content')
+
+
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3" style="margin-top: -50px;">
 
@@ -41,8 +49,8 @@
 
                                     <div class="col-md-6">
                                         <label class="form-label">Model</label>
-                                        <input type="text" class="form-control" name="Model"
-                                            value="{{ old('Model') }}" required>
+                                        <input type="text" class="form-control" name="model"
+                                            value="{{ old('model') }}" required>
                                         @error('email')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
@@ -76,8 +84,8 @@
                                         <label class="form-label">status </label>
                                         <select class="form-select" name="status">
                                             <option value="New">New</option>
-                                            <option value="Normal">Normal</option>
-                                            <option value="OutOfUse">Normal</option>
+                                            <option value="Used">Used</option>
+                                            <option value="Damaged">Damaged</option>
 
                                         </select>
                                         @error('country')
@@ -138,7 +146,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Author</label>
-                                        <input type="text" class="form-control" name="Author"
+                                        <input type="text" class="form-control" name="author"
                                             value="{{ Auth::user()->username }}" readonly>
                                         @error('author')
                                             <span class="text-danger small">{{ $message }}</span>
@@ -146,7 +154,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Purchase date</label>
-                                        <input type="date" class="form-control" name="Pur_date" value="">
+                                        <input type="date" class="form-control" name="pur_date" value="">
                                         @error('address')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
