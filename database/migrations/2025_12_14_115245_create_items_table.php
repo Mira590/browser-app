@@ -17,15 +17,16 @@ return new class extends Migration
             $table->string('model');
             $table->string('tag_number')->nullable();
             $table->string('serial_number')->nullable();
-            $table->enum('status',['New','Used','Damanged'])->default('Normal');
-            $table->enum('location',['Stock','Branch'])->default('Stock');
-            $table->foreignId('branch_id')->constrained('branches')->nullable()->cascadeOnDelete();
+            $table->enum('status',['New','Used','Damanged'])->default('New');
+            $table->enum('location',['Stock','Branch','Data_Center'])->default('Stock');
+            $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete()->nullable();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('author');
             $table->string('remark')->nullable();
             $table->string('pur_date')->nullable();
             $table->string('issue_date')->nullable();
             $table->enum('disposal',['true','false'])->default('false')->nullable();
+            $table->string('dis_date')->nullable();
             $table->timestamps();
         });
     }

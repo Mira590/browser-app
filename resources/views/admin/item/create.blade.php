@@ -101,6 +101,8 @@
                                             </option>
                                             <option value="Branch" {{ old('location') == 'Branch' ? 'selected' : '' }}>
                                                 Branch</option>
+                                                <option value="Data_Center" {{ old('Data_Center') == 'Data_Center' ? 'selected' : '' }}>
+                                                Data Center</option>
 
                                         </select>
                                         @error('gender')

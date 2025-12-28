@@ -50,7 +50,7 @@
 										<th>Tag Number</th>
 										<th>Serial Number</th>
                                         <th>issue</th>
-                                        <th>view></th>
+                                        <th>Disposal</th>
 										<th>issue</th>
 
 										
@@ -69,10 +69,13 @@
 										<td>{{$items->tag_number}}	</td>
 										<td> {{$items->serial_number}}</td>
 											
+											
 										<td><a href="{{ route('admin.editUser', $items->id) }}">
                                   <button type="button" class="btn btn-sm btn-secondary">Issue</button>
                                               </a></td>
-										<td></td>
+										<td><a href="{{ route('admin.editUser', $items->id) }}">
+                                  <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
+                                              </a></td>>
                                         <td><a href="{{ route('admin.editUser', $items->id) }}">
                                   <button type="button" class="btn btn-sm btn-primary">Edit</button>
                                               </a>
@@ -85,7 +88,8 @@
                                        </td>
                                     </td>
 
-										<td></td>
+											
+									
 										
 										
 									</tr>
@@ -100,6 +104,8 @@
 										<th>Status</th>
 										<th>Role</th>
 										<th>Action</th>
+										<th>AZB#</th>
+										<th>AZB#</th>
 										<th>AZB#</th>
 									</tr>
 								</tfoot>
