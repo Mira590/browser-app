@@ -83,4 +83,10 @@ class ItemController extends Controller
     {
         //
     }
+
+    public function detail(string $id){
+        $item = Item::with(['branch', 'category'])->findOrFail($id);
+
+        return view('admin.item.detail',compact('item'));
+    }
 }

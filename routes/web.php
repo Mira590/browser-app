@@ -41,6 +41,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/item',[ItemController::class,'create'])->name('additem');
     Route::post('/storeitem',[ItemController::class,'store'])->name('saveitem');
     Route::get('/allitem',[ItemController::class,'index'])->name('allitem');
+    Route::get('/detail/{id}',[ItemController::class,'detail'])->name('detail');
     
 
 

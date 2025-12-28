@@ -55,6 +55,9 @@
 						</li>
 							<li> <a href="{{ route('admin.additem') }}"><i class='bx bx-plus-circle'></i>New Item</a></li>
 							<li> <a href="{{route('admin.allitem')}}"><i class='bx bx-laptop'></i>All Items</a></li>
+							<li> <a href="{{route('admin.allitem')}}"><i class='bx bx-category'></i>Stock</a></li>
+							
+							
 					</ul>
 				</li>
             </ul>

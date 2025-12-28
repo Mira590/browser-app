@@ -49,9 +49,9 @@
 										<th>Model</th>
 										<th>Tag Number</th>
 										<th>Serial Number</th>
-                                        <th>issue</th>
+                                        <th>Detail</th>
                                         <th>Disposal</th>
-										<th>issue</th>
+										<th>Action</th>
 
 										
 									</tr>
@@ -70,20 +70,25 @@
 										<td> {{$items->serial_number}}</td>
 											
 											
-										<td><a href="{{ route('admin.editUser', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-secondary">Issue</button>
+										<td><a href="{{ route('admin.detail', $items->id) }}">
+                                  <button type="button" class="btn btn-sm btn-success"><i class='bx bx-folder'></i>View</button>
                                               </a></td>
 										<td><a href="{{ route('admin.editUser', $items->id) }}">
                                   <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
-                                              </a></td>>
+                                              </a>
+											
+											<a href="{{ route('admin.editUser', $items->id) }}">
+                                  <button type="button" class="btn btn-sm btn-secondary">Issue</button>
+                                              </a>
+											</td>>
                                         <td><a href="{{ route('admin.editUser', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                                  <button type="button" class="btn btn-sm btn-primary"><i class="fadeIn animated bx bx-edit-alt"></i></button>
                                               </a>
                                         <a href="javascript:void(0)"
                                          class="btn btn-sm btn-danger delete-user"
                                          data-id="{{ $items->id }}"
                                          data-url="{{ route('admin.userDelete', $items->id) }}">
-                                         Delete
+                                         <i class='lni lni-trash'></i>
                                          </a>
                                        </td>
                                     </td>
