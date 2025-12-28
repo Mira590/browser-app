@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Branch;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -33,5 +35,26 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'photo' => null,
         ]);
+        $branches=[
+            ['name'=>'main Branch','br_code'=>'00010'],
+            ['name'=>'Sarai Shahzadeh','br_code'=>'00020'],
+            ['name'=>'Faryab ','br_code'=>'00270'],
+            ['name'=>'Sare-pol','br_code'=>'00460'],
+        ];
+
+        foreach($branches as $branch){
+            Branch::create($branch);
+        }
+
+         $categories=[
+            ['name'=>'Network'],
+            ['name'=>'Database'],
+            ['name'=>'IT SUPPORT'],
+            ['name'=>'System Admin'],
+        ];
+
+        foreach($categories as $category){
+            Category::create($category);
+        }
     }
 }
