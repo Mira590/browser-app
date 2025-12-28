@@ -43,7 +43,7 @@ class ItemController extends Controller
         'serial_number' => 'nullable|string|max:100',
         'status' => 'required|in:New,Used,Damaged',
         'location' => 'required|string|max:100',
-        'branch_id' => 'nullable|string',
+        'branch_id' => 'nullable|exists:branches,id',
         'category_id' => 'required|exists:categories,id',
         'author' => 'required|string|max:100',
         'remark' => 'nullable|string|max:500',
