@@ -60,8 +60,8 @@
                                         <label class="form-label">Category </label>
                                         <select class="form-select" name="category_id">
                                             <option value="">-- Select Category --</option>
-                                            @foreach ($category as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                            @foreach ($branch as $br)
+                                                <option value="{{ $br->id }}">{{ $br->name }}</option>
                                             @endforeach
 
 

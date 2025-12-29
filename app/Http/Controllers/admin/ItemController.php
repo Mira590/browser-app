@@ -118,7 +118,10 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item= Item::findorFail($id);
+
+        $item->delete();
+        return redirect()->back()->with('success','Item Deleted Successfully!');
     }
 
     public function detail(string $id){
@@ -128,8 +131,9 @@ class ItemController extends Controller
     }
 
     public function issue(Request $request,string $id){
-        
-         return view('admin.item.issue');
+         $item = Item::with(['branch', 'category'])->findOrFail($id);
+         $branch= Branch::all();
+         return view('admin.item.issue',compact('item','branch'));
 
     }
 }

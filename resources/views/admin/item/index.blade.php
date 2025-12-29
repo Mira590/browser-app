@@ -75,7 +75,7 @@
                                   <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
                                               </a>
 											
-											<a href="{{ route('admin.editUser', $items->id) }}">
+											<a href="{{ route('admin.issue', $items->id) }}">
                                   <button type="button" class="btn btn-sm btn-secondary">Issue</button>
                                               </a>
 											</td>>
@@ -83,9 +83,9 @@
                                   <button type="button" class="btn btn-sm btn-primary"><i class="fadeIn animated bx bx-edit-alt"></i></button>
                                               </a>
                                         <a href="javascript:void(0)"
-                                         class="btn btn-sm btn-danger delete-user"
+                                         class="btn btn-sm btn-danger delete-item"
                                          data-id="{{ $items->id }}"
-                                         data-url="{{ route('admin.userDelete', $items->id) }}">
+                                         data-url="{{ route('admin.deleteitem', $items->id) }}">
                                          <i class='lni lni-trash'></i>
                                          </a>
                                        </td>
@@ -288,7 +288,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).on('click', '.delete-user', function(e){
+$(document).on('click', '.delete-item', function(e){
     e.preventDefault();
 
     let deleteUrl = $(this).data('url');

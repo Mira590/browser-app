@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('model');
-            $table->string('tag_number')->nullable();
-            $table->string('serial_number')->nullable();
+            $table->string('tag_number')->unique()->nullable();
+            $table->string('serial_number')->unique()->nullable();
             $table->enum('status',['New','Used','Damanged'])->default('New');
             $table->enum('location',['Stock','Branch','Data_Center'])->default('Stock');
             $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete()->nullable();

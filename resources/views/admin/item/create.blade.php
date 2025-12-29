@@ -51,7 +51,7 @@
                                         <label class="form-label">Model</label>
                                         <input type="text" class="form-control" name="model"
                                             value="{{ old('model') }}" required>
-                                        @error('email')
+                                        @error('model')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -63,7 +63,7 @@
                                         <label class="form-label">Tag Number</label>
                                         <input type="text" class="form-control" name="tag_number"
                                             value="{{ old('tag_number') }}" required>
-                                        @error('phone')
+                                        @error('tag_number')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -72,7 +72,7 @@
                                         <label class="form-label">Serial Number</label>
                                         <input type="text" class="form-control" name="serial_number"
                                             value="{{ old('serail_number') }}" required>
-                                        @error('city')
+                                        @error('serial_number')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -88,7 +88,7 @@
                                             <option value="Damaged">Damaged</option>
 
                                         </select>
-                                        @error('country')
+                                        @error('status')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -105,7 +105,7 @@
                                                 Data Center</option>
 
                                         </select>
-                                        @error('gender')
+                                        @error('location')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -123,7 +123,7 @@
 
 
                                         </select>
-                                        @error('bio')
+                                        @error('branch_id')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -138,7 +138,7 @@
 
 
                                         </select>
-                                        @error('experience')
+                                        @error('category_id')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -157,7 +157,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">Purchase date</label>
                                         <input type="date" class="form-control" name="pur_date" value="">
-                                        @error('address')
+                                        @error('pur_date')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>

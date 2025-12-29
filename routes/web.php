@@ -50,7 +50,9 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/detail/{id}',[ItemController::class,'detail'])->name('detail');
     Route::get('/edititem/{id}',[ItemController::class,'edit'])->name('edititem');
     Route::put('/updateitem/{id}',[ItemController::class,'update'])->name('updateitem');
-    Route::get('/issue',[ItemController::class,'issue'])->name('issue');
+    Route::delete('/itemremove/{id}',[ItemController::class,'destroy'])->name('deleteitem');
+
+    Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
     
 
 
