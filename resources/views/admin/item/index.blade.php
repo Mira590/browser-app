@@ -79,7 +79,7 @@
                                   <button type="button" class="btn btn-sm btn-secondary">Issue</button>
                                               </a>
 											</td>>
-                                        <td><a href="{{ route('admin.editUser', $items->id) }}">
+                                        <td><a href="{{ route('admin.edititem', $items->id) }}">
                                   <button type="button" class="btn btn-sm btn-primary"><i class="fadeIn animated bx bx-edit-alt"></i></button>
                                               </a>
                                         <a href="javascript:void(0)"

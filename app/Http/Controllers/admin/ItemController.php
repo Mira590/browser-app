@@ -65,7 +65,11 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $item = Item::with(['branch', 'category'])->findOrFail($id);
+         $branch = Branch::all();
+         $category = Category::all();
+
+        return view('admin.item.edit',compact('item','branch','category'));
     }
 
     /**
@@ -73,7 +77,40 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+          $item = Item::findOrFail($id);
+
+    // ✅ Validation
+    $request->validate([
+        'name'          => 'required|string|max:255',
+        'model'         => 'required|string|max:255',
+        'tag_number'    => 'required|string|max:255',
+        'serial_number' => 'required|string|max:255',
+        'status'        => 'required|in:New,Used,Damaged',
+        'location'      => 'required|in:Stock,Branch,Data_Center',
+        'branch_id'     => 'nullable|exists:branches,id',
+        'category_id'   => 'required|exists:categories,id',
+        'pur_date'      => 'nullable|date',
+        'remark'        => 'nullable|string|max:500',
+    ]);
+
+    
+    $item->update([
+        'name'          => $request->name,
+        'model'         => $request->model,
+        'tag_number'    => $request->tag_number,
+        'serial_number' => $request->serial_number,
+        'status'        => $request->status,
+        'location'      => $request->location,
+        'branch_id'     => $request->branch_id,
+        'category_id'   => $request->category_id,
+        'pur_date'      => $request->pur_date,
+        'remark'        => $request->remark,
+        'author'        => auth()->user()->username,
+    ]);
+
+    return redirect()
+        ->route('admin.allitem')
+        ->with('success', 'Item updated successfully!');
     }
 
     /**
@@ -88,5 +125,11 @@ class ItemController extends Controller
         $item = Item::with(['branch', 'category'])->findOrFail($id);
 
         return view('admin.item.detail',compact('item'));
+    }
+
+    public function issue(Request $request,string $id){
+        
+         return view('admin.item.issue');
+
     }
 }
