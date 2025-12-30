@@ -164,13 +164,23 @@
                                 </div>
 
                                 <!-- Profile Image -->
-                                <div class="row mb-4">
-                                    <div class="col-md-12">
+                                 <div class="row mb-3">
+                                    <div class="col-md-6">
                                         <label class="form-label">Remark</label>
-                                        <input type="text" class="form-control" name="remark">
+                                        <input type="text" class="form-control" name="remark"
+                                            value="" >
                                         @error('remark')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Item Type </label>
+                                        <select class="form-select" name="product_id">
+                                            <option value="">-- Select Item Type --</option>
+                                            @foreach ($product as $pro)
+                                                <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

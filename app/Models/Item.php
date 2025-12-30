@@ -15,6 +15,7 @@ class Item extends Model
         'location',
         'branch_id',
         'category_id',
+        'product_id',
         'author',
         'remark',
         'pur_date',
@@ -25,12 +26,17 @@ class Item extends Model
     // Branch relationship
     public function branch()
     {
-        return $this->belongsTo(Branch::class); // ✅ Correct model
+        return $this->belongsTo(Branch::class); 
     }
 
     // Category relationship
     public function category()
     {
-        return $this->belongsTo(Category::class); // ✅ Correct model
+        return $this->belongsTo(Category::class); 
+    }
+
+    public function product(){
+
+        return $this->belongsTo(Product::class);
     }
 }

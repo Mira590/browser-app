@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status',['New','Used','Damanged'])->default('New');
             $table->enum('location',['Stock','Branch','Data_Center'])->default('Stock');
             $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete()->nullable();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();  
             $table->string('author');
             $table->string('remark')->nullable();
             $table->string('pur_date')->nullable();

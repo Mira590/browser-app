@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Product;
 
 class ItemController extends Controller
 {
@@ -28,7 +29,8 @@ class ItemController extends Controller
 
         $branch= Branch::all();
         $category=Category::all();
-        return view('admin.item.create',compact('branch','category'));
+        $product=Product::all();
+        return view('admin.item.create',compact('branch','category','product'));
     }
 
     /**
@@ -45,6 +47,7 @@ class ItemController extends Controller
         'location' => 'required|string|max:100',
         'branch_id' => 'nullable|exists:branches,id',
         'category_id' => 'required|exists:categories,id',
+        'product_id' => 'required|exists:products,id',
         'author' => 'required|string|max:100',
         'remark' => 'nullable|string|max:500',
         'pur_date' => 'required|date',
@@ -65,11 +68,12 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Item::with(['branch', 'category'])->findOrFail($id);
+        $item = Item::with(['branch', 'category','product'])->findOrFail($id);
          $branch = Branch::all();
          $category = Category::all();
+         $product=Product::all();
 
-        return view('admin.item.edit',compact('item','branch','category'));
+        return view('admin.item.edit',compact('item','branch','category','product'));
     }
 
     /**
@@ -79,7 +83,7 @@ class ItemController extends Controller
     {
           $item = Item::findOrFail($id);
 
-    // ✅ Validation
+   
     $request->validate([
         'name'          => 'required|string|max:255',
         'model'         => 'required|string|max:255',
@@ -89,6 +93,7 @@ class ItemController extends Controller
         'location'      => 'required|in:Stock,Branch,Data_Center',
         'branch_id'     => 'nullable|exists:branches,id',
         'category_id'   => 'required|exists:categories,id',
+        'product_id'   => 'required|exists:products,id',
         'pur_date'      => 'nullable|date',
         'remark'        => 'nullable|string|max:500',
     ]);
@@ -102,6 +107,7 @@ class ItemController extends Controller
         'status'        => $request->status,
         'location'      => $request->location,
         'branch_id'     => $request->branch_id,
+        'product_id'     => $request->product_id,
         'category_id'   => $request->category_id,
         'pur_date'      => $request->pur_date,
         'remark'        => $request->remark,
