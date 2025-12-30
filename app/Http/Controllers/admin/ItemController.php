@@ -136,4 +136,26 @@ class ItemController extends Controller
          return view('admin.item.issue',compact('item','branch'));
 
     }
+
+    public function issued(Request $request , string $id){
+
+
+        $item = Item::findorFail($id);
+
+        
+
+        $item->update([
+
+            'branch_id'=>$request->branch_id,
+            'location'=>$request->location,
+            'author'=>$request->author,
+            'issue_date'=>$request->issue_date,
+            
+        ]);
+
+        return redirect()->back()->with('success','Item issued Successfully!');
+        
+
+
+    }
 }

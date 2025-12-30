@@ -31,8 +31,9 @@
 
 
                     <div class="card">
-                        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
+                        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.issuesave',$item->id) }}">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
 
@@ -46,27 +47,32 @@
                                         <select class="form-select" name="branch_id">
                                             <option value="">-- Select Branch --</option>
                                             @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}">{{ $br->br_code }}</option>
+                                                <option value="{{ $br->id }}"{{ $item->branch_id == $br->id ? 'selected' : '' }}>{{ $br->br_code }}</option>
                                             @endforeach
 
 
                                         </select>
-                                        @error('bio')
+                                        @error('branch_id')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label">Category </label>
-                                        <select class="form-select" name="category_id">
-                                            <option value="">-- Select Category --</option>
-                                            @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}">{{ $br->name }}</option>
-                                            @endforeach
+                                        <label class="form-label">Location </label>
+                                        <select class="form-select" name="location">
+                                            <option value="">-- Select Location --</option>
+                                           
+                                                <option value="Branch"{{$item->location == 'Branch' ? 'selected':''}}>Branch</option>
+
+                                                <option value="Data_Center"{{$item->location == 'Data_Center' ? 'selected' :''}}>Data Center</option>
+
+                                                <option value="Stock" {{$item->location == 'Stock' ? 'selected':''}}>IT Stock</option>
+
+                                            
 
 
                                         </select>
-                                        @error('experience')
+                                        @error('location')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -84,8 +90,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Issue Date date</label>
-                                        <input type="date" class="form-control" name="pur_date" value="">
-                                        @error('address')
+                                        <input type="date" class="form-control" name="issue_date" value="">
+                                        @error('issue_date')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>

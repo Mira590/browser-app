@@ -28,13 +28,13 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/edit/{id}',[UserController::class,'edit'])->name('editUser');
     Route::put('/update/{id}',[UserController::class,'update'])->name('updateUser');
    
-   //Branch Routes
+    //Branch Routes
     Route::get('/branch',[BranchController::class,'create'])->name('addBranch');
     Route::post('/saveBranch',[BranchController::class,'store'])->name('savebranch');
     Route::get('/allbranches',[BranchController::class,'index'])->name('allbranch');
     Route::delete('/branch/{id}',[BranchController::class,'destroy'])->name('deletebranch');
     Route::get('/branchedit/{id}',[BranchController::class,'edit'])->name('editbranch');
-   //category Routes
+    //category Routes
     Route::put('/updatebranch/{id}',[BranchController::class,'update'])->name('updatebranch');
     Route::get('/category',[CategoryController::class,'create'])->name('addcategory');
     Route::post('/saveCategory',[CategoryController::class,'store'])->name('savecategory');
@@ -51,8 +51,8 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/edititem/{id}',[ItemController::class,'edit'])->name('edititem');
     Route::put('/updateitem/{id}',[ItemController::class,'update'])->name('updateitem');
     Route::delete('/itemremove/{id}',[ItemController::class,'destroy'])->name('deleteitem');
-
     Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
+    Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
     
 
 
