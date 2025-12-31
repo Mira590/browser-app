@@ -12,7 +12,7 @@
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
 				<li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{route('admin.dashboard')}}" class="has-arrow">
 						<div class="parent-icon"><i class='bx bx-home-alt'></i>
 						</div>
 						<div class="menu-title">Dashboard</div>
@@ -48,6 +48,8 @@
 						<li> <a href="{{route('admin.addBranch')}}"><i class='bx bx-plus-circle'></i>Add Branch</a>
 						</li>
 						<li> <a href="{{route('admin.allbranch')}}"><i class='bx bx-menu'></i>All Branches</a>
+						</li>
+						<li> <a href="{{route('admin.allbranch')}}"><i class='bx bx-plus-circle'></i>Create Type</a>
 						</li>
 						<li> <a href="{{route('admin.addcategory')}}"><i class='bx bx-plus-circle'></i> Add Category</a>
 						</li>

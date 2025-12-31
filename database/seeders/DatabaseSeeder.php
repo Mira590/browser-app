@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Branch;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,19 @@ class DatabaseSeeder extends Seeder
 
         foreach($branches as $branch){
             Branch::create($branch);
+        }
+
+
+
+        $products=[
+            ['name'=>'PC'],
+            ['name'=>'Router'],
+            ['name'=>'Switch '],
+            ['name'=>'Firewall'],
+        ];
+
+        foreach($products as $product){
+            Product::create($product);
         }
 
          $categories=[

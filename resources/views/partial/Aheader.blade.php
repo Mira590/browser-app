@@ -538,7 +538,7 @@
 											<div class="d-flex align-items-center gap-3">
 												<div class="position-relative">
 													<div class="cart-product rounded-circle bg-light">
-														<img src="assets/images/products/08.png" class="" alt="product image">
+														<img src="{{asset('assets/images/products/08.png')}}" class="" alt="product image">
 													</div>
 												</div>
 												<div class="flex-grow-1">
@@ -606,8 +606,14 @@
 							<li>
 								<div class="dropdown-divider mb-0"></div>
 							</li>
-							<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
-							</li>
+							<form method="POST" action="{{ route('admin.logout') }}">
+    @csrf
+    <button type="submit" class="dropdown-item d-flex align-items-center">
+        <i class="bx bx-log-out-circle"></i>
+        <span>Logout</span>
+    </button>
+</form>
+
 						</ul>
 					</div>
 				</nav>

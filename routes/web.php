@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ItemController;
+use App\Http\Controllers\admin\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,6 +54,8 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::delete('/itemremove/{id}',[ItemController::class,'destroy'])->name('deleteitem');
     Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
+
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
     
 
 
