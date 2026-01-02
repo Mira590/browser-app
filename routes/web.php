@@ -54,7 +54,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::delete('/itemremove/{id}',[ItemController::class,'destroy'])->name('deleteitem');
     Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
-
+    Route::get('/stock',[ItemController::class,'stock'])->name('stock');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
     
 

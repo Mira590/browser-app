@@ -17,7 +17,7 @@ class ItemController extends Controller
     public function index()
     {
 
-        $item=Item::all();
+        $item=Item::paginate(10);
         return view('admin.item.index',compact('item'));
     }
 
@@ -163,5 +163,9 @@ class ItemController extends Controller
         
 
 
+    }
+    public function stock(){
+        $item=Item::where('location','Stock')->get();
+        return view('admin.item.stock',compact('item'));
     }
 }

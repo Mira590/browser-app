@@ -12,7 +12,7 @@
 <div class="page-content">
  
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">ITEM</div>
+					<div class="breadcrumb-title pe-3">Stock</div>
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
