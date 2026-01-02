@@ -55,64 +55,53 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($item as $key=>$items)
-										
-									
-									
-										<tr id="row-{{ $items->id }}">
-                                         <td>{{ $key + 1 }}</td>
+    @forelse ($item as $key => $items)
+        <tr id="row-{{ $items->id }}">
+            <td>{{ $key + 1 }}</td>
+            <td>{{ $items->name }}</td>
+            <td>{{ $items->model }}</td>
+            <td>{{ $items->tag_number }}</td>
+            <td>{{ $items->serial_number }}</td>
+            <td>
+                <a href="{{ route('admin.detail', $items->id) }}">
+                    <button type="button" class="btn btn-sm btn-success">
+                        <i class='bx bx-folder'></i> View
+                    </button>
+                </a>
+            </td>
+            <td>
+                <a href="{{ route('admin.editUser', $items->id) }}">
+                    <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
+                </a>
+            </td>
+            <td>
+                <a href="{{ route('admin.edititem', $items->id) }}">
+                    <button type="button" class="btn btn-sm btn-primary">
+                        <i class="fadeIn animated bx bx-edit-alt"></i>
+                    </button>
+                </a>
+                <a href="javascript:void(0)"
+                    class="btn btn-sm btn-danger delete-item"
+                    data-id="{{ $items->id }}"
+                    data-url="{{ route('admin.deleteitem', $items->id) }}">
+                    <i class='lni lni-trash'></i>
+                </a>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="8" class="text-center text-muted">
+                Your stock is empty.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
 
-										<td>{{$items->name}}</td>
-										<td>{{$items->model}}</td>
-										<td>{{$items->tag_number}}	</td>
-										<td> {{$items->serial_number}}</td>
-											
-											
-										<td><a href="{{ route('admin.detail', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-success"><i class='bx bx-folder'></i>View</button>
-                                              </a></td>
-										<td><a href="{{ route('admin.editUser', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
-                                              </a>
-											
-											<a href="{{ route('admin.issue', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-secondary">Issue</button>
-                                              </a>
-											</td>
-                                        <td><a href="{{ route('admin.edititem', $items->id) }}">
-                                  <button type="button" class="btn btn-sm btn-primary"><i class="fadeIn animated bx bx-edit-alt"></i></button>
-                                              </a>
-                                        <a href="javascript:void(0)"
-                                         class="btn btn-sm btn-danger delete-item"
-                                         data-id="{{ $items->id }}"
-                                         data-url="{{ route('admin.deleteitem', $items->id) }}">
-                                         <i class='lni lni-trash'></i>
-                                         </a>
-                                       </td>
-                                    </td>
-
-											
-									
-										
-										
-									</tr>
-									
-									
-									@endforeach
-								</tbody>
-								<tfoot>
-									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Status</th>
-										<th>Role</th>
-										<th>Action</th>
-										<th>AZB#</th>
-										<th>AZB#</th>
-										<th>AZB#</th>
-									</tr>
-								</tfoot>
+								
 							</table>
+							 <div class="d-flex justify-content-end mt-3">
+            {{ $item->links() }}
+        </div>
 						</div>
 					</div>
 				</div>

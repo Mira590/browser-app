@@ -24,9 +24,13 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex flex-column align-items-center text-center">
-									<img id="pre" 
-          src="{{ $user->photo ? Storage::url($user->photo) : 'No image' }}" 
-          alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+				<img id="pre"
+     src="{{ $user->photo ? asset('storage/users/' . $user->photo) : asset('images/default-avatar.png') }}"
+     alt="Admin"
+     class="rounded-circle p-1 bg-primary"
+     width="110">
+
+
 
 											<div class="mt-3">
 												<h4>{{Auth::user()->name}}</h4>
@@ -121,9 +125,9 @@
 											<div class="col-sm-9 text-secondary">
 												
 												 <select name="role" id="role" class="form-select">
-                                              <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                             <option value="superuser" {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
+                                              <option value="user" {{ $user->role=='user' ? 'selected' : '' }}>User</option>
+                                             <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                             <option value="superuser" {{ $user->role == 'superuser' ? 'selected' : '' }}>Superuser</option>
                                                </select>
 												 @error('role')
                                                           <span class="text-danger small">{{ $message }}</span>

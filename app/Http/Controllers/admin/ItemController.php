@@ -17,7 +17,7 @@ class ItemController extends Controller
     public function index()
     {
 
-        $item=Item::paginate(10);
+        $item=Item::paginate(8);
         return view('admin.item.index',compact('item'));
     }
 
