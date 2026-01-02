@@ -44,12 +44,12 @@
                                         <label class="form-label">Item Type</label>
                                         <select class="form-select" name="status">
                                             <option value="">-- All Status --</option>
-                                            <option value="New" {{ request('status') == 'New' ? 'selected' : '' }}>New
+                                            <option value="New" {{ request('status') == 'New' ? 'selected' : '' }}>PC
                                             </option>
-                                            <option value="Used" {{ request('status') == 'Used' ? 'selected' : '' }}>Used
+                                            <option value="Used" {{ request('status') == 'Used' ? 'selected' : '' }}>Router
                                             </option>
                                             <option value="Damaged" {{ request('status') == 'Damaged' ? 'selected' : '' }}>
-                                                Damaged</option>
+                                                Switch</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
