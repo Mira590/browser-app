@@ -57,10 +57,23 @@
             <li> <a href="{{ route('admin.additem') }}"><i class='bx bx-plus-circle'></i>New Item</a></li>
             <li> <a href="{{ route('admin.allitem') }}"><i class='bx bx-laptop'></i>All Items</a></li>
             <li> <a href="{{ route('admin.stock') }}"><i class='bx bx-category'></i>Stock</a></li>
-
-
         </ul>
+
     </li>
+    <li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon"><i class='bx bx-menu'></i>
+						</div>
+						<div class="menu-title">Components</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('admin.report') }}"><i class='bx bx-radio-circle'></i>Reports</a>
+						</li>
+						
+						
+					</ul>
+				</li>
+				<li>
     </ul>
     <!--end navigation-->
 </div>

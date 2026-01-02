@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ItemController;
 use App\Http\Controllers\admin\LogoutController;
+use App\Http\Controllers\admin\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -55,7 +56,9 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
     Route::get('/stock',[ItemController::class,'stock'])->name('stock');
+    Route::get('/report',[ReportController::class,'index'])->name('report');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
     
 
 
