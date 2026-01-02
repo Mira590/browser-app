@@ -1,6 +1,35 @@
 html.dark-theme .switcher-wrapper {
 	 background: #12181a;
 }
+
+
+/* Collapsed sidebar for all themes */
+.sidebar-wrapper.collapsed {
+    width: 60px; /* narrow width when collapsed */
+    overflow: hidden;
+}
+
+/* Hide menu text when collapsed */
+.sidebar-wrapper.collapsed .menu-title {
+    display: none;
+}
+
+/* Center icons when collapsed */
+.sidebar-wrapper.collapsed .parent-icon {
+    text-align: center;
+    width: 100%;
+}
+
+/* Hide submenu arrows when collapsed */
+.sidebar-wrapper.collapsed .has-arrow::after {
+    display: none;
+}
+
+/* Adjust padding for menu items */
+.sidebar-wrapper.collapsed .metismenu a {
+    padding-left: 0.8rem;
+}
+
 html.dark-theme body {
 	color: #e4e5e6;
 	background-color: #070d0e

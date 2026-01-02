@@ -17,10 +17,9 @@
                 </div>
                 <div class="menu-title">Dashboard</div>
             </a>
-            <ul>
+            
 
-        </li>
-    </ul>
+   
     </li>
     <li>
         <a href="javascript:;" class="has-arrow">
