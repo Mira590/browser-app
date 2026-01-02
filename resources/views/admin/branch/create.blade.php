@@ -31,6 +31,9 @@
     <h6 class="mb-0 text-uppercase">New Branch</h6>
     <hr />
     <div class="card">
+       <div class="card-header" style="background-color:lightslategrey">
+        <h5 class="card-title mb-3" style="color: white">New Branch</h5>
+    </div>
       <div class="card-body">
         <form action="{{route('admin.savebranch')}}" method="POST" enctype="multipart/form-data">
           @csrf

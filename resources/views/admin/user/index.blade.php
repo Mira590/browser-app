@@ -36,6 +36,10 @@
 								
 
 								<div class="card">
+
+									 <div class="card-header" style="background-color:lightslategrey">
+        <h5 class="card-title mb-3" style="color: white">New User</h5>
+    </div>
 									<form action="{{route('admin.userCreate')}}" method="POST" enctype="multipart/form-data">
 
 										@csrf

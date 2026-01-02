@@ -14,7 +14,7 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">New Item</li>
+                    <li class="breadcrumb-item active" aria-current="page">Reporting</li>
                 </ol>
             </nav>
         </div>
@@ -29,8 +29,8 @@
 
 
                     <div class="card">
-                        <div class="card-header">
-        <h5 class="card-title mb-3">Generate Reports</h5>
+                        <div class="card-header" style="background-color:lightslategrey">
+        <h5 class="card-title mb-3" style="color: white">Generate Reports</h5>
     </div>
                         <form method="GET" action="">
                             <div class="card-body">

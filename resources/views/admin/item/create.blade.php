@@ -31,6 +31,10 @@
 
 
                     <div class="card">
+
+                         <div class="card-header" style="background-color:lightslategrey">
+        <h5 class="card-title mb-3" style="color: white">New Item</h5>
+    </div>
                         <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
                             @csrf
 
