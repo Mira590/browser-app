@@ -27,9 +27,7 @@
 								
 
 								<div class="card">
-									 <div class="card-header" style="background-color:lightslategrey">
-        <h5 class="card-title mb-3" style="color: white">Generate Reports</h5>
-    </div>
+									
 									<form method="POST" enctype="multipart/form-data" action="">
 
 										@csrf

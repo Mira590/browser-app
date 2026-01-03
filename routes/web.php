@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
     Route::get('/stock',[ItemController::class,'stock'])->name('stock');
     Route::get('/report',[ReportController::class,'index'])->name('report');
+    Route::get('/luck',[ReportController::class,'create'])->name('spiner');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
     
