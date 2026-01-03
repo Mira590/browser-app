@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,17 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard.index');
+
+
+        $stock=Item::where('location','Stock')->count();
+        $data=Item::where('location','Data_Center')->count();
+     
+         $pc = Item::where('product_id', 1)
+          ->where('location', 'Stock')
+          ->count();
+
+
+        return view('admin.dashboard.index',compact('stock','data','pc'));
     }
 
     /**

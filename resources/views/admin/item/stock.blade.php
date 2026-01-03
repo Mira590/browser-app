@@ -72,6 +72,9 @@
                                         <a href="{{ route('admin.editUser', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
                                         </a>
+                                        <a href="{{ route('admin.issue', $items->id) }}">
+                                            <button type="button" class="btn btn-sm btn-secondary">Issue</button>
+                                        </a>
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.edititem', $items->id) }}">

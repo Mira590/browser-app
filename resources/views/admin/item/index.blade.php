@@ -69,12 +69,20 @@
                                                     class='bx bx-folder'></i>View</button>
                                         </a></td>
                                     <td><a href="{{ route('admin.editUser', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
+                                            <button type="button" class="btn btn-sm btn-secondary">Remove</button>
                                         </a>
                                         
+                                        
+                                        @if($items->location=='Stock')
                                         <a href="{{ route('admin.issue', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-secondary">Issue</button>
                                         </a>
+                                         @else
+
+                                        
+                                            <button type="button" class="btn btn-sm btn-secondary" disabled>Issued</button>
+                                        
+                                        @endif
                                     </td>
                                     <td><a href="{{ route('admin.edititem', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-primary"><i
