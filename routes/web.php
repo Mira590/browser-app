@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ItemController;
 use App\Http\Controllers\admin\LogoutController;
 use App\Http\Controllers\admin\ReportController;
+use App\Http\Controllers\admin\ItemReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -56,7 +57,10 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/issue/{id}',[ItemController::class,'issue'])->name('issue');
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
     Route::get('/stock',[ItemController::class,'stock'])->name('stock');
-    Route::get('/report',[ReportController::class,'index'])->name('report');
+    Route::get('/report',[ItemReportController::class,'index'])->name('report');
+  
+    Route::get('/items/report', [ItemReportController::class, 'generate'])->name('items.report');
+
     Route::get('/luck',[ReportController::class,'create'])->name('spiner');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
