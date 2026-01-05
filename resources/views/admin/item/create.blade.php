@@ -122,7 +122,7 @@
                                         <select class="form-select" name="branch_id">
                                             <option value="">-- Select Branch --</option>
                                             @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}">{{ $br->br_code }}</option>
+                                                <option value="{{ $br->id }}">{{ $br->name }}</option>
                                             @endforeach
 
 
