@@ -103,7 +103,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Branch</p>
+                                <p class="mb-0 text-secondary">Location</p>
                                 <h6 class="my-1">{{ $item->branch->name }}</h6>
 
                             </div>
@@ -119,7 +119,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">Category</p>
+                                <p class="mb-0 text-secondary">Section</p>
                                 <h6 class="my-1">{{ $item->category->name }}</h6>
 
                             </div>
@@ -167,7 +167,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <p class="mb-0 text-secondary">imported at</p>
+                                <p class="mb-0 text-secondary">imported in Stock</p>
                                 <h6 class="my-1">{{ $item->created_at }}</h6>
 
                             </div>

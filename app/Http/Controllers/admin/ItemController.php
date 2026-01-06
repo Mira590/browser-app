@@ -14,12 +14,12 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+   public function index()
+{
+    $item = Item::with('branch')->paginate(8);
+    return view('admin.item.index', compact('item'));
+}
 
-        $item=Item::paginate(8);
-        return view('admin.item.index',compact('item'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -44,7 +44,7 @@ class ItemController extends Controller
         'tag_number' => 'required|string|max:100|unique:items,tag_number',
         'serial_number' => 'nullable|string|max:100',
         'status' => 'required|in:New,Used,Damaged',
-        'location' => 'required|string|max:100',
+        //'location' => 'required|string|max:100',
         'branch_id' => 'nullable|exists:branches,id',
         'category_id' => 'required|exists:categories,id',
         'product_id' => 'required|exists:products,id',
@@ -165,7 +165,11 @@ class ItemController extends Controller
 
     }
     public function stock(){
-        $item=Item::where('location','Stock')->get();
+        $item = Item::whereHas('branch', function ($query) {
+    $query->where('name', 'Stock');
+})->with('branch')->get();
+
+       // $item=Item::where('location','Stock')->get();
         return view('admin.item.stock',compact('item'));
     }
 }

@@ -86,7 +86,7 @@
 								
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">PC
-										<span class="badge bg-gradient-quepal rounded-pill">{{$pc}}</span>
+										<span class="badge bg-gradient-quepal rounded-pill"></span>
 									</li>
 									<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Apple
 										<span class="badge bg-gradient-ibiza rounded-pill">10</span>

@@ -32,9 +32,7 @@ class ItemReportController extends Controller
             $query->where('product_id', $request->product_id);
         }
 
-        if ($request->location) {
-            $query->where('location', $request->location);
-        }
+        
 
         if ($request->category_id) {
             $query->where('category_id', $request->category_id);
@@ -69,7 +67,7 @@ class ItemReportController extends Controller
             $file = fopen('php://output', 'w');
 
             fputcsv($file, [
-                'Name', 'Model', 'Product', 'Tag', 'Serial', 'Location'
+                'Name', 'Model', 'Product', 'Tag', 'Serial', 'branch_id'
             ]);
 
             foreach ($items as $item) {
@@ -79,7 +77,7 @@ class ItemReportController extends Controller
                     optional($item->product)->name,
                     $item->tag_number,
                     $item->serial_number,
-                    $item->location
+                    optional($item->branch)->name,
                 ]);
             }
 

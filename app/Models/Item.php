@@ -12,7 +12,7 @@ class Item extends Model
         'tag_number',
         'serial_number',
         'status',
-        'location',
+        //'location',
         'branch_id',
         'category_id',
         'product_id',

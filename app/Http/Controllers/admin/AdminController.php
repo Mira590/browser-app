@@ -17,15 +17,23 @@ class AdminController extends Controller
     {
 
 
-        $stock=Item::where('location','Stock')->count();
-        $data=Item::where('location','Data_Center')->count();
+        //$stock=Item::where('location','Stock')->count();
+        //$data=Item::where('location','Data_Center')->count();
+        $stock = Item::whereHas('branch', function ($query) {
+        $query->where('name', 'Stock'); })->count();
+
+          $data = Item::whereHas('branch', function ($query) {
+         $query->where('name', 'Data_Center');
+          })->count();
+
+
      
-         $pc = Item::where('product_id', 1)
-          ->where('location', 'Stock')
-          ->count();
+        // $pc = Item::where('product_id', 1)
+          //->where('location', 'Stock')
+          //->count();
 
 
-        return view('admin.dashboard.index',compact('stock','data','pc'));
+        return view('admin.dashboard.index',compact('stock','data'));
     }
 
     /**

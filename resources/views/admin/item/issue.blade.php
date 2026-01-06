@@ -47,7 +47,7 @@
                                         <select class="form-select" name="branch_id">
                                             <option value="">-- Select Branch --</option>
                                             @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}"{{ $item->branch_id == $br->id ? 'selected' : '' }}>{{ $br->br_code }}</option>
+                                                <option value="{{ $br->id }}"{{ $item->branch_id == $br->id ? 'selected' : '' }}>{{ $br->name }}</option>
                                             @endforeach
 
 
@@ -57,30 +57,18 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label class="form-label">Location </label>
-                                        <select class="form-select" name="location">
-                                            <option value="">-- Select Location --</option>
-                                           
-                                                <option value="Branch"{{$item->location == 'Branch' ? 'selected':''}}>Branch</option>
-
-                                                <option value="Data_Center"{{$item->location == 'Data_Center' ? 'selected' :''}}>Data Center</option>
-
-                                                <option value="Stock" {{$item->location == 'Stock' ? 'selected':''}}>IT Stock</option>
-
-                                            
-
-
-                                        </select>
-                                        @error('location')
+                                     <div class="col-md-6">
+                                        <label class="form-label">Issue Date date</label>
+                                        <input type="date" class="form-control" name="issue_date" value="">
+                                        @error('issue_date')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <!-- Address -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
+                                <div class="row mb-3" >
+                                    <div class="col-md-6" hidden>
                                         <label class="form-label">Author</label>
                                         <input type="text" class="form-control" name="author"
                                             value="{{ Auth::user()->username }}" readonly>
@@ -88,13 +76,7 @@
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Issue Date date</label>
-                                        <input type="date" class="form-control" name="issue_date" value="">
-                                        @error('issue_date')
-                                            <span class="text-danger small">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                   
                                 </div>
 
                                 <!-- Profile Image -->

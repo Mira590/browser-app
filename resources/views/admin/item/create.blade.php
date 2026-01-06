@@ -97,30 +97,25 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
-
-                                        <label class="form-label">location </label>
-                                        <select class="form-select" name="location">
-                                            <option value="Stock" {{ old('location') == 'Stock' ? 'selected' : '' }}>Stock
-                                            </option>
-                                            <option value="Branch" {{ old('location') == 'Branch' ? 'selected' : '' }}>
-                                                Branch</option>
-                                                <option value="Data_Center" {{ old('Data_Center') == 'Data_Center' ? 'selected' : '' }}>
-                                                Data Center</option>
-
+                                     <div class="col-md-6">
+                                        <label class="form-label">Item Type </label>
+                                        <select class="form-select" name="product_id">
+                                            <option value="">-- Select Item Type --</option>
+                                            @foreach ($product as $pro)
+                                                <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('location')
-                                            <span class="text-danger small">{{ $message }}</span>
-                                        @enderror
                                     </div>
+
+                                    
                                 </div>
 
                                 <!-- Bio & Experience -->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Branch </label>
+                                        <label class="form-label">Location </label>
                                         <select class="form-select" name="branch_id">
-                                            <option value="">-- Select Branch --</option>
+                                            <option value="">-- Select Location --</option>
                                             @foreach ($branch as $br)
                                                 <option value="{{ $br->id }}">{{ $br->name }}</option>
                                             @endforeach
@@ -133,9 +128,11 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label">Category </label>
+
+                                        
+                                        <label class="form-label">Section </label>
                                         <select class="form-select" name="category_id">
-                                            <option value="">-- Select Category --</option>
+                                            <option value="">-- Select section --</option>
                                             @foreach ($category as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                             @endforeach
@@ -150,14 +147,7 @@
 
                                 <!-- Address -->
                                 <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Author</label>
-                                        <input type="text" class="form-control" name="author"
-                                            value="{{ Auth::user()->username }}" readonly>
-                                        @error('author')
-                                            <span class="text-danger small">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                    
                                     <div class="col-md-6">
                                         <label class="form-label">Purchase date</label>
                                         <input type="date" class="form-control" name="pur_date" value="">
@@ -165,11 +155,7 @@
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div>
-
-                                <!-- Profile Image -->
-                                 <div class="row mb-3">
-                                    <div class="col-md-6">
+                                     <div class="col-md-6">
                                         <label class="form-label">Remark</label>
                                         <input type="text" class="form-control" name="remark"
                                             value="" >
@@ -177,15 +163,23 @@
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Item Type </label>
-                                        <select class="form-select" name="product_id">
-                                            <option value="">-- Select Item Type --</option>
-                                            @foreach ($product as $pro)
-                                                <option value="{{ $pro->id }}">{{ $pro->name }}</option>
-                                            @endforeach
-                                        </select>
+                                   
+                                </div>
+
+                                <!-- Profile Image -->
+                                 <div class="row mb-3">
+
+                                    <div class="col-md-6" hidden>
+                                        <label class="form-label">Author</label>
+                                        <input type="text" class="form-control" name="author"
+                                            value="{{ Auth::user()->username }}" readonly>
+                                        @error('author')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
+
+
+                                   
                                 </div>
 
                                 <!-- Submit Button -->

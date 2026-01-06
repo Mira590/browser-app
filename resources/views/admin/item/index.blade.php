@@ -71,18 +71,19 @@
                                     <td><a href="{{ route('admin.editUser', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-secondary">Remove</button>
                                         </a>
-                                        
-                                        
-                                        @if($items->location=='Stock')
-                                        <a href="{{ route('admin.issue', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-secondary">Issue</button>
-                                        </a>
-                                         @else
 
-                                        
-                                            <button type="button" class="btn btn-sm btn-secondary" disabled>Issued</button>
-                                        
-                                        @endif
+
+                                            @if ($items->branch && $items->branch->name === 'Stock')
+                                                <a href="{{ route('admin.issue', $items->id) }}">
+                                                    <button type="button" class="btn btn-sm btn-secondary">Issue</button>
+                                                </a>
+                                            @else
+                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                    disabled>Issued</button>
+                                            @endif
+                                   
+
+
                                     </td>
                                     <td><a href="{{ route('admin.edititem', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-primary"><i
@@ -103,21 +104,21 @@
                                 </tr>
                             @endforeach
                         </tbody>
-						   
-               
-          
+
+
+
 
 
                     </table>
-<div class="d-flex justify-content-end mt-3">
-    {{ $item->links('pagination::bootstrap-5') }}
-</div>
+                    <div class="d-flex justify-content-end mt-3">
+                        {{ $item->links('pagination::bootstrap-5') }}
+                    </div>
 
                 </div>
-               
+
 
             </div>
-			
+
 
         </div>
 
