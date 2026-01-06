@@ -14,11 +14,42 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index()
+  /* public function index()
 {
     $item = Item::with('branch')->paginate(8);
     return view('admin.item.index', compact('item'));
 }
+*/
+
+
+public function index(Request $request)
+{
+    $productTypes = Product::select('id', 'name')
+        ->orderBy('name')
+        ->get();
+
+    $item = Item::query()
+        ->with(['branch', 'product'])
+        ->when($request->name, fn ($q) =>
+            $q->where('name', 'like', "%{$request->name}%")
+        )
+        ->when($request->model, fn ($q) =>
+            $q->where('model', 'like', "%{$request->model}%")
+        )
+        ->when($request->tag_number, fn ($q) =>
+            $q->where('tag_number', 'like', "%{$request->tag_number}%")
+        )
+        ->when($request->product_id, function ($q) use ($request) {
+            $q->whereHas('product', function ($p) use ($request) {
+                $p->where('id', $request->product_id);
+            });
+        })
+        ->paginate(8)
+        ->withQueryString();
+
+    return view('admin.item.index', compact('item', 'productTypes'));
+}
+
 
 
     /**

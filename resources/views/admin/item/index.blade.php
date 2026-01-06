@@ -12,7 +12,7 @@
 
         
 <div class="d-flex justify-content-center mb-3">
-    <form id="filter-form" class="row g-2 align-items-center justify-content-center">
+    <form method="GET" action="{{route('admin.allitem')}}" id="filter-form"  class="row g-2 align-items-center justify-content-center">
         <!-- Name -->
         <div class="col-auto">
             <div class="input-group">
@@ -38,17 +38,22 @@
         </div>
 
         <!-- Item Type -->
-        <div class="col-auto">
-            <div class="input-group">
-                <span class="input-group-text">Type</span>
-                <select name="item_type" class="form-select">
-                    <option value="">All Types</option>
-                    <option value="type1">Type 1</option>
-                    <option value="type2">Type 2</option>
-                    <option value="type3">Type 3</option>
-                </select>
-            </div>
-        </div>
+      <div class="col-auto">
+    <div class="input-group">
+        <span class="input-group-text">Type</span>
+        <select name="product_id" class="form-select">
+            <option value="">All Types</option>
+
+            @foreach ($productTypes as $product)
+                <option value="{{ $product->id }}"
+                    {{ request('product_id') == $product->id ? 'selected' : '' }}>
+                    {{ $product->name }}
+                </option>
+            @endforeach
+
+        </select>
+    </div>
+</div>
 
         <!-- Search Button -->
         <div class="col-auto">
