@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ItemHistory;
 
 class Item extends Model
 {
@@ -12,7 +13,6 @@ class Item extends Model
         'tag_number',
         'serial_number',
         'status',
-        //'location',
         'branch_id',
         'category_id',
         'product_id',
@@ -23,24 +23,24 @@ class Item extends Model
         'disposal',
     ];
 
-    // Branch relationship
     public function branch()
     {
-        return $this->belongsTo(Branch::class); 
+        return $this->belongsTo(Branch::class);
     }
 
-    // Category relationship
     public function category()
     {
-        return $this->belongsTo(Category::class); 
+        return $this->belongsTo(Category::class);
     }
 
-    public function product(){
-
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 
-    public function histories(){
-        return $this->belongsTo(ItemHistory::class);
+    // ✅ FIXED RELATIONSHIP
+    public function histories()
+    {
+        return $this->hasMany(ItemHistory::class, 'item_id');
     }
 }

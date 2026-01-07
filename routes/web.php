@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::put('/issueitem/{id}',[ItemController::class,'issued'])->name('issuesave');
     Route::get('/stock',[ItemController::class,'stock'])->name('stock');
     Route::get('/report',[ItemReportController::class,'index'])->name('report');
+    Route::get('/item/{id}/lifecycle', [ItemController::class, 'lifecycle'])->name('itemlife');
   
     Route::get('/items/report', [ItemReportController::class, 'generate'])->name('items.report');
 

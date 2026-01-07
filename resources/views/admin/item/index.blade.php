@@ -103,8 +103,8 @@
                                             <button type="button" class="btn btn-sm btn-success"><i
                                                     class='bx bx-folder'></i>View</button>
                                         </a></td>
-                                    <td><a href="{{ route('admin.editUser', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-secondary">Remove</button>
+                                    <td><a href="{{ route('admin.itemlife', $items->id) }}">
+                                            <button type="button" class="btn btn-sm btn-secondary">LifeCycle</button>
                                         </a>
 
 

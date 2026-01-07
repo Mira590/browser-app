@@ -112,45 +112,93 @@ public function index(Request $request)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-          $item = Item::findOrFail($id);
+   public function update(Request $request, string $id)
+{
+    $item = Item::findOrFail($id);
 
-   
+    //  Capture OLD values before update
+    $oldData = $item->only([
+        'name',
+        'model',
+        'tag_number',
+        'serial_number',
+        'status',
+        'branch_id',
+        'category_id',
+        'product_id',
+        'pur_date',
+        'remark',
+    ]);
+
     $request->validate([
         'name'          => 'required|string|max:255',
         'model'         => 'required|string|max:255',
         'tag_number'    => 'required|string|max:255',
         'serial_number' => 'required|string|max:255',
         'status'        => 'required|in:New,Used,Damaged',
-       // 'location'      => 'required|in:Stock,Branch,Data_Center',
         'branch_id'     => 'nullable|exists:branches,id',
         'category_id'   => 'required|exists:categories,id',
-        'product_id'   => 'required|exists:products,id',
+        'product_id'    => 'required|exists:products,id',
         'pur_date'      => 'nullable|date',
         'remark'        => 'nullable|string|max:500',
     ]);
 
-    
+    // 🔵 Update item
     $item->update([
         'name'          => $request->name,
         'model'         => $request->model,
         'tag_number'    => $request->tag_number,
         'serial_number' => $request->serial_number,
         'status'        => $request->status,
-        //'location'      => $request->location,
         'branch_id'     => $request->branch_id,
-        'product_id'     => $request->product_id,
+        'product_id'    => $request->product_id,
         'category_id'   => $request->category_id,
         'pur_date'      => $request->pur_date,
         'remark'        => $request->remark,
         'author'        => auth()->user()->username,
     ]);
 
+    //  Detect changes
+    $newData = $item->only(array_keys($oldData));
+    $changes = array_diff_assoc($newData, $oldData);
+
+    //  Log lifecycle ONLY if something changed
+    if (!empty($changes)) {
+
+        // Build readable description
+        $description = Auth::user()->username . ' updated item: ';
+        foreach ($changes as $field => $newValue) {
+            $oldValue = $oldData[$field] ?? 'N/A';
+            $description .= "$field ($oldValue → $newValue), ";
+        }
+
+        ItemHistory::create([
+            'item_id'        => $item->id,
+            'user_id'        => Auth::id(),
+            'action'         => 'updated',
+            'from_branch_id' => $oldData['branch_id'] ?? null,
+            'to_branch_id'   => $item->branch_id,
+            'description'    => rtrim($description, ', '),
+        ]);
+    }
+
     return redirect()
         ->route('admin.allitem')
         ->with('success', 'Item updated successfully!');
-    }
+}
+
+
+public function lifecycle(string $id)
+{
+    $item = Item::with([
+        'histories.user',
+        'histories.fromBranch',
+        'histories.toBranch'
+    ])->findOrFail($id);
+
+    return view('admin.item.lifecycle', compact('item'));
+}
+
 
     /**
      * Remove the specified resource from storage.
