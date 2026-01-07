@@ -39,4 +39,8 @@ class Item extends Model
 
         return $this->belongsTo(Product::class);
     }
+
+    public function histories(){
+        return $this->belongsTo(ItemHistory::class);
+    }
 }

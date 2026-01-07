@@ -8,6 +8,8 @@ use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\ItemHistory;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -121,7 +123,7 @@ public function index(Request $request)
         'tag_number'    => 'required|string|max:255',
         'serial_number' => 'required|string|max:255',
         'status'        => 'required|in:New,Used,Damaged',
-        'location'      => 'required|in:Stock,Branch,Data_Center',
+       // 'location'      => 'required|in:Stock,Branch,Data_Center',
         'branch_id'     => 'nullable|exists:branches,id',
         'category_id'   => 'required|exists:categories,id',
         'product_id'   => 'required|exists:products,id',
@@ -136,7 +138,7 @@ public function index(Request $request)
         'tag_number'    => $request->tag_number,
         'serial_number' => $request->serial_number,
         'status'        => $request->status,
-        'location'      => $request->location,
+        //'location'      => $request->location,
         'branch_id'     => $request->branch_id,
         'product_id'     => $request->product_id,
         'category_id'   => $request->category_id,
@@ -174,27 +176,33 @@ public function index(Request $request)
 
     }
 
-    public function issued(Request $request , string $id){
+    public function issued(Request $request, string $id)
+{
+    $item = Item::findOrFail($id);
 
+    // Save old values BEFORE update
+    $oldBranch = $item->branch_id;
 
-        $item = Item::findorFail($id);
+    // Update item
+    $item->update([
+        'branch_id'  => $request->branch_id,
+        'location'   => $request->location,
+        'author'     => $request->author,
+        'issue_date' => $request->issue_date,
+    ]);
 
-        
+    // Create lifecycle log
+    ItemHistory::create([
+        'item_id'         => $item->id,
+        'user_id'         => Auth::id(),
+        'action'          => 'issued',
+        'from_branch_id'  => $oldBranch,
+        'to_branch_id'    => $request->branch_id,
+        'description'     => Auth::user()->name . ' issued this item',
+    ]);
 
-        $item->update([
-
-            'branch_id'=>$request->branch_id,
-            'location'=>$request->location,
-            'author'=>$request->author,
-            'issue_date'=>$request->issue_date,
-            
-        ]);
-
-        return redirect()->back()->with('success','Item issued Successfully!');
-        
-
-
-    }
+    return redirect()->back()->with('success', 'Item issued Successfully!');
+}
     public function stock(){
         $item = Item::whereHas('branch', function ($query) {
     $query->where('name', 'Stock');

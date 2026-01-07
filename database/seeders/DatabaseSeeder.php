@@ -37,10 +37,13 @@ class DatabaseSeeder extends Seeder
             'photo' => null,
         ]);
         $branches=[
+                ['name'=>'Stock','br_code'=>'0000'],
+              ['name'=>'Data_Center','br_code'=>'1111'],
             ['name'=>'main Branch','br_code'=>'00010'],
             ['name'=>'Sarai Shahzadeh','br_code'=>'00020'],
             ['name'=>'Faryab ','br_code'=>'00270'],
             ['name'=>'Sare-pol','br_code'=>'00460'],
+         
         ];
 
         foreach($branches as $branch){
@@ -54,6 +57,7 @@ class DatabaseSeeder extends Seeder
             ['name'=>'Router'],
             ['name'=>'Switch '],
             ['name'=>'Firewall'],
+              ['name'=>'Server'],
         ];
 
         foreach($products as $product){

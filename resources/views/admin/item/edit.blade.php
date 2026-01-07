@@ -93,22 +93,17 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
-
-                                        <label class="form-label">location </label>
-                                        <select class="form-select" name="location">
-                                            <option value="Stock" {{ $item->location == 'Stock' ? 'selected' : '' }} >Stock
-                                            </option>
-                                            <option value="Branch" {{ $item->location == 'Branch' ? 'selected' : '' }} >
-                                                Branch</option>
-                                                <option value="Data_Center" {{ $item->location == 'Data_Center' ? 'selected' : '' }}>
-                                                Data Center</option>
-
+                                     <div class="col-md-6">
+                                        <label class="form-label">Item Type </label>
+                                        <select class="form-select" name="product_id">
+                                            <option value="">-- Select Item Type --</option>
+                                            @foreach ($product as $pro)
+                                                <option value="{{ $pro->id }}"{{ $item->product_id=$pro->id ?'selected' :'' }}>{{ $pro->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('gender')
-                                            <span class="text-danger small">{{ $message }}</span>
-                                        @enderror
                                     </div>
+
+                                   
                                 </div>
 
                                 <!-- Bio & Experience -->
@@ -118,7 +113,7 @@
                                         <select class="form-select" name="branch_id">
                                             <option value="">-- Select Branch --</option>
                                             @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}"{{ $item->branch_id == $br->id ? 'selected' : '' }}>{{ $br->br_code }}</option>
+                                                <option value="{{ $br->id }}"{{ $item->branch_id == $br->id ? 'selected' : '' }}>{{ $br->name }}</option>
                                             @endforeach
 
 
@@ -147,13 +142,14 @@
                                 <!-- Address -->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Author</label>
-                                        <input type="text" class="form-control" name="author"
-                                            value="{{ Auth::user()->username }}" readonly>
-                                        @error('author')
+                                        <label class="form-label">Remark</label>
+                                        <input type="text" class="form-control" name="remark"
+                                            value="{{ $item->remark }}" >
+                                        @error('remark')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
+                                   
                                     <div class="col-md-6">
                                         <label class="form-label">Purchase date</label>
                                         <input type="date" class="form-control" name="pur_date" value="{{$item->pur_date}}">
@@ -165,22 +161,14 @@
 
                                 <!-- Profile Image -->
                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Remark</label>
-                                        <input type="text" class="form-control" name="remark"
-                                            value="{{ $item->remark }}" >
-                                        @error('remark')
+                                    
+                                    <div class="col-md-6" hidden>
+                                        <label class="form-label">Author</label>
+                                        <input type="text" class="form-control" name="author"
+                                            value="{{ Auth::user()->username }}" readonly>
+                                        @error('author')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Item Type </label>
-                                        <select class="form-select" name="product_id">
-                                            <option value="">-- Select Item Type --</option>
-                                            @foreach ($product as $pro)
-                                                <option value="{{ $pro->id }}"{{ $item->product_id=$pro->id ?'selected' :'' }}>{{ $pro->name }}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
 
