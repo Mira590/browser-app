@@ -18,9 +18,12 @@
             <th>Date</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="background-color: #f8f9fa;">
+
         @forelse($item->histories->sortByDesc('created_at') as $key => $log)
-            <tr>
+            <tr style="transition: background-color 0.2s;" 
+    onmouseover="this.style.backgroundColor='#e2e6ea';" 
+    onmouseout="this.style.backgroundColor='#f8f9fa';">
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $log->user->username ?? 'System' }}</td>
                 <td>
