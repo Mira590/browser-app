@@ -24,7 +24,7 @@
                 <td>{{ $item->creator->username }}</td>
                 <td>{{ $item->creator->department->name ?? '-' }}</td>
                 <td>
-                    <form action="/items/{{ $item->id }}/approve" method="POST" style="display:inline;">
+                    <form action="{{ route('admin.approve',$item->id) }}" method="POST" style="display:inline;">
                         @csrf
                         <button class="btn btn-success btn-sm">Approve</button>
                     </form>

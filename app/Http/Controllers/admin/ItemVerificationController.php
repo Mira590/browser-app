@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
+
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Item;
 
 class ItemVerificationController extends Controller
 {
+     
      public function pending()
     {
         $user = auth()->user();
@@ -25,13 +28,12 @@ class ItemVerificationController extends Controller
             abort(403); // Regular users cannot access
         }
 
-        return view('admin.items.pending', compact('items'));
+        return view('admin.item.pending', compact('items'));
     }
 
      public function approve(Item $item)
     {
-        $this->authorize('verify', $item);
-
+     
         $item->update([
             'verification_status' => 'approved',
             'verified_by' => auth()->id(),

@@ -10,272 +10,213 @@ use App\Models\Item;
 use App\Models\Product;
 use App\Models\ItemHistory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  /* public function index()
-{
-    $item = Item::with('branch')->paginate(8);
-    return view('admin.item.index', compact('item'));
-}
-*/
+    public function __construct()
+    {
+        // Apply policy to all resource methods
+      
+    }
 
+    public function index(Request $request)
+    {
+        $productTypes = Product::select('id', 'name')->orderBy('name')->get();
 
-public function index(Request $request)
-{
-    $productTypes = Product::select('id', 'name')
-        ->orderBy('name')
-        ->get();
+        $item = Item::query()
+            ->with(['branch', 'product', 'creator'])
+            ->where('verification_status', 'approved')
+            ->when($request->name, fn($q) => $q->where('name', 'like', "%{$request->name}%"))
+            ->when($request->model, fn($q) => $q->where('model', 'like', "%{$request->model}%"))
+            ->when($request->tag_number, fn($q) => $q->where('tag_number', 'like', "%{$request->tag_number}%"))
+            ->when($request->product_id, fn($q) => $q->where('product_id', $request->product_id))
+            ->paginate(8)
+            ->withQueryString();
 
-    $item = Item::query()
-        ->with(['branch', 'product', 'creator'])
-        // Only approved items are visible
-        ->where('verification_status', 'approved')
-        ->when($request->name, fn ($q) =>
-            $q->where('name', 'like', "%{$request->name}%")
-        )
-        ->when($request->model, fn ($q) =>
-            $q->where('model', 'like', "%{$request->model}%")
-        )
-        ->when($request->tag_number, fn ($q) =>
-            $q->where('tag_number', 'like', "%{$request->tag_number}%")
-        )
-        ->when($request->product_id, function ($q) use ($request) {
-            $q->whereHas('product', function ($p) use ($request) {
-                $p->where('id', $request->product_id);
-            });
-        })
-        ->paginate(8)
-        ->withQueryString();
+        return view('admin.item.index', compact('item', 'productTypes'));
+    }
 
-    return view('admin.item.index', compact('item', 'productTypes'));
-}
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+      
 
-        $branch= Branch::all();
-        $category=Category::all();
-        $product=Product::all();
-        return view('admin.item.create',compact('branch','category','product'));
+        $branch = Branch::all();
+        $category = Category::all();
+        $product = Product::all();
+
+        return view('admin.item.create', compact('branch', 'category', 'product'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
- public function store(Request $request)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'model' => 'required|string|max:255',
-        'tag_number' => 'required|string|max:100|unique:items,tag_number',
-        'serial_number' => 'nullable|string|max:100',
-        'status' => 'required|in:New,Used,Damaged',
-        'branch_id' => 'nullable|exists:branches,id',
-        'category_id' => 'required|exists:categories,id',
-        'product_id' => 'required|exists:products,id',
-        'author' => 'required|string|max:100',
-        'remark' => 'nullable|string|max:500',
-        'pur_date' => 'required|date',
-        'issue_date' => 'nullable|date|after_or_equal:pur_date',
-    ]);
-
-    // Always set created_by
-    $validated['created_by'] = auth()->id();          
-
-    // Set verification based on role
-    if (auth()->user()->role === 'admin') {
-        $validated['verification_status'] = 'approved';
-        $validated['verified_by'] = auth()->id(); // Admin auto-verifies
-    } else {
-        $validated['verification_status'] = 'pending';
-        $validated['verified_by'] = null;
-    }
-
-    Item::create($validated);
-
-    $message = auth()->user()->role === 'admin' 
-        ? 'Item created successfully and automatically approved.'
-        : 'Item created successfully and sent for verification.';
-
-    return redirect()->back()->with('success', $message);
-}
-
-    public function show(string $id)
+    public function store(Request $request)
     {
-        //
+       
+
+        $validated = $request->validate([
+            'name'          => 'required|string|max:255',
+            'model'         => 'required|string|max:255',
+            'tag_number'    => 'required|string|max:100|unique:items,tag_number',
+            'serial_number' => 'nullable|string|max:100',
+            'status'        => 'required|in:New,Used,Damaged',
+            'branch_id'     => 'nullable|exists:branches,id',
+            'category_id'   => 'required|exists:categories,id',
+            'product_id'    => 'required|exists:products,id',
+            'author'        => 'required|string|max:100',
+            'remark'        => 'nullable|string|max:500',
+            'pur_date'      => 'required|date',
+            'issue_date'    => 'nullable|date|after_or_equal:pur_date',
+        ]);
+
+        $validated['created_by'] = auth()->id();
+
+        // Auto-verify for admin, else pending
+        if (auth()->user()->isAdmin()) {
+            $validated['verification_status'] = 'approved';
+            $validated['verified_by'] = auth()->id();
+        } else {
+            $validated['verification_status'] = 'pending';
+            $validated['verified_by'] = null;
+        }
+
+        Item::create($validated);
+
+        $message = auth()->user()->isAdmin()
+            ? 'Item created successfully and automatically approved.'
+            : 'Item created successfully and sent for verification.';
+
+        return redirect()->back()->with('success', $message);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $item = Item::with(['branch', 'category','product'])->findOrFail($id);
-         $branch = Branch::all();
-         $category = Category::all();
-         $product=Product::all();
+        $item = Item::with(['branch', 'category', 'product'])->findOrFail($id);
+        $this->authorize('update', $item);
 
-        return view('admin.item.edit',compact('item','branch','category','product'));
+        $branch = Branch::all();
+        $category = Category::all();
+        $product = Product::all();
+
+        return view('admin.item.edit', compact('item', 'branch', 'category', 'product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-   public function update(Request $request, string $id)
-{
-    $item = Item::findOrFail($id);
+    public function update(Request $request, string $id)
+    {
+        $item = Item::findOrFail($id);
+        $this->authorize('update', $item);
 
-    //  Capture OLD values before update
-    $oldData = $item->only([
-        'name',
-        'model',
-        'tag_number',
-        'serial_number',
-        'status',
-        'branch_id',
-        'category_id',
-        'product_id',
-        'pur_date',
-        'remark',
-    ]);
+        $oldData = $item->only([
+            'name', 'model', 'tag_number', 'serial_number', 'status',
+            'branch_id', 'category_id', 'product_id', 'pur_date', 'remark'
+        ]);
 
-    $request->validate([
-        'name'          => 'required|string|max:255',
-        'model'         => 'required|string|max:255',
-        'tag_number'    => 'required|string|max:255',
-        'serial_number' => 'required|string|max:255',
-        'status'        => 'required|in:New,Used,Damaged',
-        'branch_id'     => 'nullable|exists:branches,id',
-        'category_id'   => 'required|exists:categories,id',
-        'product_id'    => 'required|exists:products,id',
-        'pur_date'      => 'nullable|date',
-        'remark'        => 'nullable|string|max:500',
-    ]);
+        $request->validate([
+            'name'          => 'required|string|max:255',
+            'model'         => 'required|string|max:255',
+            'tag_number'    => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255',
+            'status'        => 'required|in:New,Used,Damaged',
+            'branch_id'     => 'nullable|exists:branches,id',
+            'category_id'   => 'required|exists:categories,id',
+            'product_id'    => 'required|exists:products,id',
+            'pur_date'      => 'nullable|date',
+            'remark'        => 'nullable|string|max:500',
+        ]);
 
-    // 🔵 Update item
-    $item->update([
-        'name'          => $request->name,
-        'model'         => $request->model,
-        'tag_number'    => $request->tag_number,
-        'serial_number' => $request->serial_number,
-        'status'        => $request->status,
-        'branch_id'     => $request->branch_id,
-        'product_id'    => $request->product_id,
-        'category_id'   => $request->category_id,
-        'pur_date'      => $request->pur_date,
-        'remark'        => $request->remark,
-        'author'        => auth()->user()->username,
-    ]);
+        $item->update(array_merge($request->all(), ['author' => auth()->user()->username]));
 
-    //  Detect changes
-    $newData = $item->only(array_keys($oldData));
-    $changes = array_diff_assoc($newData, $oldData);
+        // Log changes
+        $newData = $item->only(array_keys($oldData));
+        $changes = array_diff_assoc($newData, $oldData);
 
-    //  Log lifecycle ONLY if something changed
-    if (!empty($changes)) {
+        if (!empty($changes)) {
+            $description = auth()->user()->username . ' updated item: ';
+            foreach ($changes as $field => $newValue) {
+                $oldValue = $oldData[$field] ?? 'N/A';
+                $description .= "$field ($oldValue → $newValue), ";
+            }
 
-        // Build readable description
-        $description = Auth::user()->username . ' updated item: ';
-        foreach ($changes as $field => $newValue) {
-            $oldValue = $oldData[$field] ?? 'N/A';
-            $description .= "$field ($oldValue → $newValue), ";
+            ItemHistory::create([
+                'item_id'        => $item->id,
+                'user_id'        => Auth::id(),
+                'action'         => 'updated',
+                'from_branch_id' => $oldData['branch_id'] ?? null,
+                'to_branch_id'   => $item->branch_id,
+                'description'    => rtrim($description, ', ')
+            ]);
         }
+
+        return redirect()->route('admin.allitem')->with('success', 'Item updated successfully!');
+    }
+
+    public function destroy(string $id)
+    {
+        $item = Item::findOrFail($id);
+        $this->authorize('delete', $item); // ✅ enforce role-based deletion
+
+        $item->delete();
+
+        return redirect()->back()->with('success', 'Item deleted successfully!');
+    }
+
+    public function detail(string $id)
+    {
+        $item = Item::with(['branch', 'category'])->findOrFail($id);
+        $this->authorize('view', $item);
+
+        return view('admin.item.detail', compact('item'));
+    }
+
+    public function issue(Request $request, string $id)
+    {
+        $item = Item::with(['branch', 'category'])->findOrFail($id);
+        $this->authorize('update', $item);
+
+        $branch = Branch::all();
+        return view('admin.item.issue', compact('item', 'branch'));
+    }
+
+    public function issued(Request $request, string $id)
+    {
+        $item = Item::findOrFail($id);
+        $this->authorize('update', $item);
+
+        $oldBranch = $item->branch_id;
+
+        $item->update([
+            'branch_id'  => $request->branch_id,
+            'location'   => $request->location,
+            'author'     => $request->author,
+            'issue_date' => $request->issue_date,
+        ]);
 
         ItemHistory::create([
             'item_id'        => $item->id,
             'user_id'        => Auth::id(),
-            'action'         => 'updated',
-            'from_branch_id' => $oldData['branch_id'] ?? null,
-            'to_branch_id'   => $item->branch_id,
-            'description'    => rtrim($description, ', '),
+            'action'         => 'issued',
+            'from_branch_id' => $oldBranch,
+            'to_branch_id'   => $request->branch_id,
+            'description'    => Auth::user()->name . ' issued this item',
         ]);
+
+        return redirect()->back()->with('success', 'Item issued successfully!');
     }
 
-    return redirect()
-        ->route('admin.allitem')
-        ->with('success', 'Item updated successfully!');
-}
-
-
-public function lifecycle(string $id)
-{
-    $item = Item::with([
-        'histories.user',
-        'histories.fromBranch',
-        'histories.toBranch'
-    ])->findOrFail($id);
-
-    return view('admin.item.lifecycle', compact('item'));
-}
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function stock()
     {
-        $item= Item::findorFail($id);
-
-        $item->delete();
-        return redirect()->back()->with('success','Item Deleted Successfully!');
+        $item = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->with('branch')->get();
+        return view('admin.item.stock', compact('item'));
     }
 
-    public function detail(string $id){
-        $item = Item::with(['branch', 'category'])->findOrFail($id);
+    public function lifecycle(string $id)
+    {
+        $item = Item::with([
+            'histories.user',
+            'histories.fromBranch',
+            'histories.toBranch'
+        ])->findOrFail($id);
 
-        return view('admin.item.detail',compact('item'));
-    }
+        $this->authorize('view', $item);
 
-    public function issue(Request $request,string $id){
-         $item = Item::with(['branch', 'category'])->findOrFail($id);
-         $branch= Branch::all();
-         return view('admin.item.issue',compact('item','branch'));
-
-    }
-
-    public function issued(Request $request, string $id)
-{
-    $item = Item::findOrFail($id);
-
-    // Save old values BEFORE update
-    $oldBranch = $item->branch_id;
-
-    // Update item
-    $item->update([
-        'branch_id'  => $request->branch_id,
-        'location'   => $request->location,
-        'author'     => $request->author,
-        'issue_date' => $request->issue_date,
-    ]);
-
-    // Create lifecycle log
-    ItemHistory::create([
-        'item_id'         => $item->id,
-        'user_id'         => Auth::id(),
-        'action'          => 'issued',
-        'from_branch_id'  => $oldBranch,
-        'to_branch_id'    => $request->branch_id,
-        'description'     => Auth::user()->name . ' issued this item',
-    ]);
-
-    return redirect()->back()->with('success', 'Item issued Successfully!');
-}
-    public function stock(){
-        $item = Item::whereHas('branch', function ($query) {
-    $query->where('name', 'Stock');
-})->with('branch')->get();
-
-       // $item=Item::where('location','Stock')->get();
-        return view('admin.item.stock',compact('item'));
+        return view('admin.item.lifecycle', compact('item'));
     }
 }

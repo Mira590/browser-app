@@ -13,28 +13,50 @@ class AdminController extends Controller
         return view('admin.login.index');
     }
 
-    public function index()
-    {
+   public function index()
+{
+    $user = auth()->user();
 
+    if ($user->isAdmin()) {
+        // Admin sees all stats
+        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
+        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
+        $totalItems = Item::count();
+        $totalUsers = \App\Models\User::count();
 
-        //$stock=Item::where('location','Stock')->count();
-        //$data=Item::where('location','Data_Center')->count();
-        $stock = Item::whereHas('branch', function ($query) {
-        $query->where('name', 'Stock'); })->count();
-
-          $data = Item::whereHas('branch', function ($query) {
-         $query->where('name', 'Data_Center');
-          })->count();
-
-
-     
-        // $pc = Item::where('product_id', 1)
-          //->where('location', 'Stock')
-          //->count();
-
-
-        return view('admin.dashboard.index',compact('stock','data'));
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'totalUsers'));
     }
+
+    if ($user->isSuperuser()) {
+        // Superuser sees only their department or items they manage
+        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+                     ->where('created_by', $user->id)
+                     ->count();
+
+        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
+                          ->where('created_by', $user->id)
+                          ->count();
+
+        $totalItems = Item::where('created_by', $user->id)->count();
+
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
+    }
+
+    if ($user->isUser()) {
+        // User sees only their own items
+        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+                     ->where('created_by', $user->id)
+                     ->count();
+
+        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
+                          ->where('created_by', $user->id)
+                          ->count();
+
+        $totalItems = Item::where('created_by', $user->id)->count();
+
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
+    }
+}
 
     /**
      * Show the form for creating a new resource.
