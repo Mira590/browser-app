@@ -161,7 +161,7 @@ class ItemController extends Controller
     public function detail(string $id)
     {
         $item = Item::with(['branch', 'category'])->findOrFail($id);
-        $this->authorize('view', $item);
+       
 
         return view('admin.item.detail', compact('item'));
     }
@@ -169,7 +169,7 @@ class ItemController extends Controller
     public function issue(Request $request, string $id)
     {
         $item = Item::with(['branch', 'category'])->findOrFail($id);
-        $this->authorize('update', $item);
+       
 
         $branch = Branch::all();
         return view('admin.item.issue', compact('item', 'branch'));
@@ -215,7 +215,7 @@ class ItemController extends Controller
             'histories.toBranch'
         ])->findOrFail($id);
 
-        $this->authorize('view', $item);
+      
 
         return view('admin.item.lifecycle', compact('item'));
     }
