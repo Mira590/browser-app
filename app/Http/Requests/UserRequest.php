@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'phone'     =>'nullable|string|max:20',
             'azbid'      =>'nullable|string|max:255',
             'role'       =>'required|in:user,superuser,admin',
-            
+            'department_id' => 'required|exists:departments,id',
             'bio'        =>'nullable|string',
             'password'   =>'required|min:6|confirmed',
             'photo'      =>'nullable|image|mimes:jpg,jpeg,png|max:2048',

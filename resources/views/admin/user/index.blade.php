@@ -129,6 +129,30 @@
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
+                                            <h6 class="mb-0">Department</h6>
+                                        </div>
+
+                                        <div class="col-sm-9 text-secondary">
+                                            <select name="department_id" id="department_id" class="form-select" required>
+                                                <option value="">-- Select Department --</option>
+
+                                                @foreach ($dep as $depart)
+                                                    <option value="{{ $depart->id }}"
+                                                        {{ old('department_id') == $depart->id ? 'selected' : '' }}>
+                                                        {{ $depart->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('department_id')
+                                                <span class="text-danger small">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
                                             <h6 class="mb-0">bio</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">

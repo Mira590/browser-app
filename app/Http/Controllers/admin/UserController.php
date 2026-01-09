@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Department;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -26,7 +27,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.index');
+
+        $dep= Department::all();
+        return view('admin.user.index',compact('dep'));
     }
 
     /**

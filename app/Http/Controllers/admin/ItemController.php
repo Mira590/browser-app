@@ -31,7 +31,9 @@ public function index(Request $request)
         ->get();
 
     $item = Item::query()
-        ->with(['branch', 'product'])
+        ->with(['branch', 'product', 'creator'])
+        // Only approved items are visible
+        ->where('verification_status', 'approved')
         ->when($request->name, fn ($q) =>
             $q->where('name', 'like', "%{$request->name}%")
         )
@@ -54,6 +56,7 @@ public function index(Request $request)
 
 
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -69,7 +72,7 @@ public function index(Request $request)
     /**
      * Store a newly created resource in storage.
      */
-  public function store(Request $request)
+ public function store(Request $request)
 {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
@@ -77,7 +80,6 @@ public function index(Request $request)
         'tag_number' => 'required|string|max:100|unique:items,tag_number',
         'serial_number' => 'nullable|string|max:100',
         'status' => 'required|in:New,Used,Damaged',
-        //'location' => 'required|string|max:100',
         'branch_id' => 'nullable|exists:branches,id',
         'category_id' => 'required|exists:categories,id',
         'product_id' => 'required|exists:products,id',
@@ -87,10 +89,27 @@ public function index(Request $request)
         'issue_date' => 'nullable|date|after_or_equal:pur_date',
     ]);
 
+    // Always set created_by
+    $validated['created_by'] = auth()->id();          
+
+    // Set verification based on role
+    if (auth()->user()->role === 'admin') {
+        $validated['verification_status'] = 'approved';
+        $validated['verified_by'] = auth()->id(); // Admin auto-verifies
+    } else {
+        $validated['verification_status'] = 'pending';
+        $validated['verified_by'] = null;
+    }
+
     Item::create($validated);
 
-    return redirect()->back()->with('success', 'Item created successfully');
+    $message = auth()->user()->role === 'admin' 
+        ? 'Item created successfully and automatically approved.'
+        : 'Item created successfully and sent for verification.';
+
+    return redirect()->back()->with('success', $message);
 }
+
     public function show(string $id)
     {
         //

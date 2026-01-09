@@ -59,6 +59,12 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('/stock',[ItemController::class,'stock'])->name('stock');
     Route::get('/report',[ItemReportController::class,'index'])->name('report');
     Route::get('/item/{id}/lifecycle', [ItemController::class, 'lifecycle'])->name('itemlife');
+    //item verification
+
+     Route::get('/items/pending', [ItemVerificationController::class, 'pending']);
+
+    Route::post('/items/{item}/approve', [ItemVerificationController::class, 'approve']);
+    Route::post('/items/{item}/reject', [ItemVerificationController::class, 'reject']);
   
     Route::get('/items/report', [ItemReportController::class, 'generate'])->name('items.report');
 

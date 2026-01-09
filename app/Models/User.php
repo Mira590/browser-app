@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Department;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    
     protected $fillable = [
     'first_name',
     'last_name',
@@ -27,11 +30,14 @@ class User extends Authenticatable
     'phone',
     'azbid',
     'role',
+    'department_id',
     'status',
     'bio',
     'password',
 ];
-
+public function department(){
+        return $this->belongsTo(Department::class);
+    }
 
      //helper method for checking role
      public function isAdmin(){
