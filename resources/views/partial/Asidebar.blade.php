@@ -67,6 +67,7 @@
                 </a>
                 <ul>
                     <li><a href="{{ route('admin.report') }}"><i class='bx bx-radio-circle'></i>Reports</a></li>
+                     <li><a href="{{ route('admin.pending') }}"><i class='bx bx-radio-circle'></i>Verification</a></li>
                 </ul>
             </li>
         @endif

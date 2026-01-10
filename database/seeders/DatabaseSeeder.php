@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Department;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -62,6 +63,20 @@ class DatabaseSeeder extends Seeder
 
         foreach($products as $product){
             Product::create($product);
+        }
+
+
+
+        $departments=[
+            ['name'=>'Network'],
+            ['name'=>'System Admin'],
+            ['name'=>'Database'],
+            ['name'=>'IT Support'],
+            ['name'=>'IT ATM'],
+        ];
+
+        foreach($departments as $department){
+            Department::create($department);
         }
 
          $categories=[

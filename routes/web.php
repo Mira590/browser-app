@@ -85,7 +85,7 @@ Route::middleware(['auth', 'role:admin,superuser,user'])
 
         // item verificion
 
-     Route::get('/items/pending', [ItemVerificationController::class, 'pending'])->name('pending');
+        Route::get('/items/pending', [ItemVerificationController::class, 'pending'])->name('pending');
         Route::post('/items/{item}/approve', [ItemVerificationController::class, 'approve'])->name('approve');
         Route::post('/items/{item}/reject', [ItemVerificationController::class, 'reject'])->name('reject');
     });
