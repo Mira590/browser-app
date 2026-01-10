@@ -69,8 +69,8 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.editUser', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-secondary">Disposal</button>
+                                       <a href="{{ route('admin.itemlife', $items->id) }}">
+                                            <button type="button" class="btn btn-sm btn-secondary">LifeCycle</button>
                                         </a>
                                         <a href="{{ route('admin.issue', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-secondary">Issue</button>

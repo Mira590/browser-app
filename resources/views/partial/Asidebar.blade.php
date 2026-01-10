@@ -46,9 +46,9 @@
                     <li><a href="{{ route('admin.allbranch') }}"><i class='bx bx-menu'></i>All Branches</a></li>
                 @endif
 
-                @if(auth()->user()->isAdmin() || auth()->user()->isSuperuser())
-                    <li><a href="{{ route('admin.addcategory') }}"><i class='bx bx-plus-circle'></i>Add Category</a></li>
-                    <li><a href="{{ route('admin.allcategory') }}"><i class='bx bx-category'></i>All Categories</a></li>
+                @if(auth()->user()->isAdmin())
+                    <li><a href="{{ route('admin.addcategory') }}"><i class='bx bx-plus-circle'></i>Add Department</a></li>
+                    <li><a href="{{ route('admin.allcategory') }}"><i class='bx bx-category'></i>All Departments</a></li>
                 @endif
 
                 <!-- Items - All roles -->

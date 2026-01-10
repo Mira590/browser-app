@@ -124,11 +124,13 @@
                                             <button type="button" class="btn btn-sm btn-primary"><i
                                                     class="fadeIn animated bx bx-edit-alt"></i></button>
                                         </a>
+                                        @if(auth()->user()->isAdmin() || auth()->user()->isSuperuser())
                                         <a href="javascript:void(0)" class="btn btn-sm btn-danger delete-item"
                                             data-id="{{ $items->id }}"
                                             data-url="{{ route('admin.deleteitem', $items->id) }}">
                                             <i class='lni lni-trash'></i>
                                         </a>
+                                        @endif
                                     </td>
                                     </td>
 
