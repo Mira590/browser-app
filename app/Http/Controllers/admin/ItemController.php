@@ -69,8 +69,8 @@ class ItemController extends Controller
 
         $validated['created_by'] = auth()->id();
 
-        // Auto-verify for admin, else pending
-        if (auth()->user()->isAdmin()) {
+        // Auto-verify for admin and Superuser, else pending
+        if (auth()->user()->isAdmin() || auth()->user()->isSuperuser() ) {
             $validated['verification_status'] = 'approved';
             $validated['verified_by'] = auth()->id();
         } else {
@@ -80,7 +80,7 @@ class ItemController extends Controller
 
         Item::create($validated);
 
-        $message = auth()->user()->isAdmin()
+        $message = auth()->user()->isAdmin() || auth()->user()->isSuperuser()
             ? 'Item created successfully and automatically approved.'
             : 'Item created successfully and sent for verification.';
 
@@ -90,7 +90,7 @@ class ItemController extends Controller
     public function edit(string $id)
     {
         $item = Item::with(['branch', 'category', 'product'])->findOrFail($id);
-        $this->authorize('update', $item);
+    
 
         $branch = Branch::all();
         $category = Category::all();
@@ -102,7 +102,7 @@ class ItemController extends Controller
     public function update(Request $request, string $id)
     {
         $item = Item::findOrFail($id);
-        $this->authorize('update', $item);
+        
 
         $oldData = $item->only([
             'name', 'model', 'tag_number', 'serial_number', 'status',
@@ -151,7 +151,7 @@ class ItemController extends Controller
     public function destroy(string $id)
     {
         $item = Item::findOrFail($id);
-        $this->authorize('delete', $item); // ✅ enforce role-based deletion
+       
 
         $item->delete();
 
@@ -178,7 +178,7 @@ class ItemController extends Controller
     public function issued(Request $request, string $id)
     {
         $item = Item::findOrFail($id);
-        $this->authorize('update', $item);
+        
 
         $oldBranch = $item->branch_id;
 
@@ -203,7 +203,7 @@ class ItemController extends Controller
 
     public function stock()
     {
-        $item = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->with('branch')->get();
+        $item = Item::where('verification_status','approved')->whereHas('branch', fn($q) => $q->where('name', 'Stock'))->with('branch')->get();
         return view('admin.item.stock', compact('item'));
     }
 
