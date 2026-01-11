@@ -33,6 +33,9 @@
 					   </div>
 					</div>
 				  </div>
+				  @if (auth()->user()->isAdmin())
+					
+				 
 				  <div class="col">
 					<div class="card radius-10 bg-gradient-ohhappiness">
 					   <div class="card-body">
@@ -47,6 +50,7 @@
 					   </div>
 					</div>
 				  </div>
+				   @endif
 				  <div class="col">
 					<div class="card radius-10 bg-gradient-kyoto">
 					   <div class="card-body">

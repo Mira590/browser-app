@@ -44,6 +44,7 @@
                 @if(auth()->user()->isAdmin())
                     <li><a href="{{ route('admin.addBranch') }}"><i class='bx bx-plus-circle'></i>Add Branch</a></li>
                     <li><a href="{{ route('admin.allbranch') }}"><i class='bx bx-menu'></i>All Branches</a></li>
+                     <li><a href="{{ route('admin.supplier') }}"><i class='bx bx-menu'></i>Suppliers</a></li>
                 @endif
 
                 @if(auth()->user()->isAdmin())

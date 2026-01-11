@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\ItemReportController;
 use App\Http\Controllers\admin\LogoutController;
 use App\Http\Controllers\admin\ItemVerificationController;
+use App\Http\Controllers\admin\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('/categoryedit/{id}', [CategoryController::class, 'edit'])->name('editcategory');
         Route::put('/updatecategory/{id}', [CategoryController::class, 'update'])->name('updatecategory');
         Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('deletecategory');
-
+        Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier');
         // Item verification (admin only)
        
     });

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\supplier;
 
 class Item extends Model
 {
@@ -76,5 +77,9 @@ class Item extends Model
     public function scopePending($query)
     {
         return $query->where('verification_status', 'pending');
+    }
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class);
     }
 }

@@ -98,8 +98,8 @@
              class="user-img"
              alt="user avatar">
 							<div class="user-info">
-								<p class="user-name mb-0">Mira jan Najme</p>
-								<p class="designattion mb-0">Web Developer</p>
+								<p class="user-name mb-0">{{Auth::user()->username}}</p>
+								<p class="designattion mb-0">{{ Auth::user()->job_title }}</p>
 							</div>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
