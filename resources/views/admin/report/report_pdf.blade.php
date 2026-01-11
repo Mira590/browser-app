@@ -23,8 +23,8 @@
 }
 
         h5 {
-            color: blue;
-            text-align: center;
+            color: black;
+            
             margin-top: 12px;
             margin-bottom: 20px;
         }
@@ -40,6 +40,7 @@
             font-size: 11px;
             text-align: left;
         }
+      
 
         th { 
             background: #f2f2f2; 
@@ -50,11 +51,11 @@
 
 <div class="header">
     <h3>Azizi Bank</h3>
-    <img src="{{ asset('assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
+   <h5>IT Fixed Asset Report</h5>
 </div>
 
 <p style="font-size: 10px">Generate Date - {{ now()->format('d-m-Y') }}</p>
-<h5>Stock Report</h5>
+
 
 <table>
     <thead>
@@ -62,10 +63,12 @@
             <th>#</th>
             <th>Item Name</th>
             <th>Model</th>
+            <th>Tag Number</th>
             <th>Product</th>
             <th>Category</th>
-            <th>Branch</th>
-            <th>Location</th>
+             
+            <th>location</th>
+           
         </tr>
     </thead>
     <tbody>
@@ -74,10 +77,11 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->model }}</td>
+                <td>{{ $item->tag_number }}</td>
                 <td>{{ optional($item->product)->name }}</td>
                 <td>{{ optional($item->category)->name }}</td>
                 <td>{{ optional($item->branch)->name }}</td>
-                <td>{{ $item->location }}</td>
+              
             </tr>
         @empty
             <tr>

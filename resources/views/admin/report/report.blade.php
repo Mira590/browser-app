@@ -51,26 +51,10 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="col-md-6">
+                                  <div class="col-md-6">
                                     <label class="form-label">Location</label>
-                                    <select class="form-select" name="location">
-                                        <option value="">-- All Locations --</option>
-                                        <option value="Stock" {{ request('location')=='Stock' ? 'selected' : '' }}>Stock</option>
-                                        <option value="Branch" {{ request('location')=='Branch' ? 'selected' : '' }}>Branch</option>
-                                        <option value="Data_Center" {{ request('location')=='Data_Center' ? 'selected' : '' }}>
-                                            Data Center
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Branch & Category -->
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Branch</label>
                                     <select class="form-select" name="branch_id">
-                                        <option value="">-- All Branches --</option>
+                                        <option value="">-- All Location --</option>
                                         @foreach($branches as $branch)
                                             <option value="{{ $branch->id }}"
                                                 {{ request('branch_id') == $branch->id ? 'selected' : '' }}>
@@ -80,7 +64,14 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6">
+                                
+                            </div>
+
+                            <!-- Branch & Category -->
+                            <div class="row mb-3">
+                              
+
+                            
                                     <label class="form-label">Category</label>
                                     <select class="form-select" name="category_id">
                                         <option value="">-- All Categories --</option>
@@ -91,7 +82,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                
                             </div>
 
                             <!-- Purchase Date -->

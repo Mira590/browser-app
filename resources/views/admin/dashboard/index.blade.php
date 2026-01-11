@@ -38,8 +38,8 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div class="me-auto">
-								   <p class="mb-0 text-white">Total Issued</p>
-								   <h4 class="my-1 text-white">34</h4>
+								   <p class="mb-0 text-white">Total Users</p>
+								   <h4 class="my-1 text-white">{{$totalUsers}}</h4>
 								 
 							   </div>
 							   <div id="chart3"></div>
@@ -52,8 +52,8 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div class="me-auto">
-								   <p class="mb-0 text-dark">Total Users </p>
-								   <h4 class="my-1 text-dark">8</h4>
+								   <p class="mb-0 text-dark">Total Fixed Assets</p>
+								   <h4 class="my-1 text-dark">{{$totalItems}}</h4>
 								   
 							   </div>
 							   <div id="chart4"></div>
