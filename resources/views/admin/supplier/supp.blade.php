@@ -25,20 +25,16 @@
     <div class="container">
         <div class="main-body">
             <div class="row">
-                <div class="col-md-12 text-end">
-                    <button type="submit" class="btn btn-success px-4">
-                         New Suppliser
-                    </button>
-                </div>
+
                 <div class="col-lg-8">
 
 
                     <div class="card">
 
-                        <div class="card-header" style="background-color:lightslategrey">
-                            <h5 class="card-title mb-3" style="color: white">Supplier</h5>
+                        <div class="card-header" style="background-color:whitesmoke">
+                            <h5 class="card-title mb-3" style="color:black">Supplier</h5>
                         </div>
-                        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
+                        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.savesupplier') }}">
                             @csrf
 
                             <div class="card-body">
@@ -56,9 +52,9 @@
 
                                     <div class="col-md-6">
                                         <label class="form-label">Contact Person</label>
-                                        <input type="text" class="form-control" name="model"
-                                            value="{{ old('model') }}" required>
-                                        @error('model')
+                                        <input type="text" class="form-control" name="cont_person"
+                                            value="{{ old('cont_person') }}" required>
+                                        @error('cont_person')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -68,18 +64,18 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Website</label>
-                                        <input type="text" class="form-control" name="tag_number"
-                                            value="{{ old('tag_number') }}" required>
-                                        @error('tag_number')
+                                        <input type="text" class="form-control" name="website"
+                                            value="{{ old('website') }}" required>
+                                        @error('website')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" name="serial_number"
-                                            value="{{ old('serail_number') }}" required>
-                                        @error('serial_number')
+                                        <input type="text" class="form-control" name="email"
+                                            value="{{ old('email') }}" required>
+                                        @error('email')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -91,33 +87,42 @@
                                 <!-- Bio & Experience -->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Location </label>
-                                        <select class="form-select" name="branch_id">
-                                            <option value="">-- Select Location --</option>
+                                        <label class="form-label">Type</label>
 
-                                            <option value=""></option>
+                                        <select class="form-select" name="type">
+                                            <option value="">-- Select Type --</option>
 
+                                            <option value="serivec_provider"
+                                                {{ old('type') == 'serivec_provider' ? 'selected' : '' }}>
+                                                Service Provider
+                                            </option>
 
+                                            <option value="Govermental_Services"
+                                                {{ old('type') == 'Govermental_Services' ? 'selected' : '' }}>
+                                                Governmental Services
+                                            </option>
 
+                                            <option value="Distributer"
+                                                {{ old('type') == 'Distributer' ? 'selected' : '' }}>
+                                                Distributer
+                                            </option>
+
+                                            <option value="Infrastructure"
+                                                {{ old('type') == 'Infrastructure' ? 'selected' : '' }}>
+                                                Infrastructure
+                                            </option>
                                         </select>
-                                        @error('branch_id')
+
+                                        @error('type')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="col-md-6">
-
-
-                                        <label class="form-label">Section </label>
-                                        <select class="form-select" name="category_id">
-                                            <option value="">-- Select section --</option>
-
-                                            <option value=""></option>
-
-
-
-                                        </select>
-                                        @error('category_id')
+                                        <label class="form-label">Licence Number</label>
+                                        <input type="text" class="form-control" name="licence"
+                                            value="{{ old('licence') }}">
+                                        @error('licence')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -128,15 +133,17 @@
 
                                     <div class="col-md-6">
                                         <label class="form-label">Expire of Licence</label>
-                                        <input type="date" class="form-control" name="pur_date" value="">
-                                        @error('pur_date')
+                                        <input type="date" class="form-control" name="exp_licence"
+                                            value="{{ old('exp_licence') }}">
+                                        @error('exp_licence')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Remark</label>
-                                        <input type="text" class="form-control" name="remark" value="">
-                                        @error('remark')
+                                        <label class="form-label">Phone</label>
+                                        <input type="text" class="form-control" name="phone"
+                                            value="{{ old('phone') }}" placeholder="+937XXXXXXX">
+                                        @error('phone')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -144,13 +151,31 @@
                                 </div>
 
                                 <!-- Profile Image -->
+
                                 <div class="row mb-3">
 
-                                    <div class="col-md-6" hidden>
-                                        <label class="form-label">Author</label>
-                                        <input type="text" class="form-control" name="author"
-                                            value="{{ Auth::user()->username }}" readonly>
-                                        @error('author')
+
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control" name="address"
+                                            value="{{ old('address') }}" placeholder="Address">
+                                        @error('address')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row mb-3">
+
+
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" name="desc" value="{{ old('desc') }}" placeholder="Description"></textarea>
+                                        @error('desc')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>

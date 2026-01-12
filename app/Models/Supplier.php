@@ -9,11 +9,14 @@ class Supplier extends Model
 {
     protected $fillable=[
         'name',
-        'contact_person',
-        'phone',
+        'cont_person', 
         'website',
         'email',
-        'letter_expire',
+        'type',
+        'licence',
+        'exp_licence',
+        'phone',
+        'desc',
         'address',
 
         

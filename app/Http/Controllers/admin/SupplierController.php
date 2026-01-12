@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
@@ -12,7 +13,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('admin.supplier.supp');
+        $supplier=Supplier::paginate(8);
+        return view('admin.supplier.index',compact('supplier'));
         
     }
 
@@ -21,7 +23,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.supplier.supp');
     }
 
     /**
@@ -29,15 +31,37 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+
+   $valid= $request->validate([
+            
+           
+            'name'  =>'required|string|unique:suppliers,name',
+            'cont_person'     =>'nullable|string|max:20',
+            'website'      =>'nullable|string|max:255',
+            'email'      =>'nullable|email|unique:suppliers,email',
+            'type'      =>'required|string',
+            'licence'  =>'required|string|unique:suppliers,licence',
+            'exp_licence'  =>'required|date',
+            'phone'  =>'required|max:14',
+            'desc'  =>'nullable|string',
+            'address'  =>'nullable|string',
+   ]);
+          
+
+         Supplier::create($valid);
+
+         return redirect()->back()->with('success', 'Supplier Created Successfully!');
+   
+            }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+
+    return view('admin.supplier.show', compact('supplier'));
     }
 
     /**

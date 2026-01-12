@@ -39,20 +39,7 @@
 
         <!-- Item Type -->
       <div class="col-auto">
-    <div class="input-group">
-        <span class="input-group-text">Type</span>
-        <select name="product_id" class="form-select">
-            <option value="">All Types</option>
-
-            @foreach ($productTypes as $product)
-                <option value="{{ $product->id }}"
-                    {{ request('product_id') == $product->id ? 'selected' : '' }}>
-                    {{ $product->name }}
-                </option>
-            @endforeach
-
-        </select>
-    </div>
+    
 </div>
 
         <!-- Search Button -->
@@ -60,17 +47,31 @@
             <button type="submit" class="btn btn-primary"><i class="bx bx-search"></i> Search</button>
         </div>
     </form>
+    
 </div>
+
 
 
            <div class="ms-auto mb-3">
    
 
         </div>
+
+       
         <!--end breadcrumb-->
-        <h6 class="mb-0 text-uppercase">All Items</h6>
-        <hr />
+       <div class="d-flex align-items-center mb-3">
+    <h6 class="mb-0 text-uppercase">All Items</h6>
+
+    <div class="ms-auto">
+        <a href="{{route('admin.supplier')}}" class="btn btn-success">
+            <i class="bx bx-plus"></i> New Supplier
+        </a>
+    </div>
+</div>
+<hr />
+
         <div class="card">
+              
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -78,57 +79,45 @@
                             <tr>
                                 <th>No#</th>
                                 <th>Name</th>
-                                <th>Model</th>
-                                <th>Tag Number</th>
-                                <th>Serial Number</th>
+                                <th>contact Person</th>
+                            
+
+                                <th>Licenc Number</th>
                                 <th>Detail</th>
-                                <th>Disposal</th>
                                 <th>Action</th>
 
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($item as $key => $items)
-                                <tr id="row-{{ $items->id }}">
+                            @foreach ($supplier as $key => $suppliers)
+                                <tr id="row-{{ $suppliers->id }}">
                                     <td>{{ $key + 1 }}</td>
-
-                                    <td>{{ $items->name }}</td>
-                                    <td>{{ $items->model }}</td>
-                                    <td>{{ $items->tag_number }} </td>
-                                    <td> {{ $items->serial_number }}</td>
-
-
-                                    <td><a href="{{ route('admin.detail', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                    class='bx bx-folder'></i>View</button>
-                                        </a></td>
-                                    <td>
+                                    <td>{{ $suppliers->name }}</td>
+                                    <td>{{ $suppliers->cont_person }}</td>
+                                   
+                                    <td>{{$suppliers->licence}}</td>
+                                    <td><a href="{{ route('admin.showsupplier', $suppliers->id) }}">
+                                            <button type="button" class="btn btn-sm btn-secondary">View</button>
+                                        </a>
 
 
-                                            @if ($items->branch && $items->branch->name === 'Stock')
-                                                <a href="{{ route('admin.issue', $items->id) }}">
-                                                    <button type="button" class="btn btn-sm btn-secondary">Issue</button>
-                                                </a>
-                                            @else
-                                                <button type="button" class="btn btn-sm btn-secondary"
-                                                    disabled>Issued</button>
-                                            @endif
+                                           
                                    
 
 
                                     </td>
-                                    <td><a href="{{ route('admin.edititem', $items->id) }}">
+                                    <td><a href="{{ route('admin.edititem', $suppliers->id) }}">
                                             <button type="button" class="btn btn-sm btn-primary"><i
                                                     class="fadeIn animated bx bx-edit-alt"></i></button>
                                         </a>
-                                        @if(auth()->user()->isAdmin() || auth()->user()->isSuperuser())
+                                      
                                         <a href="javascript:void(0)" class="btn btn-sm btn-danger delete-item"
-                                            data-id="{{ $items->id }}"
-                                            data-url="{{ route('admin.deleteitem', $items->id) }}">
+                                            data-id="{{ $suppliers->id }}"
+                                            data-url="{{ route('admin.deleteitem', $suppliers->id) }}">
                                             <i class='lni lni-trash'></i>
                                         </a>
-                                        @endif
+                                        
                                     </td>
                                     </td>
 
@@ -146,7 +135,7 @@
 
                     </table>
                     <div class="d-flex justify-content-end mt-3">
-                        {{ $item->links('pagination::bootstrap-5') }}
+                        {{ $supplier->links('pagination::bootstrap-5') }}
                     </div>
 
                 </div>

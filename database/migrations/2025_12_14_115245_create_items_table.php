@@ -23,7 +23,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();  
             $table->string('author');
             $table->string('remark')->nullable();
-            $table->string('pur_date')->nullable();
+            $table->date('pur_date')->nullable();
+             $table->date('life')->nullable();
             $table->string('issue_date')->nullable();
             $table->enum('disposal',['true','false'])->default('false')->nullable();
             $table->string('dis_date')->nullable();

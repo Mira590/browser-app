@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Product;
 use App\Models\ItemHistory;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -44,8 +45,9 @@ class ItemController extends Controller
         $branch = Branch::all();
         $category = Category::all();
         $product = Product::all();
+        $supplier= Supplier::all();
 
-        return view('admin.item.create', compact('branch', 'category', 'product'));
+        return view('admin.item.create', compact('branch', 'category', 'product','supplier'));
     }
 
     public function store(Request $request)
@@ -65,6 +67,8 @@ class ItemController extends Controller
             'remark'        => 'nullable|string|max:500',
             'pur_date'      => 'required|date',
             'issue_date'    => 'nullable|date|after_or_equal:pur_date',
+            'supplier_id'   => 'nullable|exists:suppliers,id',
+            'life'          => 'required|date',
         ]);
 
         $validated['created_by'] = auth()->id();
@@ -160,7 +164,7 @@ class ItemController extends Controller
 
     public function detail(string $id)
     {
-        $item = Item::with(['branch', 'category'])->findOrFail($id);
+        $item = Item::with(['branch', 'category','supplier'])->findOrFail($id);
        
 
         return view('admin.item.detail', compact('item'));

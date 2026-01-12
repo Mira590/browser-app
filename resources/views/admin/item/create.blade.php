@@ -145,6 +145,36 @@
                                     </div>
                                 </div>
 
+
+                                <div class="row mb-3">
+                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label">Item Life</label>
+                                        <input type="date" class="form-control" name="life" value="{{old('life')}}">
+                                        @error('life')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                     <div class="col-md-6">
+
+                                        
+                                        <label class="form-label">Supplier </label>
+                                        <select class="form-select" name="supplier_id">
+                                            <option value="">-- Select Supplier --</option>
+                                            @foreach ($supplier as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                            @endforeach
+
+
+                                        </select>
+                                        @error('category_id')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                   
+                                </div>
+
+
                                 <!-- Address -->
                                 <div class="row mb-3">
                                     

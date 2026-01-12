@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\supplier;
+use Carbon\Carbon;
 
 class Item extends Model
 {
@@ -29,6 +30,8 @@ class Item extends Model
         'created_by',           //  Must be added
         'verified_by',          // Optional, nullable
         'verification_status',  // pending / approved / rejected
+        'supplier_id',
+        'life',
     ];
 
     /** Who created the item */
@@ -82,4 +85,7 @@ class Item extends Model
     public function supplier(){
         return $this->belongsTo(Supplier::class);
     }
+
+
+  
 }

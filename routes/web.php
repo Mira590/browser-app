@@ -59,7 +59,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('/categoryedit/{id}', [CategoryController::class, 'edit'])->name('editcategory');
         Route::put('/updatecategory/{id}', [CategoryController::class, 'update'])->name('updatecategory');
         Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('deletecategory');
-        Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier');
+        Route::get('/supplier', [SupplierController::class, 'create'])->name('supplier');
+        Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
+        Route::post('/addsupllier', [SupplierController::class, 'store'])->name('savesupplier');
+        Route::get('/detail/supplier/{id}', [SupplierController::class, 'show'])->name('showsupplier');
+ 
         // Item verification (admin only)
        
     });
