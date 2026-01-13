@@ -93,64 +93,99 @@ class ItemController extends Controller
 
     public function edit(string $id)
     {
-        $item = Item::with(['branch', 'category', 'product'])->findOrFail($id);
+        $item = Item::with(['branch', 'category', 'product','supplier'])->findOrFail($id);
     
 
         $branch = Branch::all();
         $category = Category::all();
         $product = Product::all();
+        $supplier=Supplier::all();
 
-        return view('admin.item.edit', compact('item', 'branch', 'category', 'product'));
+        return view('admin.item.edit', compact('item', 'branch', 'category', 'product','supplier'));
     }
 
-    public function update(Request $request, string $id)
-    {
-        $item = Item::findOrFail($id);
-        
+public function update(Request $request, string $id)
+{
+    $item = Item::findOrFail($id);
 
-        $oldData = $item->only([
-            'name', 'model', 'tag_number', 'serial_number', 'status',
-            'branch_id', 'category_id', 'product_id', 'pur_date', 'remark'
-        ]);
+    // Fields we want to track
+    $trackedFields = [
+        'name', 'model', 'tag_number', 'serial_number', 'status',
+        'branch_id', 'category_id', 'product_id', 'pur_date',
+        'remark', 'supplier_id', 'life'
+    ];
 
-        $request->validate([
-            'name'          => 'required|string|max:255',
-            'model'         => 'required|string|max:255',
-            'tag_number'    => 'required|string|max:255',
-            'serial_number' => 'required|string|max:255',
-            'status'        => 'required|in:New,Used,Damaged',
-            'branch_id'     => 'nullable|exists:branches,id',
-            'category_id'   => 'required|exists:categories,id',
-            'product_id'    => 'required|exists:products,id',
-            'pur_date'      => 'nullable|date',
-            'remark'        => 'nullable|string|max:500',
-        ]);
+    // Capture OLD values
+    $oldData = $item->only($trackedFields);
 
-        $item->update(array_merge($request->all(), ['author' => auth()->user()->username]));
+   $validated = $request->validate([
+    'name'          => 'required|string|max:255',
+    'model'         => 'required|string|max:255',
+    'tag_number'    => 'required|string|max:255',
+    'serial_number' => 'required|string|max:255',
+    'status'        => 'required|in:New,Used,Damaged',
+    'branch_id'     => 'nullable|exists:branches,id',
+    'category_id'   => 'required|exists:categories,id',
+    'product_id'    => 'required|exists:products,id',
+    'pur_date'      => 'nullable|date',
+    'remark'        => 'nullable|string|max:500',
+    'supplier_id'   => 'nullable|exists:suppliers,id',
+    'life'          => 'required|date',
+]);
 
-        // Log changes
-        $newData = $item->only(array_keys($oldData));
-        $changes = array_diff_assoc($newData, $oldData);
+$item->update($validated + [
+    'author' => auth()->user()->username
+]);
 
-        if (!empty($changes)) {
-            $description = auth()->user()->username . ' updated item: ';
-            foreach ($changes as $field => $newValue) {
-                $oldValue = $oldData[$field] ?? 'N/A';
-                $description .= "$field ($oldValue → $newValue), ";
+
+    // Capture NEW values
+    $newData = $item->only($trackedFields);
+
+    // Detect changes
+    $changes = array_diff_assoc($newData, $oldData);
+
+    if (!empty($changes)) {
+        $descriptions = [];
+
+        foreach ($changes as $field => $newValue) {
+            $oldValue = $oldData[$field];
+
+            // Convert foreign keys to names
+            switch ($field) {
+                case 'category_id':
+                    $oldValue = optional(\App\Models\Category::find($oldValue))->name ?? 'None';
+                    $newValue = optional(\App\Models\Category::find($newValue))->name ?? 'None';
+                    break;
+
+                case 'supplier_id':
+                    $oldValue = optional(\App\Models\Supplier::find($oldValue))->name ?? 'None';
+                    $newValue = optional(\App\Models\Supplier::find($newValue))->name ?? 'None';
+                    break;
+
+                case 'branch_id':
+                    $oldValue = optional(\App\Models\Branch::find($oldValue))->name ?? 'None';
+                    $newValue = optional(\App\Models\Branch::find($newValue))->name ?? 'None';
+                    break;
             }
 
-            ItemHistory::create([
-                'item_id'        => $item->id,
-                'user_id'        => Auth::id(),
-                'action'         => 'updated',
-                'from_branch_id' => $oldData['branch_id'] ?? null,
-                'to_branch_id'   => $item->branch_id,
-                'description'    => rtrim($description, ', ')
-            ]);
+            $descriptions[] = "updated {$field} ({$oldValue} → {$newValue})";
         }
 
-        return redirect()->route('admin.allitem')->with('success', 'Item updated successfully!');
+        ItemHistory::create([
+            'item_id'        => $item->id,
+            'user_id'        => auth()->id(),
+            'action'         => 'updated',
+            'from_branch_id' => $oldData['branch_id'],
+            'to_branch_id'   => $item->branch_id,
+            'description'    => auth()->user()->username . ' ' . implode(', ', $descriptions),
+        ]);
     }
+
+    return redirect()
+        ->route('admin.allitem')
+        ->with('success', 'Item updated successfully!');
+}
+
 
     public function destroy(string $id)
     {
@@ -205,11 +240,45 @@ class ItemController extends Controller
         return redirect()->back()->with('success', 'Item issued successfully!');
     }
 
-    public function stock()
-    {
-        $item = Item::where('verification_status','approved')->whereHas('branch', fn($q) => $q->where('name', 'Stock'))->with('branch')->get();
-        return view('admin.item.stock', compact('item'));
+  // make sure to import
+
+public function stock(Request $request)
+{
+    $query = Item::where('verification_status', 'approved')
+        ->whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+        ->with('branch');
+
+    // Filters
+    if ($request->filled('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
     }
+    if ($request->filled('model')) {
+        $query->where('model', 'like', '%' . $request->model . '%');
+    }
+    if ($request->filled('tag_number')) {
+        $query->where('tag_number', 'like', '%' . $request->tag_number . '%');
+    }
+    if ($request->filled('product_id')) {
+        $query->where('product_id', $request->product_id);
+    }
+    if ($request->filled('search')) {
+        $query->where(fn($q) => 
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('model', 'like', '%' . $request->search . '%')
+              ->orWhere('tag_number', 'like', '%' . $request->search . '%')
+              ->orWhere('serial_number', 'like', '%' . $request->search . '%')
+        );
+    }
+
+    $item = $query->get();
+
+    // Get all product types for the filter dropdown
+    $productTypes = Product::all();
+
+    return view('admin.item.stock', compact('item', 'productTypes'));
+}
+
+
 
     public function lifecycle(string $id)
     {

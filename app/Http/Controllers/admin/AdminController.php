@@ -29,30 +29,18 @@ class AdminController extends Controller
 
     if ($user->isSuperuser()) {
         // Superuser sees only their department or items they manage
-        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-                     ->where('created_by', $user->id)
-                     ->count();
-
-        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-                          ->where('created_by', $user->id)
-                          ->count();
-
-        $totalItems = Item::where('created_by', $user->id)->count();
+       $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
+        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
+        $totalItems = Item::count();
 
         return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
     }
 
     if ($user->isUser()) {
         // User sees only their own items
-        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-                     ->where('created_by', $user->id)
-                     ->count();
-
-        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-                          ->where('created_by', $user->id)
-                          ->count();
-
-        $totalItems = Item::where('created_by', $user->id)->count();
+       $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
+        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
+        $totalItems = Item::count();
 
         return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
     }

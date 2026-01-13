@@ -10,6 +10,56 @@
 
     <div class="page-content">
 
+       <div class="d-flex justify-content-center mb-3">
+    <form method="GET" action="{{route('admin.stock')}}" id="filter-form"  class="row g-2 align-items-center justify-content-center">
+        <!-- Name -->
+        <div class="col-auto">
+            <div class="input-group">
+                <span class="input-group-text">Name</span>
+                <input type="text" name="name" class="form-control" placeholder="Enter Name">
+            </div>
+        </div>
+
+        <!-- Model -->
+        <div class="col-auto">
+            <div class="input-group">
+                <span class="input-group-text">Model</span>
+                <input type="text" name="model" class="form-control" placeholder="Enter Model">
+            </div>
+        </div>
+
+        <!-- Tag Number -->
+        <div class="col-auto">
+            <div class="input-group">
+                <span class="input-group-text">Tag#</span>
+                <input type="text" name="tag_number" class="form-control" placeholder="Enter Tag Number">
+            </div>
+        </div>
+
+        <!-- Item Type -->
+      <div class="col-auto">
+    <div class="input-group">
+        <span class="input-group-text">Type</span>
+        <select name="product_id" class="form-select">
+            <option value="">All Types</option>
+
+            @foreach ($productTypes as $product)
+                <option value="{{ $product->id }}"
+                    {{ request('product_id') == $product->id ? 'selected' : '' }}>
+                    {{ $product->name }}
+                </option>
+            @endforeach
+
+        </select>
+    </div>
+</div>
+
+        <!-- Search Button -->
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary"><i class="bx bx-search"></i> Search</button>
+        </div>
+    </form>
+</div>
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
             <div class="breadcrumb-title pe-3">Stock</div>
             <div class="ps-3">
@@ -21,15 +71,7 @@
                     </ol>
                 </nav>
             </div>
-            <div class="ms-auto">
-                <div class="btn-group">
-
-                    <button type="button" class="btn btn-primary"> <i class="bx bx-search"></i></button>
-                    <input type="search" name='search' style="font-size: 20px;" placeholder="Search">
-
-
-                </div>
-            </div>
+           
 
         </div>
         <!--end breadcrumb-->
@@ -47,7 +89,7 @@
                                 <th>Tag Number</th>
                                 <th>Serial Number</th>
                                 <th>Detail</th>
-                                <th>Disposal</th>
+                                <th>Issue</th>
                                 <th>Action</th>
 
 
@@ -69,9 +111,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                       <a href="{{ route('admin.itemlife', $items->id) }}">
-                                            <button type="button" class="btn btn-sm btn-secondary">LifeCycle</button>
-                                        </a>
+                                      
                                         <a href="{{ route('admin.issue', $items->id) }}">
                                             <button type="button" class="btn btn-sm btn-secondary">Issue</button>
                                         </a>
