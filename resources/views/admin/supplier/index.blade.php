@@ -76,7 +76,7 @@
 
 
                                     </td>
-                                    <td><a href="{{ route('admin.edititem', $suppliers->id) }}">
+                                    <td><a href="{{ route('admin.editsupplier', $suppliers->id) }}">
                                             <button type="button" class="btn btn-sm btn-primary"><i
                                                     class="fadeIn animated bx bx-edit-alt"></i></button>
                                         </a>

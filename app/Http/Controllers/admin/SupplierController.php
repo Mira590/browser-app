@@ -69,7 +69,9 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $supplier= Supplier::findorFail($id);
+        return view('admin.supplier.edit',compact('supplier'));
     }
 
     /**
@@ -77,7 +79,29 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+
+        $supplier=Supplier::findorFail($id);
+
+
+
+        $supplier->name= $request->name;
+        $supplier->cont_person=$request->cont_person;
+        $supplier->type=$request->type;
+        $supplier->phone=$request->phone;
+        $supplier->website=$request->website;
+        $supplier->email=$request->email;
+        $supplier->licence=$request->licence;
+        $supplier->exp_licence=$request->exp_licence;
+        $supplier->address=$request->address;
+        $supplier->desc=$request->desc;
+       
+
+
+        $supplier->update();
+
+        return redirect()->route('admin.suppliers')->with('success','Supplier Updated successfully');
+        
     }
 
     /**
