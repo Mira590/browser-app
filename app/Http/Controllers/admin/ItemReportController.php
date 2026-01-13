@@ -67,7 +67,7 @@ class ItemReportController extends Controller
             $file = fopen('php://output', 'w');
 
             fputcsv($file, [
-                'Name', 'Model', 'Product', 'Tag', 'Serial', 'branch_id'
+                'Name', 'Model', 'Product', 'Tag', 'Serial', 'Locatoin','Purchas Date','Expier Date','Supplier','Status'
             ]);
 
             foreach ($items as $item) {
@@ -78,6 +78,10 @@ class ItemReportController extends Controller
                     $item->tag_number,
                     $item->serial_number,
                     optional($item->branch)->name,
+                    $item->pur_date,
+                    $item->pur_date,
+                    optional($item->supplier)->name,
+                    $item->status,
                 ]);
             }
 

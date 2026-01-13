@@ -11,44 +11,13 @@
     <div class="page-content">
 
         
-<div class="d-flex justify-content-center mb-3">
-    <form method="GET" action="{{route('admin.allitem')}}" id="filter-form"  class="row g-2 align-items-center justify-content-center">
-        <!-- Name -->
-        <div class="col-auto">
-            <div class="input-group">
-                <span class="input-group-text">Name</span>
-                <input type="text" name="name" class="form-control" placeholder="Enter Name">
-            </div>
-        </div>
 
-        <!-- Model -->
-        <div class="col-auto">
-            <div class="input-group">
-                <span class="input-group-text">Model</span>
-                <input type="text" name="model" class="form-control" placeholder="Enter Model">
-            </div>
-        </div>
-
-        <!-- Tag Number -->
-        <div class="col-auto">
-            <div class="input-group">
-                <span class="input-group-text">Tag#</span>
-                <input type="text" name="tag_number" class="form-control" placeholder="Enter Tag Number">
-            </div>
-        </div>
-
-        <!-- Item Type -->
-      <div class="col-auto">
-    
-</div>
 
         <!-- Search Button -->
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary"><i class="bx bx-search"></i> Search</button>
-        </div>
-    </form>
+        
+  
     
-</div>
+
 
 
 
@@ -60,7 +29,7 @@
        
         <!--end breadcrumb-->
        <div class="d-flex align-items-center mb-3">
-    <h6 class="mb-0 text-uppercase">All Items</h6>
+    <h6 class="mb-0 text-uppercase">Suppliers</h6>
 
     <div class="ms-auto">
         <a href="{{route('admin.supplier')}}" class="btn btn-success">
@@ -112,9 +81,9 @@
                                                     class="fadeIn animated bx bx-edit-alt"></i></button>
                                         </a>
                                       
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-danger delete-item"
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-danger delete-supplier"
                                             data-id="{{ $suppliers->id }}"
-                                            data-url="{{ route('admin.deleteitem', $suppliers->id) }}">
+                                            data-url="{{ route('admin.deletesupplier', $suppliers->id) }}">
                                             <i class='lni lni-trash'></i>
                                         </a>
                                         
@@ -351,7 +320,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).on('click', '.delete-item', function(e) {
+        $(document).on('click', '.delete-supplier', function(e) {
             e.preventDefault();
 
             let deleteUrl = $(this).data('url');

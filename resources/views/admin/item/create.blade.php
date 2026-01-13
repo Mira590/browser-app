@@ -1,13 +1,11 @@
 @extends('admin.master')
 @section('content')
-
-
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3" style="margin-top: -50px;">
 
@@ -32,9 +30,9 @@
 
                     <div class="card">
 
-                         <div class="card-header" style="background-color:lightslategrey">
-        <h5 class="card-title mb-3" style="color: white">New Item</h5>
-    </div>
+                        <div class="card-header" style="background-color:lightslategrey">
+                            <h5 class="card-title mb-3" style="color: white">New Item</h5>
+                        </div>
                         <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
                             @csrf
 
@@ -75,7 +73,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">Serial Number</label>
                                         <input type="text" class="form-control" name="serial_number"
-                                            value="{{ old('serail_number') }}" required>
+                                            value="{{ old('serial_number') }}" required>
                                         @error('serial_number')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
@@ -87,9 +85,9 @@
                                     <div class="col-md-6">
                                         <label class="form-label">status </label>
                                         <select class="form-select" name="status">
-                                            <option value="New">New</option>
-                                            <option value="Used">Used</option>
-                                            <option value="Damaged">Damaged</option>
+                                            <option value="New" {{old('status')=='New' ? 'selected':''}}>New</option>
+                                            <option value="Used" {{old('status')=='Used' ? 'selected':''}} >Used</option>
+                                            <option value="Damaged" {{old('status')=='Damaged' ? 'selected':''}}>Damaged</option>
 
                                         </select>
                                         @error('status')
@@ -97,17 +95,17 @@
                                         @enderror
                                     </div>
 
-                                     <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <label class="form-label">Item Type </label>
                                         <select class="form-select" name="product_id">
                                             <option value="">-- Select Item Type --</option>
                                             @foreach ($product as $pro)
-                                                <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                                                <option value="{{ $pro->id }}"{{old('product_id')==$pro->id ? 'selected':''}}>{{ $pro->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    
+
                                 </div>
 
                                 <!-- Bio & Experience -->
@@ -117,7 +115,7 @@
                                         <select class="form-select" name="branch_id">
                                             <option value="">-- Select Location --</option>
                                             @foreach ($branch as $br)
-                                                <option value="{{ $br->id }}">{{ $br->name }}</option>
+                                                <option value="{{ $br->id }}" {{old('branch_id')==$br->id ? 'selected':''}}>{{ $br->name }}</option>
                                             @endforeach
 
 
@@ -129,12 +127,12 @@
 
                                     <div class="col-md-6">
 
-                                        
+
                                         <label class="form-label">Section </label>
                                         <select class="form-select" name="category_id">
                                             <option value="">-- Select section --</option>
                                             @foreach ($category as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                <option value="{{ $cat->id }}" {{old('category_id')==$cat->id ? 'selected':''}}>{{ $cat->name }}</option>
                                             @endforeach
 
 
@@ -147,22 +145,23 @@
 
 
                                 <div class="row mb-3">
-                                    
+
                                     <div class="col-md-6">
                                         <label class="form-label">Item Life</label>
-                                        <input type="date" class="form-control" name="life" value="{{old('life')}}">
+                                        <input type="date" class="form-control" name="life"
+                                            value="{{ old('life') }}">
                                         @error('life')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                     <div class="col-md-6">
+                                    <div class="col-md-6">
 
-                                        
+
                                         <label class="form-label">Supplier </label>
                                         <select class="form-select" name="supplier_id">
                                             <option value="">-- Select Supplier --</option>
                                             @foreach ($supplier as $sup)
-                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                <option value="{{ $sup->id }}"{{old('supplier_id')==$sup->id ? 'selected':''}}>{{ $sup->name }}</option>
                                             @endforeach
 
 
@@ -171,33 +170,32 @@
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
 
 
                                 <!-- Address -->
                                 <div class="row mb-3">
-                                    
+
                                     <div class="col-md-6">
                                         <label class="form-label">Purchase date</label>
-                                        <input type="date" class="form-control" name="pur_date" value="">
+                                        <input type="date" class="form-control" name="pur_date" value="{{old('pur_date')}}">
                                         @error('pur_date')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                     <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <label class="form-label">Remark</label>
-                                        <input type="text" class="form-control" name="remark"
-                                            value="" >
+                                        <input type="text" class="form-control" name="remark" value="{{old('remark')}}">
                                         @error('remark')
                                             <span class="text-danger small">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
 
                                 <!-- Profile Image -->
-                                 <div class="row mb-3">
+                                <div class="row mb-3">
 
                                     <div class="col-md-6" hidden>
                                         <label class="form-label">Author</label>
@@ -209,7 +207,7 @@
                                     </div>
 
 
-                                   
+
                                 </div>
 
                                 <!-- Submit Button -->

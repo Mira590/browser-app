@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
         Route::post('/addsupllier', [SupplierController::class, 'store'])->name('savesupplier');
         Route::get('/detail/supplier/{id}', [SupplierController::class, 'show'])->name('showsupplier');
+        Route::delete('/supplier/{id}', [SupplierController::class, 'destroy'])->name('deletesupplier');
  
         // Item verification (admin only)
        

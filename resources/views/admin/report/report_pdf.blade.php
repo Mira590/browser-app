@@ -30,7 +30,7 @@
         }
 
         table { 
-            width: 100%; 
+            width: 105%; 
             border-collapse: collapse; 
         }
 
@@ -64,10 +64,14 @@
             <th>Item Name</th>
             <th>Model</th>
             <th>Tag Number</th>
-            <th>Product</th>
-            <th>Category</th>
-             
+            <th>Item Type</th>
+            <th>Section</th>  
             <th>location</th>
+            <th>Supplier</th>
+            <th>Status</th>
+            <th>Purchase Date</th>
+            <th>Expire Date</th>
+            
            
         </tr>
     </thead>
@@ -81,6 +85,10 @@
                 <td>{{ optional($item->product)->name }}</td>
                 <td>{{ optional($item->category)->name }}</td>
                 <td>{{ optional($item->branch)->name }}</td>
+                <td>{{ optional($item->supplier)->name }}</td>
+                <td>{{$item->status}}</td>
+                <td>{{$item->pur_date}}</td>
+                <td>{{$item->life}}</td>
               
             </tr>
         @empty
