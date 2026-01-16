@@ -25,15 +25,15 @@
 									<div class="card-body">
 										<div class="d-flex flex-column align-items-center text-center">
 				<img id="pre"
-     src="{{ $user->photo ? asset('storage/users/' . $user->photo) : asset('images/default-avatar.png') }}"
+     src="{{ asset('storage/' . Auth::user()->photo) }}"
      alt="Admin"
-     class="rounded-circle p-1 bg-primary"
-     width="110">
+     class=""
+     width="200">
 
 
 
 											<div class="mt-3">
-												<h4>{{Auth::user()->name}}</h4>
+												<h4>{{Auth::user()->first_name}}</h4>
 												<p class="text-secondary mb-1">{{$user->email}}</p>
 												
 											</div>

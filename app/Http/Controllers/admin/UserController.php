@@ -81,15 +81,21 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
     }
 
-    if ($request->hasFile('photo')) {
-        if ($user->photo) {
-            Storage::disk('public')->delete('users/' . $user->photo);
-        }
-        $file = $request->file('photo');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('public/users', $filename);
-        $user->photo = $filename;
+  if ($request->hasFile('photo')) {
+    // Delete old photo if exists
+    if ($user->photo && Storage::disk('public')->exists('users/' . $user->photo)) {
+        Storage::disk('public')->delete('users/' . $user->photo);
     }
+
+    $file = $request->file('photo');
+    $filename = time() . '_' . $file->getClientOriginalName();
+
+    // Store file on 'public' disk in 'users' folder
+    $file->storeAs('users', $filename, 'public');
+
+    // Save relative path to DB
+    $user->photo = 'users/' . $filename;
+}
 
     $user->save();
 
