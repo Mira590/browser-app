@@ -216,11 +216,17 @@
                                         <button type="submit" class="btn btn-primary px-4">
                                             save
                                         </button>
+                                        
                                     </div>
                                 </div>
 
-                            </div>
                         </form>
+                        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.saveitem') }}">
+    @csrf
+    <label for="excel_file">Upload Excel</label>
+    <input type="file" name="excel_file" class="form-control" accept=".xlsx,.xls,.csv">
+    <button type="submit" class="btn btn-primary form-control">Upload Excel</button>
+</form>
                     </div>
 
 

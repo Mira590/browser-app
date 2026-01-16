@@ -12,6 +12,8 @@ use App\Models\ItemHistory;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Imports\ItemsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -50,46 +52,72 @@ class ItemController extends Controller
         return view('admin.item.create', compact('branch', 'category', 'product','supplier'));
     }
 
-    public function store(Request $request)
-    {
-       
-
-        $validated = $request->validate([
-            'name'          => 'required|string|max:255',
-            'model'         => 'required|string|max:255',
-            'tag_number'    => 'required|string|max:100|unique:items,tag_number',
-            'serial_number' => 'nullable|string|max:100',
-            'status'        => 'required|in:New,Used,Damaged',
-            'branch_id'     => 'nullable|exists:branches,id',
-            'category_id'   => 'required|exists:categories,id',
-            'product_id'    => 'required|exists:products,id',
-            'author'        => 'required|string|max:100',
-            'remark'        => 'nullable|string|max:500',
-            'pur_date'      => 'required|date',
-            'issue_date'    => 'nullable|date|after_or_equal:pur_date',
-            'supplier_id'   => 'nullable|exists:suppliers,id',
-            'life'          => 'required|date',
+ public function store(Request $request)
+{
+    // Handle Excel file upload
+    if ($request->hasFile('excel_file')) {
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
-        $validated['created_by'] = auth()->id();
-
-        // Auto-verify for admin and Superuser, else pending
-        if (auth()->user()->isAdmin() || auth()->user()->isSuperuser() ) {
-            $validated['verification_status'] = 'approved';
-            $validated['verified_by'] = auth()->id();
+        // Determine verification status based on user role
+        $verificationData = [];
+        if (auth()->user()->isAdmin() || auth()->user()->isSuperuser()) {
+            $verificationData['verification_status'] = 'approved';
+            $verificationData['verified_by'] = auth()->id();
         } else {
-            $validated['verification_status'] = 'pending';
-            $validated['verified_by'] = null;
+            $verificationData['verification_status'] = 'pending';
+            $verificationData['verified_by'] = null;
         }
 
-        Item::create($validated);
+        // Pass verification data to the import
+        Excel::import(new ItemsImport($verificationData), $request->file('excel_file'));
 
         $message = auth()->user()->isAdmin() || auth()->user()->isSuperuser()
-            ? 'Item created successfully and automatically approved.'
-            : 'Item created successfully and sent for verification.';
+            ? 'Items imported successfully and automatically approved.'
+            : 'Items imported successfully and sent for verification.';
 
         return redirect()->back()->with('success', $message);
     }
+
+    // Handle single item creation
+    $validated = $request->validate([
+        'name'          => 'required|string|max:255',
+        'model'         => 'required|string|max:255',
+        'tag_number'    => 'required|string|max:100|unique:items,tag_number',
+        'serial_number' => 'nullable|string|max:100',
+        'status'        => 'required|in:New,Used,Damaged',
+        'branch_id'     => 'nullable|exists:branches,id',
+        'category_id'   => 'required|exists:categories,id',
+        'product_id'    => 'required|exists:products,id',
+        'author'        => 'required|string|max:100',
+        'remark'        => 'nullable|string|max:500',
+        'pur_date'      => 'required|date',
+        'issue_date'    => 'nullable|date|after_or_equal:pur_date',
+        'supplier_id'   => 'nullable|exists:suppliers,id',
+        'life'          => 'required|date',
+    ]);
+
+    $validated['created_by'] = auth()->id();
+
+    // Auto-verify for admin and Superuser, else pending
+    if (auth()->user()->isAdmin() || auth()->user()->isSuperuser()) {
+        $validated['verification_status'] = 'approved';
+        $validated['verified_by'] = auth()->id();
+    } else {
+        $validated['verification_status'] = 'pending';
+        $validated['verified_by'] = null;
+    }
+
+    Item::create($validated);
+
+    $message = auth()->user()->isAdmin() || auth()->user()->isSuperuser()
+        ? 'Item created successfully and automatically approved.'
+        : 'Item created successfully and sent for verification.';
+
+    return redirect()->back()->with('success', $message);
+}
+
 
     public function edit(string $id)
     {
