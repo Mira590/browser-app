@@ -21,10 +21,29 @@ class AdminController extends Controller
         // Admin sees all stats
         $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
         $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
+        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
+            ->count();
+
+        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
+            ->count();
+        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
+            ->count();
+        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
+            ->count();
+
+        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
+            ->count();
+            
+
         $totalItems = Item::count();
         $totalUsers = \App\Models\User::count();
 
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'totalUsers'));
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'totalUsers','pc','server','router','switch','firewall'));
     }
 
     if ($user->isSuperuser()) {
@@ -33,7 +52,26 @@ class AdminController extends Controller
         $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
         $totalItems = Item::count();
 
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
+        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
+            ->count();
+
+        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
+            ->count();
+        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
+            ->count();
+        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
+            ->count();
+
+        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
+            ->count();
+            
+
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'pc','server','router','switch','firewall'));
     }
 
     if ($user->isUser()) {
@@ -42,7 +80,26 @@ class AdminController extends Controller
         $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
         $totalItems = Item::count();
 
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems'));
+        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
+            ->count();
+
+        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
+            ->count();
+        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
+            ->count();
+        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
+            ->count();
+
+        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
+            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
+            ->count();
+            
+
+        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'pc','server','router','switch','firewall'));
     }
 }
 
