@@ -45,7 +45,7 @@
                                                 <input type="text" class="form-control" id="inputEmailAddress"
                                                     required name="username" :value="{{ old('username') }}"
                                                     placeholder="Type a user name">
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('username')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Password</label>
@@ -55,7 +55,7 @@
                                                         id="inputChoosePassword" placeholder="Enter Password"> <a
                                                         href="javascript:;" class="input-group-text bg-transparent"><i
                                                             class="bx bx-hide"></i></a>
-                                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                    <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
