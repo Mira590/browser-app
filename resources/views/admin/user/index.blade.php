@@ -46,7 +46,7 @@
                                     <label class="form-label fw-semibold">Name</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-user"></i></span>
-                                        <input type="text" class="form-control" name="first_name" value="">
+                                        <input type="text" class="form-control" name="first_name" value="" placeholder="Name">
                                     </div>
                                     @error('first_name')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -56,7 +56,7 @@
                                     <label class="form-label fw-semibold">Username</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-id-card"></i></span>
-                                        <input type="text" class="form-control" name="username" value="">
+                                        <input type="text" class="form-control" name="username" value="" placeholder="username">
                                     </div>
                                     @error('username')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -66,7 +66,7 @@
                                     <label class="form-label fw-semibold">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-envelope"></i></span>
-                                        <input type="email" class="form-control" name="email" value="">
+                                        <input type="email" class="form-control" name="email" value="" placeholder="Email">
                                     </div>
                                     @error('email')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -76,7 +76,7 @@
                                     <label class="form-label fw-semibold">Position</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-briefcase"></i></span>
-                                        <input type="text" class="form-control" name="job_title" value="">
+                                        <input type="text" class="form-control" name="job_title" value="" placeholder="Position">
                                     </div>
                                     @error('job_title')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -86,7 +86,7 @@
                                     <label class="form-label fw-semibold">Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-lock"></i></span>
-                                        <input type="password" class="form-control" name="password">
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
                                     </div>
                                     @error('password')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -96,7 +96,7 @@
                                     <label class="form-label fw-semibold">Confirm Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-lock-alt"></i></span>
-                                        <input type="password" class="form-control" name="password_confirmation">
+                                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
                                     </div>
                                     @error('password_confirmation')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
@@ -135,7 +135,7 @@
                                     <label class="form-label fw-semibold">Bio</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="bx bx-comment"></i></span>
-                                        <input type="text" class="form-control" name="bio">
+                                        <input type="text" class="form-control" name="bio" placeholder="BIO">
                                     </div>
                                     @error('bio')<small class="text-danger">{{ $message }}</small>@enderror
                                 </div>
