@@ -15,6 +15,34 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function  change(){
+
+        return view('admin.user.change');
+    }
+
+public function updatepassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required'],
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        // Check current password
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return back()->withErrors([
+                'current_password' => 'Current password is incorrect.',
+            ]);
+        }
+
+        // Update password
+        auth()->user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Password changed successfully!');
+    }
+
     public function index()
     {
 
