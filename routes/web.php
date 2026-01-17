@@ -98,7 +98,9 @@ Route::middleware(['auth', 'role:admin,superuser,user'])
         Route::post('/items/{item}/reject', [ItemVerificationController::class, 'reject'])->name('reject');
         //change password
         Route::get('/change-password', [UserController::class, 'change'])->name('change-password');
-         Route::post('/change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
+        Route::post('/change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
+
+        Route::get('/Profile', [UserController::class, 'Profile'])->name('Profile');
     });
 
 // REPORTS (Admin + Superuser)

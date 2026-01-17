@@ -42,7 +42,9 @@ public function updatepassword(Request $request)
 
         return back()->with('success', 'Password changed successfully!');
     }
-
+    public function Profile(){
+        return view('admin.user.profile');
+    }
     public function index()
     {
 
