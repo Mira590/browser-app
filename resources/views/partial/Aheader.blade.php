@@ -103,9 +103,9 @@
 							</div>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
-							<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
+							<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.Profile') }}"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
 							</li>
-							<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
+							<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.change-password') }}"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
 							</li>
 							</li>
 							<li>

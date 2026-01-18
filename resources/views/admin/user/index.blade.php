@@ -1,233 +1,197 @@
 @extends('admin.master')
 @section('content')
-    <div class="page-content" style="margin-top: -70px">
+<div class="page-content" style="margin-top: -70px">
 
-        <!--breadcrumb-->
-        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Create User</div>
-            <div class="ps-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">New User</li>
-                    </ol>
-                </nav>
-            </div>
-
+    <!-- Breadcrumb -->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+        <div class="breadcrumb-title pe-3">Create User</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="#"><i class="bx bx-home-alt"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">New User</li>
+                </ol>
+            </nav>
         </div>
+    </div>
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-        <!--end breadcrumb-->
-        <div class="container">
-            <div class="main-body">
-                <div class="row">
+    <!-- Success Message -->
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
-                    <div class="col-lg-8">
+    <!-- Form Container -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
 
+                <div class="card shadow-sm rounded-4 border-0">
+                    <!-- Card Header -->
+                    <div class="card-header rounded-top p-4" style="background-color:gray;">
+                        <h4 class="mb-0"><i class="bx bx-user-plus"></i> New User</h4>
+                        <p class="mb-0 small text-dark">Fill in the information below to create a new user account.</p>
+                    </div>
 
-                        <div class="card">
+                    <form action="{{ route('admin.userCreate') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="card-body p-4">
 
-                            <div class="card-header" style="background-color:lightslategrey">
-                                <h5 class="card-title mb-3" style="color: white">New User</h5>
-                            </div>
-                            <form action="{{ route('admin.userCreate') }}" method="POST" enctype="multipart/form-data">
+                            <div class="row g-3">
 
-                                @csrf
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Name</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name='first_name' value="" />
-                                            @error('first_name')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                <!-- Name -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-user"></i></span>
+                                        <input type="text" class="form-control" name="first_name" value="" placeholder="Name">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Username</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="username" value="" />
-                                            @error('username')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    @error('first_name')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
+
+                                <!-- Username -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Username</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-id-card"></i></span>
+                                        <input type="text" class="form-control" name="username" value="" placeholder="username">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">email</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="email" value="" />
-                                            @error('email')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    @error('username')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-envelope"></i></span>
+                                        <input type="email" class="form-control" name="email" value="" placeholder="Email">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Position</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="job_title" value="" />
-                                            @error('job_titl')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    @error('email')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
+
+                                <!-- Position -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Position</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-briefcase"></i></span>
+                                        <input type="text" class="form-control" name="job_title" value="" placeholder="Position">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Password</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="password" class="form-control" name="password" value="" />
-                                            @error('password')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    @error('job_title')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
+
+                                <!-- Password -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-lock"></i></span>
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0"> Confirm Password</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="password" class="form-control" name="password_confirmation"
-                                                value="" require />
-                                            @error('password_confirmation')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    @error('password')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Confirm Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-lock-alt"></i></span>
+                                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Role</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
+                                    @error('password_confirmation')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
 
-                                            <select name="role" id="role" class="form-select">
-                                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User
-                                                </option>
-                                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin
-                                                </option>
-                                                <option value="superuser"
-                                                    {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
-                                            </select>
-                                            @error('role')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                <!-- Role -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Role</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-user-circle"></i></span>
+                                        <select name="role" id="role" class="form-select">
+                                            <option value="user">User</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="superuser">Superuser</option>
+                                        </select>
                                     </div>
+                                    @error('role')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Department</h6>
-                                        </div>
-
-                                        <div class="col-sm-9 text-secondary">
-                                            <select name="department_id" id="department_id" class="form-select" required>
-                                                <option value="">-- Select Department --</option>
-
-                                                @foreach ($dep as $depart)
-                                                    <option value="{{ $depart->id }}"
-                                                        {{ old('department_id') == $depart->id ? 'selected' : '' }}>
-                                                        {{ $depart->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('department_id')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                <!-- Department -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Department</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-building"></i></span>
+                                        <select name="department_id" id="department_id" class="form-select" required>
+                                            <option value="">-- Select Department --</option>
+                                            @foreach ($dep as $depart)
+                                                <option value="{{ $depart->id }}">{{ $depart->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    @error('department_id')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
 
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">bio</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="bio" value="" />
-                                            @error('bio')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                <!-- Bio -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Bio</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-comment"></i></span>
+                                        <input type="text" class="form-control" name="bio" placeholder="BIO">
                                     </div>
+                                    @error('bio')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">AZB Number</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="azbid"
-                                                placeholder="ex: AZ#" value="" />
-                                            @error('experience')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                <!-- AZB Number -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">AZB Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bx bx-hash"></i></span>
+                                        <input type="text" class="form-control" name="azbid" placeholder="ex: AZ#">
                                     </div>
+                                    @error('azbid')<small class="text-danger">{{ $message }}</small>@enderror
+                                </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Profile Image</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="file" class="form-control" name="photo" id="photo" />
-                                            @error('photo')
-                                                <span class="text-danger small">{{ $message }}</span>
-                                            @enderror
-
-                                            <!-- IMAGE PREVIEW UNDER INPUT -->
-                                            <div class="mt-2">
-                                                <img id="pre"
-                                                    src="{{ asset('backend/assets/images/avatars/avatar-2.png') }}"
-                                                    alt="Preview" class="rounded-circle" width="100">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="row">
-                                        <div class="col-sm-3"></div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
-
-                                        </div>
+                                <!-- Profile Image -->
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold">Profile Image</label>
+                                    <input type="file" class="form-control" name="photo" id="photo">
+                                    @error('photo')<small class="text-danger">{{ $message }}</small>@enderror
+                                    <div class="mt-2">
+                                        <img id="pre" src="{{ asset('backend/assets/images/avatars/avatar-2.png') }}"
+                                             alt="Preview" class="rounded-circle" width="100">
                                     </div>
                                 </div>
-                            </form>
-                        </div>
 
-                    </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="mt-4 text-end">
+                                <input type="submit" class="btn btn-primary btn-lg px-5" value="Save Changes">
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
     </div>
-    </div>
 
-    <script>
-        const photoInput = document.getElementById('photo');
-        const previewImg = document.getElementById('pre');
+</div>
 
-        photoInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
+<!-- Image Preview Script -->
+<script>
+    const photoInput = document.getElementById('photo');
+    const previewImg = document.getElementById('pre');
+
+    photoInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
             }
-        });
-    </script>
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 @endsection
