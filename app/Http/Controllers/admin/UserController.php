@@ -65,16 +65,31 @@ public function updatepassword(Request $request)
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+   public function store(UserRequest $request)
 {
     $data = $request->validated();
 
     if ($request->hasFile('photo')) {
-        $data['photo'] = $request->file('photo')->store('users', 'public');
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        // Ensure the folder exists
+        $destinationPath = public_path('storage/users');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        // Move the uploaded file to public/storage/users
+        $file->move($destinationPath, $filename);
+
+        // Save the path for the database
+        $data['photo'] = 'storage/users/' . $filename;
     }
 
+    // Hash the password
     $data['password'] = Hash::make($data['password']);
 
+    // Create the user
     User::create($data);
 
     return redirect()->back()->with('success', 'User Created Successfully!');
@@ -90,49 +105,54 @@ public function updatepassword(Request $request)
        $user=User::findorFail($id);
         return view('admin.user.edit',compact('user'));
     }
-  public function update(Request $request, string $id)
+  
+public function update(Request $request, string $id)
 {
     $user = User::findOrFail($id);
 
-    
-
     $user->first_name = $request->first_name;
-    $user->last_name = $request->last_name;
-    $user->email = $request->email;
-    $user->job_title = $request->job_title;
-    $user->username = $request->username;
-    $user->phone = $request->phone;
-    $user->azbid = $request->azbid;
-    $user->role = $request->role;
-    $user->status = $request->status;
-    $user->bio = $request->bio;
+    $user->last_name  = $request->last_name;
+    $user->email      = $request->email;
+    $user->job_title  = $request->job_title;
+    $user->username   = $request->username;
+    $user->phone      = $request->phone;
+    $user->azbid      = $request->azbid;
+    $user->role       = $request->role;
+    $user->status     = $request->status;
+    $user->bio        = $request->bio;
 
+    // Update password if provided
     if ($request->filled('password')) {
         $user->password = Hash::make($request->password);
     }
 
-  if ($request->hasFile('photo')) {
-    // Delete old photo if exists
-    if ($user->photo && Storage::disk('public')->exists('users/' . $user->photo)) {
-        Storage::disk('public')->delete('users/' . $user->photo);
+    if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $destinationPath = public_path('storage/users');
+
+        // Ensure folder exists
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        // Delete old photo if exists
+        if ($user->photo && file_exists(public_path($user->photo))) {
+            unlink(public_path($user->photo));
+        }
+
+        // Move new photo to public/storage/users
+        $file->move($destinationPath, $filename);
+
+        // Save relative path to DB
+        $user->photo = 'storage/users/' . $filename;
     }
-
-    $file = $request->file('photo');
-    $filename = time() . '_' . $file->getClientOriginalName();
-
-    // Store file on 'public' disk in 'users' folder
-    $file->storeAs('users', $filename, 'public');
-
-    // Save relative path to DB
-    $user->photo = 'users/' . $filename;
-}
 
     $user->save();
 
-    return redirect()->route('admin.allUsers')->with('success', 'User updated successfully!');
+    return redirect()->route('admin.allUsers')
+                     ->with('success', 'User updated successfully!');
 }
-
-
 
 
     /**

@@ -153,7 +153,7 @@
                                 <!-- User Info Section -->
                                 <div class="d-flex align-items-center mb-3">
                                     <!-- Square Profile Image -->
-                                    <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="User Photo" class="me-3"
+                                    <img src="{{ asset(Auth::user()->photo) }}" alt="User Photo" class="me-3"
                                         style="width:100px; height:100px;  border-radius:4px;">
 
                                     <!-- Labels and Values -->

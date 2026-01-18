@@ -25,7 +25,7 @@
 									<div class="card-body">
 										<div class="d-flex flex-column align-items-center text-center">
 				                        <img id="pre"
-                                         src="{{ asset('storage/' . Auth::user()->photo) }}"
+                                         src="{{ asset( Auth::user()->photo) }}"
                                          alt="Admin"
                                          class=""
                                          width="200">

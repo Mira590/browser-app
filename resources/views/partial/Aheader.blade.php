@@ -94,7 +94,7 @@
 					</div>
 					<div class="user-box dropdown px-3">
 						<a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="{{ asset('storage/' . Auth::user()->photo) }}" class="user-img">
+							<img src="{{ asset(Auth::user()->photo) }}" class="user-img">
 
 
 							<div class="user-info">
