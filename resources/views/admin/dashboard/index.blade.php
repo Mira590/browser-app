@@ -122,15 +122,15 @@
                         <ul class="list-group list-group-flush">
                             <li
                                 class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">
-                                PC <span class="badge bg-gradient-quepal rounded-pill">25</span>
+                                PC <span class="badge bg-gradient-quepal rounded-pill">{{$pcd}}</span>
                             </li>
                             <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-                                Router<span class="badge bg-gradient-ibiza rounded-pill">10</span>
+                                Router<span class="badge bg-gradient-ibiza rounded-pill">{{$routerd}}</span>
                             </li>
                             <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-                                Server <span class="badge bg-gradient-deepblue rounded-pill">65</span>
+                                Server <span class="badge bg-gradient-deepblue rounded-pill">{{$serverd}}</span>
                             <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-                                Switch <span class="badge bg-gradient-deepblue rounded-pill">65</span>
+                                Switch <span class="badge bg-gradient-deepblue rounded-pill">{{$switchd}}</span>
                             </li>
                         </ul>
                     </div>
@@ -142,7 +142,7 @@
                             <div class="card-header bg-transparent">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h6 class="mb-0">Welcome!</h6>
+                                        <h6 class="mb-0">Welcome!, {{Auth::user()->first_name}}</h6>
                                     </div>
                                 </div>
                             </div>
