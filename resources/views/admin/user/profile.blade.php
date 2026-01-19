@@ -31,7 +31,7 @@
 
                             <!-- Profile Photo -->
                             <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
-                                <img src="{{ asset('storage/' . Auth::user()->photo) }}" 
+                                <img src="{{ asset(Auth::user()->photo) }}" 
                                      class=""
                                      width="180" height="180" alt="Profile Photo">
                             </div>

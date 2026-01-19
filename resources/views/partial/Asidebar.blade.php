@@ -4,7 +4,7 @@
             <img src='{{ asset('assets/images/logo-icon.png') }}' class="logo-icon" alt="logo icon">
         </div>
         <div>
-            <h4 class="logo-text">IT STOCK</h4>
+            <h4 class="logo-text">IT Asset</h4>
         </div>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i></div>
     </div>
@@ -48,8 +48,8 @@
                 @endif
 
                 @if(auth()->user()->isAdmin())
-                    <li><a href="{{ route('admin.addcategory') }}"><i class='bx bx-plus-circle'></i>Add Department</a></li>
-                    <li><a href="{{ route('admin.allcategory') }}"><i class='bx bx-category'></i>All Departments</a></li>
+                    <li><a href="{{ route('admin.addcategory') }}"><i class='bx bx-plus-circle'></i>Add Section</a></li>
+                    <li><a href="{{ route('admin.allcategory') }}"><i class='bx bx-category'></i>All Section</a></li>
                 @endif
 
                 <!-- Items - All roles -->

@@ -28,7 +28,7 @@
 
 <div class="row">
   <div class="col-xl-9 mx-auto">
-    <h6 class="mb-0 text-uppercase">New Category</h6>
+    <h6 class="mb-0 text-uppercase">New Section</h6>
     <hr />
     <div class="card">
       <div class="card-body">

@@ -75,7 +75,7 @@
 
         </div>
         <!--end breadcrumb-->
-        <h6 class="mb-0 text-uppercase">All Items</h6>
+   
         <hr />
         <div class="card">
             <div class="card-body">

@@ -165,7 +165,7 @@
 
                             <!-- Submit -->
                             <div class="mt-4 text-end">
-                                <input type="submit" class="btn btn-primary btn-lg px-5" value="Save Changes">
+                                <input type="submit" class="btn btn-primary btn-lg px-5" value="Save">
                             </div>
 
                         </div>
