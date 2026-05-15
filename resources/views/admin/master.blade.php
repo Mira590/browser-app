@@ -1,5 +1,6 @@
 
 @include('partial.link');
+@yield('scripts')
 
 <body onload="info_noti()">
 	<!--wrapper-->

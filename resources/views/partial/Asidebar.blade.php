@@ -18,59 +18,42 @@
             </a>
         </li>
 
-        @if(auth()->user()->isAdmin())
-            <!-- User Management - Admin Only -->
-            <li>
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon"><i class="bx bx-user"></i></div>
-                    <div class="menu-title">User Management</div>
-                </a>
-                <ul>
-                    <li><a href="{{ route('admin.userIndex') }}"><i class='bx bx-user-plus'></i>Create User</a></li>
-                    <li><a href="{{ route('admin.allUsers') }}"><i class='bx bx-menu'></i>All Users</a></li>
-                </ul>
-            </li>
-        @endif
 
-        <li class="menu-label">Setting</li>
-
-        <!-- Asset Management - Admin, Superuser, User -->
+        <!-- User Management - Admin Only -->
         <li>
             <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-folder'></i></div>
-                <div class="menu-title">Asset Management</div>
+                <div class="parent-icon"><i class="bx bx-user"></i></div>
+                <div class="menu-title">User Management</div>
             </a>
             <ul>
-                @if(auth()->user()->isAdmin())
-                    <li><a href="{{ route('admin.addBranch') }}"><i class='bx bx-plus-circle'></i>Add Branch</a></li>
-                    <li><a href="{{ route('admin.allbranch') }}"><i class='bx bx-menu'></i>All Branches</a></li>
-                     <li><a href="{{ route('admin.suppliers') }}"><i class='bx bx-menu'></i>Suppliers</a></li>
-                @endif
-
-                @if(auth()->user()->isAdmin())
-                    <li><a href="{{ route('admin.addcategory') }}"><i class='bx bx-plus-circle'></i>Add Section</a></li>
-                    <li><a href="{{ route('admin.allcategory') }}"><i class='bx bx-category'></i>All Section</a></li>
-                @endif
-
-                <!-- Items - All roles -->
-                <li><a href="{{ route('admin.additem') }}"><i class='bx bx-plus-circle'></i>Stock Import</a></li>
-                <li><a href="{{ route('admin.allitem') }}"><i class='bx bx-laptop'></i>All Items</a></li>
-                <li><a href="{{ route('admin.stock') }}"><i class='bx bx-category'></i>Stock</a></li>
+                <li><a href="{{ route('admin.userIndex') }}"><i class='bx bx-user-plus'></i>Create User</a></li>
+                <li><a href="{{ route('admin.allUsers') }}"><i class='bx bx-menu'></i>All Users</a></li>
             </ul>
         </li>
 
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-folder'></i></div>
+                <div class="menu-title">Browser Settings</div>
+            </a>
+            <ul>
+
+                <li><a href="{{ route('admin.link') }}"><i class='bx bx-plus-circle'></i>Create Link</a></li>
+                <li><a href="{{ route('admin.link.list') }}"><i class='bx bx-menu'></i>All links</a></li>
+                <li><a href="{{ route('admin.slider') }}"><i class='bx bx-plus-circle'></i>Create Slider</a></li>
+                <li><a href="{{ route('admin.slider.list') }}"><i class='bx bx-menu'></i>All Sliders</a></li>
+
+            </ul>
+        </li>
+
+
+
+        <!-- Asset Management - Admin, Superuser, User -->
+
+
         <!-- Reports - Admin & Superuser only -->
-        @if(auth()->user()->isAdmin() || auth()->user()->isSuperuser())
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class='bx bx-menu'></i></div>
-                    <div class="menu-title">Reports</div>
-                </a>
-                <ul>
-                    <li><a href="{{ route('admin.report') }}"><i class='bx bx-radio-circle'></i>Reports</a></li>
-                     <li><a href="{{ route('admin.pending') }}"><i class='bx bx-radio-circle'></i>Verification</a></li>
-                </ul>
-            </li>
-        @endif
+
+
+
     </ul>
 </div>

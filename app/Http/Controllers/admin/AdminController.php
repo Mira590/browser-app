@@ -17,52 +17,11 @@ class AdminController extends Controller
 {
     $user = auth()->user();
 
-    if ($user->isAdmin()) {
-        // Admin sees all stats
-        $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
-        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
-        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-
-        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
+   
 
 
-          $pcd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-             $serverd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $routerd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switchd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewalld = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
-            
-
-        $totalItems = Item::count();
-        $totalUsers = \App\Models\User::count();
-
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'totalUsers','pc','server','router','switch','firewall','stock', 'data', 'totalItems', 'totalUsers','pcd','serverd','routerd','switchd','firewalld'));
-    }
+        return view('admin.dashboard.index');
+    
 
     if ($user->isSuperuser()) {
         // Superuser sees only their department or items they manage
