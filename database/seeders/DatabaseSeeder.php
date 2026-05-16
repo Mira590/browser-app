@@ -37,57 +37,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'photo' => null,
         ]);
-        $branches=[
-                ['name'=>'Stock','br_code'=>'0000'],
-              ['name'=>'Data_Center','br_code'=>'1111'],
-            ['name'=>'main Branch','br_code'=>'00010'],
-            ['name'=>'Sarai Shahzadeh','br_code'=>'00020'],
-            ['name'=>'Faryab ','br_code'=>'00270'],
-            ['name'=>'Sare-pol','br_code'=>'00460'],
-         
-        ];
+       
 
-        foreach($branches as $branch){
-            Branch::create($branch);
-        }
+       
 
 
-
-        $products=[
-            ['name'=>'PC'],
-            ['name'=>'Router'],
-            ['name'=>'Switch '],
-            ['name'=>'Firewall'],
-              ['name'=>'Server'],
-        ];
-
-        foreach($products as $product){
-            Product::create($product);
-        }
+       
 
 
+       
 
-        $departments=[
-            ['name'=>'Network'],
-            ['name'=>'System Admin'],
-            ['name'=>'Database'],
-            ['name'=>'IT Support'],
-            ['name'=>'IT ATM'],
-        ];
-
-        foreach($departments as $department){
-            Department::create($department);
-        }
-
-         $categories=[
-            ['name'=>'Network'],
-            ['name'=>'Database'],
-            ['name'=>'IT SUPPORT'],
-            ['name'=>'System Admin'],
-        ];
-
-        foreach($categories as $category){
-            Category::create($category);
-        }
+       
     }
 }

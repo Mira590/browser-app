@@ -209,22 +209,44 @@ body {
 /* GRID (fallback for old browsers) */
 /* GRID */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: -10px;
+}
+
+/* modern grid where supported */
+@supports (display: grid) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin: 0;
+    }
+    .card {
+        width: auto;
+        margin: 0;
+    }
 }
 
 /* Tablet */
 @media (max-width: 992px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+    .card {
+        width: calc(50% - 20px);
     }
 }
 
 /* Mobile */
 @media (max-width: 600px) {
-    .grid {
-        grid-template-columns: repeat(1, 1fr);
+    .grid,
+    .card {
+        width: 100%;
+    }
+    .card {
+        margin: 10px 0;
     }
 }
 
@@ -238,7 +260,10 @@ body {
 }
 .cards-bg {
     position: absolute;
-    inset: 0 0 0 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -258,6 +283,7 @@ body {
 .grid { position: relative; z-index: 1; }
 
 .card {
+    width: auto;
     background: rgba(255,255,255,0.48);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -265,9 +291,22 @@ body {
     border-radius: 12px;
     padding: 18px;
     text-align: center;
-    margin-bottom: 15px;
     box-shadow: 0 8px 28px rgba(16,24,40,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@supports not (display: grid) {
+    .card {
+        width: calc(25% - 20px);
+        margin: 10px;
+    }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
+    .card {
+        background: rgba(255,255,255,0.96);
+        border-color: rgba(204,204,204,0.4);
+    }
 }
 
 .card:hover {
@@ -432,12 +471,17 @@ body {
 // SAFE SLIDER (works in all browsers)
 var index = 0;
 var slideElements = document.querySelectorAll('.slide');
-var slideCount = {{ $sliderCount }};
+var slideCount = slideElements.length || {{ $sliderCount }};
 
 function showSlide(i) {
-    slideElements.forEach(function(slide, idx) {
-        slide.classList.toggle('active', idx === i);
-    });
+    for (var j = 0; j < slideElements.length; j++) {
+        var slide = slideElements[j];
+        if (j === i) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    }
 }
 
 window.addEventListener('load', function() {
@@ -450,6 +494,14 @@ setInterval(function () {
 }, 5000);
 
 // DATE & TIME
+function getWeekdayName(date) {
+    var weekdays = [
+        'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday'
+    ];
+    return weekdays[date.getDay()];
+}
+
 function updateTime() {
     var now = new Date();
 
@@ -459,8 +511,16 @@ function updateTime() {
     document.getElementById("fullDate").innerHTML =
         now.toLocaleDateString();
 
-    document.getElementById("dayName").innerHTML =
-        now.toLocaleDateString("en-US", { weekday: "long" });
+    var dayName = document.getElementById("dayName");
+    if (typeof now.toLocaleDateString === 'function') {
+        try {
+            dayName.innerHTML = now.toLocaleDateString('en-US', { weekday: 'long' });
+        } catch (e) {
+            dayName.innerHTML = getWeekdayName(now);
+        }
+    } else {
+        dayName.innerHTML = getWeekdayName(now);
+    }
 }
 
 setInterval(updateTime, 1000);
