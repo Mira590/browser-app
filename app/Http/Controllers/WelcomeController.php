@@ -8,9 +8,11 @@ use App\Models\Slider;
 
 class WelcomeController extends Controller
 {
-    public function index(){
-            $link = Link::all();
-         $sliders = Slider::latest()->get();
-         return view('link.welcome', compact('link', 'sliders'));
+    public function index()
+    {
+        $link = Link::query()->orderBy('id')->paginate(8);
+        $sliders = Slider::latest()->get();
+
+        return view('link.welcome', compact('link', 'sliders'));
     }
 }
