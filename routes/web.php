@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\LogoutController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\WelcomeController;
 
 
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('/edit-slider/{id}', [SliderController::class, 'edit'])->name('edit.slider');
         Route::post('/update-slider/{id}', [SliderController::class, 'update'])->name('update.slider');
         Route::delete('/delete-slider/{id}', [SliderController::class, 'destroy'])->name('delete.slider');
+
+        Route::get('/forms', [FormController::class, 'index'])->name('forms.index');
+        Route::post('/forms', [FormController::class, 'store'])->name('forms.store');
+        Route::delete('/forms/{downloadableForm}', [FormController::class, 'destroy'])->name('forms.destroy');
      });
 // ITEMS (Admin + Superuser + User)
 

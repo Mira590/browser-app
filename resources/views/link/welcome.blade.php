@@ -512,6 +512,47 @@ body {
     margin-bottom: 18px;
 }
 
+.portal-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.portal-tab {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.portal-tab[aria-selected="true"] {
+    border-bottom-color: var(--blue);
+    color: var(--navy);
+}
+
+.portal-tab:focus-visible {
+    outline: 3px solid rgba(23, 105, 170, 0.35);
+    outline-offset: 2px;
+}
+
+.portal-panel[hidden] {
+    display: none !important;
+}
+
+.form-file-type {
+    margin: -4px 0 16px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
 .search-wrap {
     position: relative;
     flex: 1 1 260px;
@@ -1025,6 +1066,12 @@ body {
         <div class="time" id="time"></div>
     </div>
 
+    <div class="portal-tabs" role="tablist" aria-label="Portal sections">
+        <button class="portal-tab" id="applicationsTab" type="button" role="tab" aria-selected="true" aria-controls="applicationsPanel" tabindex="0">Applications</button>
+        <button class="portal-tab" id="formsTab" type="button" role="tab" aria-selected="false" aria-controls="formsPanel" tabindex="-1">Forms</button>
+    </div>
+
+    <section class="portal-panel" id="applicationsPanel" role="tabpanel" aria-labelledby="applicationsTab">
     <div class="section-heading">
         <div>
             <h1 class="section-title">Your applications</h1>
@@ -1105,6 +1152,41 @@ body {
             <strong>No user paths saved</strong>
             <span>Add a name and web address above to keep a link here.</span>
         </div>
+    </section>
+    </section>
+
+    <section class="portal-panel" id="formsPanel" role="tabpanel" aria-labelledby="formsTab" hidden>
+        <div class="section-heading">
+            <div>
+                <h1 class="section-title">Downloadable forms</h1>
+                <p class="section-description">Download the forms you need.</p>
+            </div>
+        </div>
+
+        @if ($forms->isNotEmpty())
+            <div class="grid">
+                @foreach ($forms as $form)
+                    <article class="card">
+                        <div aria-hidden="true" style="font-size: 42px; margin-bottom: 12px;">📄</div>
+                        <h3>{{ $form['name'] }}</h3>
+                        <p class="form-file-type">{{ $form['extension'] }} document</p>
+                        <div class="btn">
+                            <a class="open" href="{{ $form['url'] }}" download>Download</a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+            @if ($forms->hasPages())
+                <div class="pagination-wrapper" aria-label="Form pages">
+                    {{ $forms->links() }}
+                </div>
+            @endif
+        @else
+            <div class="empty-state">
+                <strong>No forms available yet</strong>
+                <span>Add form files to <code>public/forms</code> to make them downloadable here.</span>
+            </div>
+        @endif
     </section>
 
     </div>
@@ -1419,6 +1501,18 @@ document.querySelectorAll('[data-filter]').forEach(function(button) {
             filterButton.setAttribute('aria-pressed', filterButton === button ? 'true' : 'false');
         });
         renderApplications();
+    });
+});
+
+var portalTabs = document.querySelectorAll('[role="tab"][aria-controls]');
+portalTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        portalTabs.forEach(function(otherTab) {
+            var isSelected = otherTab === tab;
+            otherTab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            otherTab.tabIndex = isSelected ? 0 : -1;
+            document.getElementById(otherTab.getAttribute('aria-controls')).hidden = !isSelected;
+        });
     });
 });
 

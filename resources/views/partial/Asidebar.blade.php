@@ -42,6 +42,7 @@
                 <li><a href="{{ route('admin.link.list') }}"><i class='bx bx-menu'></i>All links</a></li>
                 <li><a href="{{ route('admin.slider') }}"><i class='bx bx-plus-circle'></i>Create Slider</a></li>
                 <li><a href="{{ route('admin.slider.list') }}"><i class='bx bx-menu'></i>All Sliders</a></li>
+                <li><a href="{{ route('admin.forms.index') }}"><i class='bx bx-file'></i>Manage Forms</a></li>
 
             </ul>
         </li>

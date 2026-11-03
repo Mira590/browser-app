@@ -3,124 +3,70 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DownloadableForm;
+use App\Models\Link;
+use App\Models\Slider;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Item;
 
 class AdminController extends Controller
 {
-    public function login(){
+    public function login()
+    {
 
         return view('admin.login.index');
     }
 
-   public function index()
-{
-    $user = auth()->user();
+    public function index()
+    {
+        $user = auth()->user();
+        $isAdmin = $user->isAdmin();
 
-   
+        $stats = [
+            [
+                'label' => 'Applications',
+                'value' => Link::query()->count(),
+                'description' => 'Portal shortcuts',
+                'icon' => 'bx-grid-alt',
+                'tone' => 'blue',
+                'url' => $isAdmin ? route('admin.link.list') : route('welcome.page'),
+            ],
+            [
+                'label' => 'Downloadable forms',
+                'value' => DownloadableForm::query()->count(),
+                'description' => 'Available to your team',
+                'icon' => 'bx-file',
+                'tone' => 'green',
+                'url' => $isAdmin ? route('admin.forms.index') : route('welcome.page'),
+            ],
+            [
+                'label' => 'Sliders',
+                'value' => Slider::query()->count(),
+                'description' => 'Portal banner slides',
+                'icon' => 'bx-images',
+                'tone' => 'orange',
+                'url' => $isAdmin ? route('admin.slider.list') : route('welcome.page'),
+            ],
+            [
+                'label' => 'Team members',
+                'value' => User::query()->count(),
+                'description' => 'Portal accounts',
+                'icon' => 'bx-group',
+                'tone' => 'purple',
+                'url' => $isAdmin ? route('admin.allUsers') : route('welcome.page'),
+            ],
+        ];
 
+        $recentLinks = Link::query()->latest()->take(5)->get();
+        $recentForms = DownloadableForm::query()->latest()->take(5)->get();
 
-        return view('admin.dashboard.index');
-    
-
-    if ($user->isSuperuser()) {
-        // Superuser sees only their department or items they manage
-       $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
-        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
-        $totalItems = Item::count();
-
-        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-
-        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
-            
-             $pcd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-             $serverd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $routerd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switchd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewalld = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
-
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'pc','server','router','switch','firewall','pcd','serverd','routerd','switchd','firewalld'));
+        return view('admin.dashboard.index', compact('user', 'isAdmin', 'stats', 'recentLinks', 'recentForms'));
     }
-
-    if ($user->isUser()) {
-        // User sees only their own items
-       $stock = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))->count();
-        $data = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))->count();
-        $totalItems = Item::count();
-
-        $pc = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-
-        $server = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $router = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switch = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewall = Item::whereHas('branch', fn($q) => $q->where('name', 'Stock'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
-
-             $pcd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'PC'))
-            ->count();
-             $serverd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Server'))
-            ->count();
-        $routerd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Router'))
-            ->count();
-        $switchd = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Switch'))
-            ->count();
-
-        $firewalld = Item::whereHas('branch', fn($q) => $q->where('name', 'Data_Center'))
-            ->whereHas('product', fn($q) => $q->where('name', 'Firewall'))
-            ->count();
-            
-
-        return view('admin.dashboard.index', compact('stock', 'data', 'totalItems', 'pc','server','router','switch','firewall','pcd','serverd','routerd','switchd','firewalld'));
-    }
-}
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-
-    {
-   
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
