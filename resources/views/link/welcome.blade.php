@@ -206,7 +206,7 @@ body {
 
 /* DATE CARD */
 .date-card {
-    background: #0b2e4a;
+    background: #130bab;
     color: white;
     padding: 20px;
     border-radius: 14px;
@@ -372,7 +372,7 @@ body {
 }
 
 .open {
-    background: #0b2e4a;
+    background: #091285;
     color: white;
 }
 

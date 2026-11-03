@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class SliderController extends Controller
 {
@@ -22,15 +24,17 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'pic' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
+            'pic' => 'nullable|image|mimes:jpg,jpeg,png|max:9000',
         ]);
 
         $picName = null;
 
         if ($request->hasFile('pic')) {
             $file = $request->file('pic');
-            $picName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/sliders'), $picName);
+            $picName = Str::uuid() . '.' . strtolower($file->getClientOriginalExtension());
+            $slidersDirectory = public_path('uploads/sliders');
+            File::ensureDirectoryExists($slidersDirectory);
+            $file->move($slidersDirectory, $picName);
         }
 
         Slider::create([
@@ -56,7 +60,7 @@ class SliderController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:255',
-            'pic' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'pic' => 'nullable|image|mimes:jpg,jpeg,png|max:9000',
         ]);
 
         $picName = $slider->pic;

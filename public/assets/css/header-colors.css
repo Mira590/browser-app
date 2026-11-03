@@ -34,7 +34,7 @@ html.color-header .mobile-toggle-menu {
 	color: #fff
 }
 .switcher-body .headercolor1 {
-	background: #0727d7!important
+	background: #0b2e4a!important
 }
 .switcher-body .headercolor2 {
 	background: #23282c!important
@@ -58,7 +58,7 @@ html.color-header .mobile-toggle-menu {
 	background: #ff9800!important
 }
 html.headercolor1 .topbar {
-	background: #0727d7
+	background: #0b2e4a
 }
 html.headercolor2 .topbar {
 	background: #23282c
@@ -139,7 +139,6 @@ html.color-sidebar .sidebar-wrapper {
     background-position: center;
     background-repeat: no-repeat;
 }
-
 
 
 
