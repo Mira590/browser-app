@@ -22,7 +22,11 @@ it('allows admins to upload forms that appear on the welcome page', function () 
     try {
         $response->assertRedirect(route('admin.forms.index'));
         $this->assertFileExists($filePath);
-        $this->get(route('welcome.page'))->assertOk()->assertSee('Domain User Form');
+        $this->get(route('welcome.page'))
+            ->assertOk()
+            ->assertSee('Domain User Form')
+            ->assertDontSee('Client hostname:')
+            ->assertDontSee('Your IP address:');
 
         $this->delete(route('admin.forms.destroy', $form))
             ->assertRedirect(route('admin.forms.index'));
