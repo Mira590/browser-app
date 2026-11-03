@@ -18,14 +18,25 @@
             <form action="{{ route('admin.forms.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-3 align-items-end">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <label for="formTitle" class="form-label">Form name</label>
                         <input id="formTitle" name="title" type="text" class="form-control" value="{{ old('title') }}" maxlength="255" required>
                         @error('title')
                             <div class="text-danger small">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
+                        <label for="formCategory" class="form-label">Category</label>
+                        <select id="formCategory" name="category" class="form-select" required>
+                            @foreach ($categories as $value => $label)
+                                <option value="{{ $value }}" @selected(old('category', 'operation') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('category')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-3">
                         <label for="formFile" class="form-label">File</label>
                         <input id="formFile" name="file" type="file" class="form-control" accept=".pdf,.doc,.docx,.odt,.xls,.xlsx,.ods" required>
                         <div class="form-text">PDF, Word, or Excel documents up to 10 MB.</div>
@@ -51,6 +62,7 @@
                     <thead>
                         <tr>
                             <th>Form name</th>
+                            <th>Category</th>
                             <th>File type</th>
                             <th>Added</th>
                             <th>Actions</th>
@@ -60,6 +72,7 @@
                         @forelse ($forms as $form)
                             <tr>
                                 <td>{{ $form->title }}</td>
+                                <td>{{ $categories[$form->category] ?? $categories['operation'] }}</td>
                                 <td>{{ strtoupper(pathinfo($form->file_path, PATHINFO_EXTENSION)) }}</td>
                                 <td>{{ $form->created_at->format('Y-m-d') }}</td>
                                 <td class="text-nowrap">
@@ -73,7 +86,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">No forms have been uploaded.</td>
+                                <td colspan="5" class="text-center text-muted">No forms have been uploaded.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -542,6 +542,65 @@ body {
     outline-offset: 2px;
 }
 
+.form-category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 22px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #eaf0f5;
+}
+
+.form-category-tab {
+    display: inline-flex;
+    min-height: 42px;
+    flex: 1 1 145px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: #53687b;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.form-category-tab[aria-selected="true"] {
+    border-color: #e4ebf1;
+    background: #fff;
+    color: var(--navy);
+    box-shadow: 0 2px 6px rgba(22, 53, 78, 0.07);
+}
+
+.form-category-tab:focus-visible {
+    outline: 3px solid rgba(23, 105, 170, 0.35);
+    outline-offset: 2px;
+}
+
+.category-count {
+    display: inline-flex;
+    min-width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    border-radius: 99px;
+    background: rgba(23, 105, 170, 0.1);
+    color: inherit;
+    font-size: 11px;
+}
+
+.form-category-panel[hidden] {
+    display: none !important;
+}
+
 .portal-panel[hidden] {
     display: none !important;
 }
@@ -1066,7 +1125,7 @@ body {
         <div class="time" id="time"></div>
     </div>
 
-    <div class="portal-tabs" role="tablist" aria-label="Portal sections">
+    <div class="portal-tabs" id="portalTabList" role="tablist" aria-label="Portal sections">
         <button class="portal-tab" id="applicationsTab" type="button" role="tab" aria-selected="true" aria-controls="applicationsPanel" tabindex="0">Applications</button>
         <button class="portal-tab" id="formsTab" type="button" role="tab" aria-selected="false" aria-controls="formsPanel" tabindex="-1">Forms</button>
     </div>
@@ -1163,30 +1222,59 @@ body {
             </div>
         </div>
 
-        @if ($forms->isNotEmpty())
-            <div class="grid">
-                @foreach ($forms as $form)
-                    <article class="card">
-                        <div aria-hidden="true" style="font-size: 42px; margin-bottom: 12px;">📄</div>
-                        <h3>{{ $form['name'] }}</h3>
-                        <p class="form-file-type">{{ $form['extension'] }} document</p>
-                        <div class="btn">
-                            <a class="open" href="{{ $form['url'] }}" download>Download</a>
+        <div class="form-category-tabs" role="tablist" aria-label="Form categories">
+            @foreach ($formCategories as $category => $categoryLabel)
+                <button
+                    class="form-category-tab"
+                    id="{{ $category }}FormsTab"
+                    type="button"
+                    role="tab"
+                    data-form-tab
+                    data-category="{{ $category }}"
+                    aria-selected="{{ $activeFormCategory === $category ? 'true' : 'false' }}"
+                    aria-controls="{{ $category }}FormsPanel"
+                    tabindex="{{ $activeFormCategory === $category ? '0' : '-1' }}"
+                >
+                    {{ $categoryLabel }}
+                    <span class="category-count">{{ $forms[$category]->total() }}</span>
+                </button>
+            @endforeach
+        </div>
+
+        @foreach ($formCategories as $category => $categoryLabel)
+            <section
+                class="form-category-panel"
+                id="{{ $category }}FormsPanel"
+                role="tabpanel"
+                aria-labelledby="{{ $category }}FormsTab"
+                @if ($activeFormCategory !== $category) hidden @endif
+            >
+                @if ($forms[$category]->isNotEmpty())
+                    <div class="grid">
+                        @foreach ($forms[$category] as $form)
+                            <article class="card">
+                                <div aria-hidden="true" style="font-size: 42px; margin-bottom: 12px;">📄</div>
+                                <h3>{{ $form['name'] }}</h3>
+                                <p class="form-file-type">{{ $form['extension'] }} document</p>
+                                <div class="btn">
+                                    <a class="open" href="{{ $form['url'] }}" download>Download</a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                    @if ($forms[$category]->hasPages())
+                        <div class="pagination-wrapper" aria-label="{{ $categoryLabel }} pages">
+                            {{ $forms[$category]->appends(['formCategory' => $category])->links() }}
                         </div>
-                    </article>
-                @endforeach
-            </div>
-            @if ($forms->hasPages())
-                <div class="pagination-wrapper" aria-label="Form pages">
-                    {{ $forms->links() }}
-                </div>
-            @endif
-        @else
-            <div class="empty-state">
-                <strong>No forms available yet</strong>
-                <span>Add form files to <code>public/forms</code> to make them downloadable here.</span>
-            </div>
-        @endif
+                    @endif
+                @else
+                    <div class="empty-state">
+                        <strong>No {{ strtolower($categoryLabel) }} available yet</strong>
+                        <span>Forms added to this category will appear here.</span>
+                    </div>
+                @endif
+            </section>
+        @endforeach
     </section>
 
     </div>
@@ -1504,7 +1592,7 @@ document.querySelectorAll('[data-filter]').forEach(function(button) {
     });
 });
 
-var portalTabs = document.querySelectorAll('[role="tab"][aria-controls]');
+var portalTabs = document.querySelectorAll('#portalTabList [role="tab"][aria-controls]');
 portalTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
         portalTabs.forEach(function(otherTab) {
@@ -1513,6 +1601,43 @@ portalTabs.forEach(function(tab) {
             otherTab.tabIndex = isSelected ? 0 : -1;
             document.getElementById(otherTab.getAttribute('aria-controls')).hidden = !isSelected;
         });
+    });
+});
+
+var formTabs = document.querySelectorAll('[data-form-tab]');
+formTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        formTabs.forEach(function(otherTab) {
+            var isSelected = otherTab === tab;
+            otherTab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            otherTab.tabIndex = isSelected ? 0 : -1;
+            document.getElementById(otherTab.getAttribute('aria-controls')).hidden = !isSelected;
+        });
+
+        var currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('formCategory', tab.getAttribute('data-category'));
+        window.history.replaceState(null, '', currentUrl);
+    });
+
+    tab.addEventListener('keydown', function(event) {
+        var currentIndex = Array.prototype.indexOf.call(formTabs, tab);
+        var nextIndex = currentIndex;
+
+        if (event.key === 'ArrowRight') {
+            nextIndex = (currentIndex + 1) % formTabs.length;
+        } else if (event.key === 'ArrowLeft') {
+            nextIndex = (currentIndex - 1 + formTabs.length) % formTabs.length;
+        } else if (event.key === 'Home') {
+            nextIndex = 0;
+        } else if (event.key === 'End') {
+            nextIndex = formTabs.length - 1;
+        } else {
+            return;
+        }
+
+        event.preventDefault();
+        formTabs[nextIndex].focus();
+        formTabs[nextIndex].click();
     });
 });
 
