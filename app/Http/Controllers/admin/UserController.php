@@ -21,7 +21,7 @@ class UserController extends Controller
         return view('admin.user.change');
     }
 
-public function updatepassword(Request $request)
+    public function updatepassword(Request $request)
     {
         $request->validate([
             'current_password' => ['required'],
@@ -34,7 +34,7 @@ public function updatepassword(Request $request)
                 'current_password' => 'Current password is incorrect.',
             ]);
         }
-
+        // $AFGCDNO = 123; // afghanistan card no: $afg_card_num $AfgCardNum 
         // Update password
         auth()->user()->update([
             'password' => Hash::make($request->password),
@@ -42,12 +42,13 @@ public function updatepassword(Request $request)
 
         return back()->with('success', 'Password changed successfully!');
     }
+
     public function Profile(){
         return view('admin.user.profile');
     }
+
     public function index()
     {
-
         $users=User::paginate(10);
          return view('admin.user.all',compact('users'));
     }
@@ -57,7 +58,6 @@ public function updatepassword(Request $request)
      */
     public function create()
     {
-
         $dep= Department::all();
         return view('admin.user.index',compact('dep'));
     }

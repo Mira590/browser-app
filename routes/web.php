@@ -1,6 +1,13 @@
 <?php
-
+/**
+ * @author:Mira jan
+ * @version: 1.0
+ * @date: 2024-06-10
+ * @description: This file contains the web routes for the application.
+ */
+// SYSTEM Dependencies
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
