@@ -25,6 +25,6 @@
 	<link rel="stylesheet" href='{{asset("assets/css/dark-theme.css")}}' />
 	<link rel="stylesheet" href='{{asset("assets/css/semi-dark.css")}}' />
 	<link rel="stylesheet" href='{{asset("assets/css/header-colors.css")}}' />
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="{{ asset('js/sweetalert2.js') }}"></script>
 	<title>IT Stock</title>
 </head>

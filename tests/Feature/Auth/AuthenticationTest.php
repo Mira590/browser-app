@@ -12,6 +12,16 @@ test('admin login screen can be rendered and the old login path is unavailable',
         ->assertRedirect(route('admin.login'));
 });
 
+test('authenticated users visiting the admin login screen are redirected to the dashboard', function () {
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.login'))
+        ->assertRedirect(route('admin.dashboard'));
+});
+
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
