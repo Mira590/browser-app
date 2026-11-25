@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\LogoutController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\FormController;
@@ -26,7 +27,8 @@ use App\Http\Controllers\WelcomeController;
 
 
 // Admin login
-Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('admin.login');
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest')->name('admin.login.store');
 Route::get('/Welcom', [WelcomeController::class, 'index'])->name('welcome.page');
 
 // Dashboard (all roles)

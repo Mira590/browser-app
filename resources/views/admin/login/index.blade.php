@@ -435,7 +435,7 @@
 <body>
     <main class="login-page">
         <section class="login-showcase" aria-label="Browser Portal introduction">
-            <a class="login-brand" href="{{ route('login') }}">
+            <a class="login-brand" href="{{ route('admin.login') }}">
                 <img src="{{ asset('assets/images/logo-icon.png') }}" alt="">
                 <span>AziziBank <span style="font-weight: 500; opacity: 0.72;">| Browser Portal</span></span>
             </a>
@@ -482,7 +482,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('admin.login.store') }}">
                     @csrf
 
                     <div class="login-field">

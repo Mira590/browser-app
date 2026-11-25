@@ -22,8 +22,7 @@ class LogoutController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Redirect after logout
-        return redirect('/login')->with('success', 'You have been logged out.');
+        return redirect()->route('admin.login')->with('success', 'You have been logged out.');
     }
     public function index()
     {
