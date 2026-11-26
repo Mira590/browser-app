@@ -29,7 +29,7 @@ use App\Http\Controllers\WelcomeController;
 // Admin login
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('admin.login');
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest')->name('admin.login.store');
-Route::get('/Welcom', [WelcomeController::class, 'index'])->name('welcome.page');
+Route::get('/welcom', [WelcomeController::class, 'index'])->name('welcome.page');
 
 // Dashboard (all roles)
 Route::middleware(['auth', 'verified'])
