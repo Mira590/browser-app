@@ -1212,7 +1212,7 @@
             <section class="user-paths-section" aria-labelledby="userPathsTitle">
                 <div class="section-heading">
                     <div>
-                        <h2 class="section-title" id="userPathsTitle">User paths</h2>
+                        <h2 class="section-title" id="userPathsTitle">Add Your Own Links</h2>
                         <p class="section-description">Save useful links from the web in this browser. These links are
                             not sent to the database.</p>
                     </div>
