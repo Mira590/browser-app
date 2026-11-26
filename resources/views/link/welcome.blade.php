@@ -1298,7 +1298,7 @@
     </div>
 
     <div class="footer">
-        © 2026 AziziBank Internal Portal | All Rights Reserved By Mirajan Najmezada
+        © 2026 AziziBank Internal Portal | Developed By Mirajan-Najmezada
     </div>
     <div class="status-message" id="statusMessage" role="status" aria-live="polite" hidden></div>
 
