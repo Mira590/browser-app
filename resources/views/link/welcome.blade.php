@@ -1298,7 +1298,7 @@
     </div>
 
     <div class="footer">
-        © 2026 AziziBank Internal Portal | All Rights Reserved by IT Department
+    © 2026 Azizi Bank Welcome Portal (AZB Form) |  Developed by Mirjana Najmizada | Maintained by the IT Department
     </div>
     <div class="status-message" id="statusMessage" role="status" aria-live="polite" hidden></div>
 
