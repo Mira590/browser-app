@@ -628,6 +628,12 @@
             font-weight: 700;
         }
 
+        .guidance-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
         .search-wrap {
             position: relative;
             flex: 1 1 260px;
@@ -1147,6 +1153,8 @@
                 aria-controls="applicationsPanel" tabindex="0">Applications</button>
             <button class="portal-tab" id="formsTab" type="button" role="tab" aria-selected="false"
                 aria-controls="formsPanel" tabindex="-1">Forms</button>
+            <button class="portal-tab" id="guidanceTab" type="button" role="tab" aria-selected="false"
+                aria-controls="guidancePanel" tabindex="-1">Guidance Terminal</button>
         </div>
 
         <section class="portal-panel" id="applicationsPanel" role="tabpanel" aria-labelledby="applicationsTab">
@@ -1291,6 +1299,38 @@
                     @endif
                 </section>
             @endforeach
+        </section>
+
+        <section class="portal-panel" id="guidancePanel" role="tabpanel" aria-labelledby="guidanceTab" hidden>
+            <div class="section-heading">
+                <div>
+                    <h1 class="section-title">Guidance Terminal</h1>
+                    <p class="section-description">Support contacts for common system and account issues.</p>
+                </div>
+            </div>
+
+            <div class="grid">
+                <article class="card guidance-card">
+                    <h3>ICBA System Supports </h3>
+                    <p>For ICBA system Support, Dial  1217, 1233, or 1232 EXT#.</p>
+                </article>
+                <article class="card guidance-card">
+                    <h3>System Admin </h3>
+                    <p>For system Support, call 1213,1223or 1212 .</p>
+                </article>
+                <article class="card guidance-card">
+                    <h3>Network section </h3>
+                    <p>For network-related issues, call 1215,1216 1230 .</p>
+                </article>
+                <article class="card guidance-card">
+                    <h3>IT Support</h3>
+                    <p>For IT support, please contact ,1226,1225,1224,1227</p>
+                </article>
+                 <article class="card guidance-card">
+                    <h3>IT ATM</h3>
+                    <p>For IT support, please contact ,1236,1240</p>
+                </article>
+            </div>
         </section>
 
     </div>

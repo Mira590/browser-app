@@ -143,3 +143,16 @@ it('paginates forms in the admin panel eight at a time', function () {
         ->assertSee('Admin Form 9')
         ->assertDontSee('Admin Form 1');
 });
+
+it('shows static guidance terminal support cards on the welcome page', function () {
+    $this->get(route('welcome.page'))
+        ->assertOk()
+        ->assertSee('Guidance Terminal')
+        ->assertSee('ICBA System Issues')
+        ->assertSee('For ICBA system issues, call 1232, 127, or 1233.')
+        ->assertSee('User Lock')
+        ->assertSee('For a user lock, call 1223 or 1233.')
+        ->assertSee('Domain Lock')
+        ->assertSee('For a domain lock, call 1223 or 1233.')
+        ->assertSee('Additional Guidance');
+});

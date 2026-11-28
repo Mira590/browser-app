@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 class FormController extends Controller
 {
-    private const ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx', 'odt', 'xls', 'xlsx', 'ods'];
+    private const ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx', 'odt', 'xls', 'xlsx', 'ods','html'];
 
     public function index()
     {
@@ -25,7 +25,7 @@ class FormController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', Rule::in(array_keys(DownloadableForm::CATEGORIES))],
-            'file' => ['required', 'file', 'mimes:pdf,doc,docx,odt,xls,xlsx,ods', 'max:10240'],
+            'file' => ['required', 'file', 'mimes:pdf,doc,docx,odt,xls,xlsx,ods,html', 'max:10240'],
         ]);
 
         $file = $request->file('file');
